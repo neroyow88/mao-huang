@@ -1,0 +1,134 @@
+import React, { useState } from "react";
+import {
+  Nav,
+  Button,
+  Input,
+  NavLink,
+  NavItem,
+  Form,
+  FormGroup,
+} from "reactstrap";
+
+const styles = {
+  loginBarContainer: {
+    height: "40px",
+    width: "100%",
+    background:
+      "transparent linear-gradient(0deg, #8E0002 0%, #AD0002 100%) 0% 0% no-repeat padding-box",
+  },
+  navStyle: {
+    marginLeft: "40%",
+    marginRight: "15%",
+  },
+  inputStyle: {
+    width: "150px",
+    height: "30px",
+    marginLeft: "5px",
+    marginRight: "5px",
+  },
+  passwordInputStyle: {
+    backgroundImage: "url('icon_eye.png')",
+    backgroundPosition: "95% 50%",
+    backgroundRepeat: "no-repeat",
+  },
+  buttonStyle: {
+    width: "75px",
+    marginLeft: "5px",
+  },
+  loginButtonStyle: {
+    color: "#FFFFFF",
+    background:
+      "transparent linear-gradient(180deg, #FCB715 0%, #E9A400 100%) 0% 0% no-repeat padding-box",
+  },
+  registerButtonStyle: {
+    color: "#606060",
+    background:
+      "transparent linear-gradient(180deg, #F2F2F2 0%, #D2D2D2 100%) 0% 0% no-repeat padding-box",
+  },
+};
+
+export default function LoginBar() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const updateUsername = (e): void => {
+    setUsername(e.target.value);
+  };
+
+  const updatePassword = (e): void => {
+    setPassword(e.target.value);
+  };
+
+  return (
+    <section id="login-bar-container" style={styles.loginBarContainer}>
+      <Nav style={styles.navStyle}>
+        <NavItem>
+          <NavLink href="" style={{ color: "#FCB715" }}>
+            忘记账号
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="" style={{ color: "#FFFFFF" }}>
+            忘记密码
+          </NavLink>
+        </NavItem>
+        <Form inline>
+          <FormGroup>
+            <Input
+              placeholder="猫皇账号"
+              type="text"
+              id="username"
+              onChange={updateUsername}
+              style={styles.inputStyle}
+            ></Input>
+          </FormGroup>
+          <FormGroup>
+            <Input
+              placeholder="密码"
+              type="password"
+              id="password"
+              onChange={updatePassword}
+              style={Object.assign(
+                {},
+                styles.inputStyle,
+                styles.passwordInputStyle
+              )}
+            ></Input>
+          </FormGroup>
+          <Button
+            onClick={() => {
+              onLoginClick(username, password);
+            }}
+            size="sm"
+            style={Object.assign(
+              {},
+              styles.buttonStyle,
+              styles.loginButtonStyle
+            )}
+          >
+            登入
+          </Button>
+          <Button
+            onClick={() => {
+              onRegisterClick();
+            }}
+            size="sm"
+            style={Object.assign(
+              {},
+              styles.buttonStyle,
+              styles.registerButtonStyle
+            )}
+          >
+            注册
+          </Button>
+        </Form>
+      </Nav>
+    </section>
+  );
+}
+
+function onLoginClick(username, password): void {
+  console.log(username, password);
+}
+
+function onRegisterClick(): void {}
