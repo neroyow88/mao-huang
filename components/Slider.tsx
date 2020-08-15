@@ -7,21 +7,6 @@ import {
 } from "reactstrap";
 import customStyle from "../styles/carousel.module.scss";
 
-const styles = {
-  indicatorStyle: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "10px",
-    borderTop: "none",
-    borderBottom: "none",
-  },
-  arrowBox: {
-    width: "60px",
-    height: "120px",
-    backgroundColor: "#161616",
-  },
-};
-
 const items = [
   {
     src: "promotion_slider.png",
