@@ -17,14 +17,14 @@ const styles = {
       "transparent linear-gradient(0deg, #8E0002 0%, #AD0002 100%) 0% 0% no-repeat padding-box",
   },
   navStyle: {
-    marginLeft: "40%",
-    marginRight: "15%",
+    marginLeft: "48%",
   },
   inputStyle: {
     width: "150px",
     height: "30px",
     marginLeft: "5px",
     marginRight: "5px",
+    borderRadius: "0px",
   },
   passwordInputStyle: {
     backgroundImage: "url('icon_eye.png')",

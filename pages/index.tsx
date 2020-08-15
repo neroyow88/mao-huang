@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
+
+// Components
 import LoginBar from "../components/LoginBar";
 import UtilityBar from "../components/UtilityBar";
+import GameListBar from "../components/GameListBar";
+import Slider from "../components/Slider";
+
+const styles = {
+  mainContainer: {
+    width: "1920px",
+    transformOrigin: "top left",
+  },
+};
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [scale, setScale] = useState(1);
 
   const checkView = () => {
     useEffect(() => {
       const { isMobile } = require("react-device-detect");
       setIsMobile(isMobile);
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
+      setScale(window.innerWidth / 1920);
     });
   };
   checkView();
@@ -20,7 +29,7 @@ export default function Home() {
   if (isMobile) {
     return renderMobileView();
   } else {
-    return renderBrowserView(width, height);
+    return renderBrowserView(scale);
   }
 }
 
@@ -28,11 +37,18 @@ function renderMobileView(): JSX.Element {
   return <div id="main-container"></div>;
 }
 
-function renderBrowserView(width: number, height: number): JSX.Element {
+function renderBrowserView(scale: number): JSX.Element {
   return (
-    <div id="main-container" style={{ width: width, height: height }}>
+    <div
+      id="main-container"
+      style={Object.assign({}, styles.mainContainer, {
+        transform: `scale(${scale})`,
+      })}
+    >
       {LoginBar()}
       {UtilityBar()}
+      {GameListBar()}
+      {Slider()}
     </div>
   );
 }

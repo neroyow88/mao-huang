@@ -1,6 +1,11 @@
 import React from "react";
 import { Nav, NavItem, Navbar, NavLink } from "reactstrap";
 
+interface IUtilityItem {
+  label: string;
+  image?: string;
+}
+
 const styles = {
   utilityBarContainer: {
     height: "110px",
@@ -18,10 +23,11 @@ const styles = {
   },
   navItemStyle: {
     alignSelf: "center",
+    paddingRight: "70px",
   },
   utilityItemContainer: {
     marginTop: "50px",
-    marginLeft: "50px",
+    paddingRight: "80px",
   },
 };
 
@@ -35,22 +41,20 @@ export default function UtilityBar() {
           <NavItem style={styles.navItemStyle}>
             <img src={"logo.png"} />
           </NavItem>
-          {utilityItem({ contentLabel: "猫皇", contentImage: "520-logo2.png" })}
-          {utilityItem({ contentLabel: "游戏充值" })}
-          {utilityItem({ contentLabel: "快速提款" })}
-          {utilityItem({ contentLabel: "户内转帐" })}
-          {utilityItem({ contentLabel: "留言信息" })}
-          {utilityItem({ contentLabel: `猫皇余额 : ${balance}` })}
+          {utilityItem({ label: "猫皇", image: "520-logo2.png" })}
+          {utilityItem({ label: "游戏充值" })}
+          {utilityItem({ label: "快速提款" })}
+          {utilityItem({ label: "户内转帐" })}
+          {utilityItem({ label: "留言信息" })}
+          {utilityItem({ label: `猫皇余额 : ${balance}` })}
         </Nav>
       </Navbar>
     </section>
   );
 }
 
-function utilityItem(content) {
-  const imageComponent = content.contentImage ? (
-    <img src="520-logo2.png"></img>
-  ) : null;
+function utilityItem(content: IUtilityItem) {
+  const imageComponent = content.image ? <img src="520-logo2.png"></img> : null;
 
   return (
     <NavItem style={styles.utilityItemContainer}>
@@ -60,7 +64,7 @@ function utilityItem(content) {
           color: "#FCB715",
         }}
       >
-        {content.contentLabel}
+        {content.label}
         {imageComponent}
       </NavLink>
     </NavItem>
