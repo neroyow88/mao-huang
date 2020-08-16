@@ -21,7 +21,20 @@ export default function Home() {
     useEffect(() => {
       const { isMobile } = require("react-device-detect");
       setIsMobile(isMobile);
-      setScale(window.innerWidth / 1920);
+
+      const onResize = () => {
+        const newScale =
+          window.innerWidth / 1920 <= 0.66 ? 0.66 : window.innerWidth / 1920;
+        console.log(window.innerWidth);
+        setScale(newScale);
+      };
+
+      onResize();
+      window.addEventListener("resize", onResize);
+
+      return () => {
+        window.removeEventListener("resize", onResize);
+      };
     });
   };
   checkView();
