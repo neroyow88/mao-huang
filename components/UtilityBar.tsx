@@ -10,7 +10,8 @@ const styles = {
   utilityBarContainer: {
     height: "110px",
     width: "100%",
-    background: "#AD0002 0% 0% no-repeat padding-box",
+    background: "#AD0002",
+    border: "2px solid #AD0002",
   },
   navbarStyle: {
     height: "100%",
@@ -35,7 +36,7 @@ export default function UtilityBar() {
   const balance = 2432.13;
 
   return (
-    <section id="utility-bar-container" style={styles.utilityBarContainer}>
+    <div id="utility-bar-container" style={styles.utilityBarContainer}>
       <Navbar style={styles.navbarStyle}>
         <Nav style={styles.navStyle}>
           <NavItem style={styles.navItemStyle}>
@@ -49,7 +50,7 @@ export default function UtilityBar() {
           {utilityItem({ label: `猫皇余额 : ${balance}` })}
         </Nav>
       </Navbar>
-    </section>
+    </div>
   );
 }
 

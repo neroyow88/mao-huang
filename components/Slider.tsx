@@ -53,7 +53,7 @@ export default function Slider() {
   });
 
   return (
-    <section>
+    <div id="slider-container">
       <Carousel activeIndex={activeIndex} next={next} previous={previous}>
         <CarouselIndicators
           items={items}
@@ -75,6 +75,6 @@ export default function Slider() {
           cssModule={customStyle}
         />
       </Carousel>
-    </section>
+    </div>
   );
 }

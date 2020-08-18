@@ -13,8 +13,7 @@ const styles = {
   loginBarContainer: {
     height: "40px",
     width: "100%",
-    background:
-      "transparent linear-gradient(0deg, #8E0002 0%, #AD0002 100%) 0% 0% no-repeat padding-box",
+    background: "transparent linear-gradient(0deg, #8E0002 0%, #AD0002 100%)",
   },
   navStyle: {
     marginLeft: "48%",
@@ -60,7 +59,7 @@ export default function LoginBar() {
   };
 
   return (
-    <section id="login-bar-container" style={styles.loginBarContainer}>
+    <div id="login-bar-container" style={styles.loginBarContainer}>
       <Nav style={styles.navStyle}>
         <NavItem>
           <NavLink href="" style={{ color: "#FCB715" }}>
@@ -123,7 +122,7 @@ export default function LoginBar() {
           </Button>
         </Form>
       </Nav>
-    </section>
+    </div>
   );
 }
 

@@ -19,6 +19,7 @@ const styles = {
     width: "100%",
     height: "70px",
     backgroundColor: "#1E202F",
+    border: "2px solid #1E202F",
   },
   navbarStyle: {
     height: "100%",
@@ -42,11 +43,11 @@ export default function GameListBar() {
   });
 
   return (
-    <section id="game-list-bar-container" style={styles.gameListBarContainer}>
+    <div id="game-list-bar-container" style={styles.gameListBarContainer}>
       <Navbar style={styles.navbarStyle}>
         <Nav style={styles.navStyle}>{components}</Nav>
       </Navbar>
-    </section>
+    </div>
   );
 }
 

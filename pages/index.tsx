@@ -5,11 +5,14 @@ import LoginBar from "../components/LoginBar";
 import UtilityBar from "../components/UtilityBar";
 import GameListBar from "../components/GameListBar";
 import Slider from "../components/Slider";
+import NoticeBoard from "../components/NoticeBoard";
+import Card from "../components/Card";
 
 const styles = {
   mainContainer: {
     width: "1920px",
     transformOrigin: "top left",
+    backgroundColor: "#1E202F",
   },
 };
 
@@ -62,6 +65,8 @@ function renderBrowserView(scale: number): JSX.Element {
       {UtilityBar()}
       {GameListBar()}
       {Slider()}
+      {NoticeBoard()}
+      {Card()}
     </div>
   );
 }

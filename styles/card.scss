@@ -1,0 +1,29 @@
+#cards-container {
+  height: 725px;
+}
+
+#background-container {
+  position: absolute;
+  z-index: -1;
+}
+
+#card-item-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#card-01 {
+  transform: translate(-75px, 50px) rotate(-15deg);
+}
+
+#card-02 {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+#card-03 {
+  transform: translate(75px, 50px) rotate(15deg);
+}
