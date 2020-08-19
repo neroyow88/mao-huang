@@ -38,8 +38,8 @@ const styles = {
 };
 
 export default function GameListBar() {
-  const components = gameListModel.map((item) => {
-    return dropdownItem(item);
+  const components = gameListModel.map((item, index: number) => {
+    return dropdownItem(item, index);
   });
 
   return (
@@ -51,20 +51,29 @@ export default function GameListBar() {
   );
 }
 
-function dropdownItem(content: IDropdownItem) {
+function dropdownItem(content: IDropdownItem, index: number) {
   let dropdownChild = [];
   if (content.childs && content.childs.length > 0) {
-    dropdownChild = content.childs.map((child) => {
-      return <DropdownItem>{child}</DropdownItem>;
+    dropdownChild = content.childs.map((child: string, index: number) => {
+      return (
+        <DropdownItem key={`dropdown-item-${index}`}>{child}</DropdownItem>
+      );
     });
   }
 
   return (
-    <UncontrolledDropdown nav inNavbar>
-      <DropdownToggle nav caret style={styles.dropdownItem}>
+    <UncontrolledDropdown nav inNavbar key={`uncontrolled-dropdown-${index}`}>
+      <DropdownToggle
+        key={`dropdown-toggle-${index}`}
+        nav
+        caret
+        style={styles.dropdownItem}
+      >
         {content.label}
       </DropdownToggle>
-      <DropdownMenu>{dropdownChild}</DropdownMenu>
+      <DropdownMenu key={`dropdown-menu-${index}`}>
+        {dropdownChild}
+      </DropdownMenu>
     </UncontrolledDropdown>
   );
 }

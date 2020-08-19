@@ -28,7 +28,6 @@ export default function Home() {
       const onResize = () => {
         const newScale =
           window.innerWidth / 1920 <= 0.66 ? 0.66 : window.innerWidth / 1920;
-        console.log(window.innerWidth);
         setScale(newScale);
       };
 

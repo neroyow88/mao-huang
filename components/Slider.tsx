@@ -40,12 +40,12 @@ export default function Slider() {
     setActiveIndex(newIndex);
   };
 
-  const slides = items.map((item) => {
+  const slides = items.map((item, index: number) => {
     return (
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={item.src}
+        key={`slide-item-${index}`}
       >
         <img src={item.src} style={{ width: "100%" }} />
       </CarouselItem>

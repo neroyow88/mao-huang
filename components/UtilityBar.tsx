@@ -8,7 +8,7 @@ interface IUtilityItem {
 
 const styles = {
   utilityBarContainer: {
-    height: "110px",
+    height: "90px",
     width: "100%",
     background: "#AD0002",
     border: "2px solid #AD0002",
@@ -23,11 +23,11 @@ const styles = {
     marginLeft: "12%",
   },
   navItemStyle: {
-    alignSelf: "center",
+    // alignSelf: "center",
     paddingRight: "70px",
   },
   utilityItemContainer: {
-    marginTop: "50px",
+    marginTop: "40px",
     paddingRight: "80px",
   },
 };
