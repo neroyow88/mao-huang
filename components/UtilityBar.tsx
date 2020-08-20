@@ -20,10 +20,10 @@ const styles = {
   navStyle: {
     height: "100%",
     width: "100%",
-    marginLeft: "12%",
+    paddingLeft: "10%",
+    fontSize: "18px",
   },
   navItemStyle: {
-    // alignSelf: "center",
     paddingRight: "70px",
   },
   utilityItemContainer: {

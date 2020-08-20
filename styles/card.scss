@@ -8,7 +8,7 @@
 }
 
 #card-item-container {
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -17,12 +17,6 @@
 
 #card-01 {
   transform: translate(-75px, 50px) rotate(-15deg);
-  img:hover {
-    padding-bottom: 10px;
-  }
-  img:active {
-    animation: flip-card 0.3s linear;
-  }
 }
 
 #card-02 {
@@ -32,12 +26,6 @@
 
 #card-03 {
   transform: translate(75px, 50px) rotate(15deg);
-  img:hover {
-    padding-bottom: 10px;
-  }
-  img:active {
-    animation: flip-card 0.3s linear;
-  }
 }
 
 .flip-card {

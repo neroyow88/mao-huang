@@ -7,15 +7,15 @@ export default function Card() {
         <img src="background.png"></img>
       </div>
       <div id="card-item-container">
-        <div id="card-01">{flipCard(1)}</div>
-        <div id="card-02">{flipCard(2)}</div>
-        <div id="card-03">{flipCard(3)}</div>
+        <div id="card-01">{FlipCard(1)}</div>
+        <div id="card-02">{FlipCard(2)}</div>
+        <div id="card-03">{FlipCard(3)}</div>
       </div>
     </div>
   );
 }
 
-function flipCard(index: number): JSX.Element {
+function FlipCard(index: number): JSX.Element {
   const convertIndex = index < 10 ? `0${index}` : index;
   return (
     <div className="flip-card" key={`flip-card-${convertIndex}`}>

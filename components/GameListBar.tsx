@@ -28,8 +28,9 @@ const styles = {
   navStyle: {
     height: "100%",
     width: "100%",
-    marginLeft: "12%",
+    paddingLeft: "10%",
     alignContent: "center",
+    fontSize: "18px",
   },
   dropdownItem: {
     color: "#FFFFFF",

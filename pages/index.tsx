@@ -7,9 +7,14 @@ import GameListBar from "../components/GameListBar";
 import Slider from "../components/Slider";
 import NoticeBoard from "../components/NoticeBoard";
 import Card from "../components/Card";
+import EventBar from "../components/EventBar";
 
 const styles = {
   mainContainer: {
+    position: "relative",
+  },
+  map: {
+    position: "absolute",
     width: "1920px",
     transformOrigin: "top left",
     backgroundColor: "#1E202F",
@@ -26,9 +31,12 @@ export default function Home() {
       setIsMobile(isMobile);
 
       const onResize = () => {
-        const newScale =
-          window.innerWidth / 1920 <= 0.66 ? 0.66 : window.innerWidth / 1920;
-        setScale(newScale);
+        const scrollBarWidth =
+          window.innerWidth - document.documentElement.clientWidth;
+        console.log(scrollBarWidth);
+        const newScale = (window.innerWidth - scrollBarWidth) / 1920;
+        console.log(newScale);
+        setScale(newScale <= 0.66 ? 0.66 : newScale);
       };
 
       onResize();
@@ -54,18 +62,21 @@ function renderMobileView(): JSX.Element {
 
 function renderBrowserView(scale: number): JSX.Element {
   return (
-    <div
-      id="main-container"
-      style={Object.assign({}, styles.mainContainer, {
-        transform: `scale(${scale})`,
-      })}
-    >
-      {LoginBar()}
-      {UtilityBar()}
-      {GameListBar()}
-      {Slider()}
-      {NoticeBoard()}
-      {Card()}
+    <div id="main-container" style={styles.mainContainer}>
+      <div
+        id="map"
+        style={Object.assign({}, styles.map, {
+          transform: `scale(${scale})`,
+        })}
+      >
+        {LoginBar()}
+        {UtilityBar()}
+        {GameListBar()}
+        {Slider()}
+        {NoticeBoard()}
+        {Card()}
+        {EventBar()}
+      </div>
     </div>
   );
 }
