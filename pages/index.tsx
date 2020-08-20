@@ -9,18 +9,6 @@ import NoticeBoard from "../components/NoticeBoard";
 import Card from "../components/Card";
 import EventBar from "../components/EventBar";
 
-const styles = {
-  mainContainer: {
-    position: "relative",
-  },
-  map: {
-    position: "absolute",
-    width: "1920px",
-    transformOrigin: "top left",
-    backgroundColor: "#1E202F",
-  },
-};
-
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [scale, setScale] = useState(1);
@@ -62,13 +50,8 @@ function renderMobileView(): JSX.Element {
 
 function renderBrowserView(scale: number): JSX.Element {
   return (
-    <div id="main-container" style={styles.mainContainer}>
-      <div
-        id="map"
-        style={Object.assign({}, styles.map, {
-          transform: `scale(${scale})`,
-        })}
-      >
+    <div id="main-container">
+      <div id="map" style={{ transform: `scale(${scale})` }}>
         {LoginBar()}
         {UtilityBar()}
         {GameListBar()}

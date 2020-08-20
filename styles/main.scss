@@ -1,0 +1,10 @@
+#main-container {
+  position: relative;
+}
+
+#map {
+  position: absolute;
+  width: 1920px;
+  transform-origin: top left;
+  background-color: #1e202f;
+}
