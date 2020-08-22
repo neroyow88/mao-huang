@@ -8,6 +8,8 @@ import Slider from "../components/Slider";
 import NoticeBoard from "../components/NoticeBoard";
 import Card from "../components/Card";
 import EventBar from "../components/EventBar";
+import CustomerService from "../components/CustomerService";
+import SponsorBar from "../components/SponsorBar";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -59,6 +61,8 @@ function renderBrowserView(scale: number): JSX.Element {
         {NoticeBoard()}
         {Card()}
         {EventBar()}
+        {CustomerService()}
+        {SponsorBar()}
       </div>
     </div>
   );

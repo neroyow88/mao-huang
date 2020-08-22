@@ -3,6 +3,8 @@ import "../styles/main.scss";
 import "../styles/noticeBoard.scss";
 import "../styles/card.scss";
 import "../styles/eventBar.scss";
+import "../styles/customerService.scss";
+import "../styles/sponsor.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyApp({ Component, pageProps }) {

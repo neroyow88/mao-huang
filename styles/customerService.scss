@@ -1,0 +1,72 @@
+#customer-service-container {
+  display: flex;
+  flex-direction: row;
+  height: 612px;
+  width: 80%;
+  color: #ffffff;
+  margin-left: 20%;
+}
+
+#left-service-container {
+  height: 100%;
+  width: 42%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 150px;
+}
+
+#right-service-container {
+  height: 100%;
+  width: 560px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 150px;
+  align-items: center;
+
+  #name-label {
+    font-size: 22px;
+    padding-top: 40px;
+  }
+
+  #title-label {
+    padding-top: 5px;
+  }
+
+  #description-label {
+    display: flex;
+    flex-direction: row;
+    padding-top: 35px;
+
+    img {
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+  }
+}
+
+.icons-container {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 30px;
+  width: 100%;
+}
+
+#suggestion-label {
+  padding-top: 20px;
+  padding-bottom: 26px;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+}
+
+.icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .icon-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
