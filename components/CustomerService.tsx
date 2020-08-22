@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
+import React from "react";
+// import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
 
 const iconType = {
   SERVICE: 1,
@@ -81,17 +81,17 @@ function renderIcon(img: string, label: string, type: number): JSX.Element {
   );
 }
 
-const customerServiceItems = [
-  {
-    src: "mamber.png",
-  },
-  {
-    src: "mamber.png",
-  },
-  {
-    src: "mamber.png",
-  },
-];
+// const customerServiceItems = [
+//   {
+//     src: "mamber.png",
+//   },
+//   {
+//     src: "mamber.png",
+//   },
+//   {
+//     src: "mamber.png",
+//   },
+// ];
 
 // function CustomerServiceSlider() {
 //   const [activeIndex, setActiveIndex] = useState(0);
