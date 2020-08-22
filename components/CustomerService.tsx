@@ -93,51 +93,51 @@ const customerServiceItems = [
   },
 ];
 
-function CustomerServiceSlider() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
+// function CustomerServiceSlider() {
+//   const [activeIndex, setActiveIndex] = useState(0);
+//   const [animating, setAnimating] = useState(false);
 
-  const next = () => {
-    if (animating) return;
-    const nextIndex =
-      activeIndex === customerServiceItems.length - 1 ? 0 : activeIndex + 1;
-    setActiveIndex(nextIndex);
-  };
+//   const next = () => {
+//     if (animating) return;
+//     const nextIndex =
+//       activeIndex === customerServiceItems.length - 1 ? 0 : activeIndex + 1;
+//     setActiveIndex(nextIndex);
+//   };
 
-  const previous = () => {
-    if (animating) return;
-    const nextIndex =
-      activeIndex === 0 ? customerServiceItems.length - 1 : activeIndex - 1;
-    setActiveIndex(nextIndex);
-  };
+//   const previous = () => {
+//     if (animating) return;
+//     const nextIndex =
+//       activeIndex === 0 ? customerServiceItems.length - 1 : activeIndex - 1;
+//     setActiveIndex(nextIndex);
+//   };
 
-  const goToIndex = (newIndex) => {
-    if (animating) return;
-    setActiveIndex(newIndex);
-  };
+//   const goToIndex = (newIndex) => {
+//     if (animating) return;
+//     setActiveIndex(newIndex);
+//   };
 
-  const slides = customerServiceItems.map((item, index: number) => {
-    return (
-      <CarouselItem
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
-        key={`slide-item-${index}`}
-      >
-        <img src={item.src} />
-      </CarouselItem>
-    );
-  });
+//   const slides = customerServiceItems.map((item, index: number) => {
+//     return (
+//       <CarouselItem
+//         onExiting={() => setAnimating(true)}
+//         onExited={() => setAnimating(false)}
+//         key={`slide-item-${index}`}
+//       >
+//         <img src={item.src} />
+//       </CarouselItem>
+//     );
+//   });
 
-  return (
-    <div id="slider-container">
-      <Carousel activeIndex={activeIndex} next={next} previous={previous}>
-        <CarouselIndicators
-          items={customerServiceItems}
-          activeIndex={activeIndex}
-          onClickHandler={goToIndex}
-        />
-        {slides}
-      </Carousel>
-    </div>
-  );
-}
+//   return (
+//     <div id="slider-container">
+//       <Carousel activeIndex={activeIndex} next={next} previous={previous}>
+//         <CarouselIndicators
+//           items={customerServiceItems}
+//           activeIndex={activeIndex}
+//           onClickHandler={goToIndex}
+//         />
+//         {slides}
+//       </Carousel>
+//     </div>
+//   );
+// }
