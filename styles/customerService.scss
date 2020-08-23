@@ -1,7 +1,7 @@
 #customer-service-container {
   display: flex;
   flex-direction: row;
-  height: 612px;
+  height: 400px;
   width: 80%;
   color: #ffffff;
   margin-left: 20%;
@@ -12,7 +12,7 @@
   width: 42%;
   display: flex;
   flex-direction: column;
-  padding-top: 150px;
+  padding-top: 50px;
 }
 
 #right-service-container {
@@ -20,7 +20,7 @@
   width: 560px;
   display: flex;
   flex-direction: column;
-  padding-top: 150px;
+  padding-top: 50px;
   align-items: center;
 
   #name-label {

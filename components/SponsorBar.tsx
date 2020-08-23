@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function CustomerService() {
   return (
@@ -74,11 +74,21 @@ function _renderFeedback(): JSX.Element {
 }
 
 function _renderContact(): JSX.Element {
+  const [isChatOn, setIsChatOn] = useState(false);
+  const popOut = (): void => {
+    setIsChatOn(!isChatOn);
+    console.log(isChatOn);
+  };
+
   return (
     <div id="contact-container" className="child-container">
       <div className="sponsor-title-label">客服中心</div>
       <div id="contact-content-container">
-        <div className="contact-content-row-container">
+        <div
+          className="contact-content-row-container"
+          onClick={popOut}
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
           <div className="contact-image-container">
             <img src="sponsor/contact_chat.png"></img>
           </div>

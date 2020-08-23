@@ -23,9 +23,7 @@ export default function Home() {
       const onResize = () => {
         const scrollBarWidth =
           window.innerWidth - document.documentElement.clientWidth;
-        console.log(scrollBarWidth);
         const newScale = (window.innerWidth - scrollBarWidth) / 1920;
-        console.log(newScale);
         setScale(newScale <= 0.66 ? 0.66 : newScale);
       };
 

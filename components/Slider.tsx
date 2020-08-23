@@ -9,13 +9,13 @@ import customStyle from "../styles/carousel.module.scss";
 
 const items = [
   {
-    src: "promotion_slider.png",
+    src: "slider/promotion_slider_01.png",
   },
   {
-    src: "promotion_slider.png",
+    src: "slider/promotion_slider_02.png",
   },
   {
-    src: "promotion_slider.png",
+    src: "slider/promotion_slider_03.png",
   },
 ];
 
