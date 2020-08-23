@@ -5,6 +5,7 @@ import "../styles/card.scss";
 import "../styles/eventBar.scss";
 import "../styles/customerService.scss";
 import "../styles/sponsor.scss";
+import "../styles/popOut.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyApp({ Component, pageProps }) {

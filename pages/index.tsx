@@ -10,6 +10,7 @@ import Card from "../components/Card";
 import EventBar from "../components/EventBar";
 import CustomerService from "../components/CustomerService";
 import SponsorBar from "../components/SponsorBar";
+import PopOut from "../components/PopOut";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -49,10 +50,22 @@ function renderMobileView(): JSX.Element {
 }
 
 function renderBrowserView(scale: number): JSX.Element {
+  const [toggle, setToggle] = useState(false);
+  const [type, setType] = useState(0);
+
+  const showPopOut = (popOutType): void => {
+    setToggle(true);
+    setType(popOutType);
+  };
+
+  const hidePopOut = (): void => {
+    setToggle(false);
+  };
+
   return (
     <div id="main-container">
       <div id="map" style={{ transform: `scale(${scale})` }}>
-        {LoginBar()}
+        {LoginBar(showPopOut)}
         {UtilityBar()}
         {GameListBar()}
         {Slider()}
@@ -61,6 +74,7 @@ function renderBrowserView(scale: number): JSX.Element {
         {EventBar()}
         {CustomerService()}
         {SponsorBar()}
+        {PopOut(type, toggle, hidePopOut)}
       </div>
     </div>
   );

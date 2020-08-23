@@ -8,6 +8,7 @@ import {
   Form,
   FormGroup,
 } from "reactstrap";
+import { PopOutType } from "../model/WebConstant";
 
 const styles = {
   loginBarContainer: {
@@ -46,7 +47,7 @@ const styles = {
   },
 };
 
-export default function LoginBar() {
+export default function LoginBar(showPopOutCallback) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -58,16 +59,34 @@ export default function LoginBar() {
     setPassword(e.target.value);
   };
 
+  const forgotUsername = () => {
+    showPopOutCallback(PopOutType.FORGOT_USERNAME);
+  };
+
+  const forgotPassword = () => {
+    showPopOutCallback(PopOutType.FORGOT_PASSWORD);
+  };
+
+  const register = () => {
+    showPopOutCallback(PopOutType.REGISTER);
+  };
+
   return (
     <div id="login-bar-container" style={styles.loginBarContainer}>
       <Nav style={styles.navStyle}>
         <NavItem>
-          <NavLink href="" style={{ color: "#FCB715" }}>
+          <NavLink
+            onClick={forgotUsername}
+            style={{ color: "#FCB715", cursor: "pointer" }}
+          >
             忘记账号
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="" style={{ color: "#FFFFFF" }}>
+          <NavLink
+            onClick={forgotPassword}
+            style={{ color: "#FFFFFF", cursor: "pointer" }}
+          >
             忘记密码
           </NavLink>
         </NavItem>
@@ -108,9 +127,7 @@ export default function LoginBar() {
             登入
           </Button>
           <Button
-            onClick={() => {
-              onRegisterClick();
-            }}
+            onClick={register}
             size="sm"
             style={Object.assign(
               {},
@@ -129,5 +146,3 @@ export default function LoginBar() {
 function onLoginClick(username, password): void {
   console.log(username, password);
 }
-
-function onRegisterClick(): void {}
