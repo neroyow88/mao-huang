@@ -8,7 +8,6 @@ import {
   DropdownItem,
 } from "reactstrap";
 import { gameListModel } from "../model/GameListModel";
-import customStyles from "../styles/gameList.module.scss";
 
 interface IDropdownItem {
   label: string;
