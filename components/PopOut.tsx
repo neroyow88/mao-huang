@@ -65,7 +65,7 @@ function renderRegister(toggle: boolean, close = () => {}): JSX.Element {
 
 function renderForgotUsername(toggle: boolean, close = () => {}): JSX.Element {
   return (
-    <Modal isOpen={toggle} toggle={close}>
+    <Modal isOpen={toggle} toggle={close} centered>
       <ModalHeader onClick={close}>忘记账号</ModalHeader>
       <ModalBody>
         <Form>
@@ -89,7 +89,7 @@ function renderForgotUsername(toggle: boolean, close = () => {}): JSX.Element {
 
 function renderForgotPassword(toggle: boolean, close = () => {}): JSX.Element {
   return (
-    <Modal isOpen={toggle} toggle={close}>
+    <Modal isOpen={toggle} toggle={close} centered>
       <ModalHeader onClick={close}>忘记密码</ModalHeader>
       <ModalBody>
         <Form>

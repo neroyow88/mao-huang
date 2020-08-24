@@ -8,9 +8,11 @@ import {
   DropdownItem,
 } from "reactstrap";
 import { gameListModel } from "../model/GameListModel";
+import customStyles from "../styles/gameList.module.scss";
 
 interface IDropdownItem {
   label: string;
+  prefix: string;
   childs?: string[];
 }
 
@@ -57,7 +59,9 @@ function dropdownItem(content: IDropdownItem, index: number) {
   if (content.childs && content.childs.length > 0) {
     dropdownChild = content.childs.map((child: string, index: number) => {
       return (
-        <DropdownItem key={`dropdown-item-${index}`}>{child}</DropdownItem>
+        <DropdownItem key={`dropdown-item-${index}`}>
+          <img src={`game_list/${content.prefix}/${child}_deactive.png`}></img>
+        </DropdownItem>
       );
     });
   }
@@ -72,7 +76,10 @@ function dropdownItem(content: IDropdownItem, index: number) {
       >
         {content.label}
       </DropdownToggle>
-      <DropdownMenu key={`dropdown-menu-${index}`}>
+      <DropdownMenu
+        key={`dropdown-menu-${index}`}
+        // cssModule={customStyles}
+      >
         {dropdownChild}
       </DropdownMenu>
     </UncontrolledDropdown>

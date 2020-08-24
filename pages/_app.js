@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "../styles/main.scss";
+// import "../styles/gameList.scss";
 import "../styles/noticeBoard.scss";
 import "../styles/card.scss";
 import "../styles/eventBar.scss";
