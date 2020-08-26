@@ -32,7 +32,7 @@ const styles = {
   },
 };
 
-export default function UtilityBar() {
+function renderUtilityBar() {
   const balance = 2432.13;
 
   return (
@@ -71,3 +71,5 @@ function utilityItem(content: IUtilityItem) {
     </NavItem>
   );
 }
+
+export { renderUtilityBar };

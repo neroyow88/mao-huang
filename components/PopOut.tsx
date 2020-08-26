@@ -12,21 +12,19 @@ import {
 } from "reactstrap";
 import { PopOutType } from "../model/WebConstant";
 
-export default function PopOut(
-  type: PopOutType,
-  toggle: boolean,
-  close = () => {}
-): JSX.Element {
+function renderPopOut(props: Props): JSX.Element {
+  const { type, toggle, hidePopOut } = props;
+
   let component;
   switch (type) {
     case PopOutType.REGISTER:
-      component = renderRegister(toggle, close);
+      component = _renderRegister(toggle, hidePopOut);
       break;
     case PopOutType.FORGOT_USERNAME:
-      component = renderForgotUsername(toggle, close);
+      component = _renderForgotUsername(toggle, hidePopOut);
       break;
     case PopOutType.FORGOT_PASSWORD:
-      component = renderForgotPassword(toggle, close);
+      component = _renderForgotPassword(toggle, hidePopOut);
       break;
     default:
       break;
@@ -39,7 +37,10 @@ export default function PopOut(
   );
 }
 
-function renderRegister(toggle: boolean, close = () => {}): JSX.Element {
+function _renderRegister(
+  toggle: boolean,
+  close: NoParamReturnNulFunction
+): JSX.Element {
   return (
     <Modal isOpen={toggle} toggle={close} centered>
       <ModalHeader onClick={close}>创建新账号</ModalHeader>
@@ -63,7 +64,10 @@ function renderRegister(toggle: boolean, close = () => {}): JSX.Element {
   );
 }
 
-function renderForgotUsername(toggle: boolean, close = () => {}): JSX.Element {
+function _renderForgotUsername(
+  toggle: boolean,
+  close: NoParamReturnNulFunction
+): JSX.Element {
   return (
     <Modal isOpen={toggle} toggle={close} centered>
       <ModalHeader onClick={close}>忘记账号</ModalHeader>
@@ -87,7 +91,10 @@ function renderForgotUsername(toggle: boolean, close = () => {}): JSX.Element {
   );
 }
 
-function renderForgotPassword(toggle: boolean, close = () => {}): JSX.Element {
+function _renderForgotPassword(
+  toggle: boolean,
+  close: NoParamReturnNulFunction
+): JSX.Element {
   return (
     <Modal isOpen={toggle} toggle={close} centered>
       <ModalHeader onClick={close}>忘记密码</ModalHeader>
@@ -110,3 +117,5 @@ function renderForgotPassword(toggle: boolean, close = () => {}): JSX.Element {
     </Modal>
   );
 }
+
+export { renderPopOut };

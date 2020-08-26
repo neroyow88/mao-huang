@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Nav,
   Button,
@@ -11,29 +11,13 @@ import {
 import { PopOutType } from "../model/WebConstant";
 
 const styles = {
-  loginBarContainer: {
-    height: "40px",
-    width: "100%",
-    background: "transparent linear-gradient(0deg, #8E0002 0%, #AD0002 100%)",
-  },
   navStyle: {
     marginLeft: "48%",
-  },
-  inputStyle: {
-    width: "150px",
-    height: "30px",
-    marginLeft: "5px",
-    marginRight: "5px",
-    borderRadius: "0px",
   },
   passwordInputStyle: {
     backgroundImage: "url('icon_eye.png')",
     backgroundPosition: "95% 50%",
     backgroundRepeat: "no-repeat",
-  },
-  buttonStyle: {
-    width: "75px",
-    marginLeft: "5px",
   },
   loginButtonStyle: {
     color: "#FFFFFF",
@@ -47,32 +31,39 @@ const styles = {
   },
 };
 
-export default function LoginBar(showPopOutCallback) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function renderLoginBar(props: Props) {
+  const { isMobile } = props;
 
-  const updateUsername = (e): void => {
-    setUsername(e.target.value);
-  };
+  if (isMobile) {
+    return loginBarMobile(props);
+  } else {
+    return loginBarBrowser(props);
+  }
+}
 
-  const updatePassword = (e): void => {
-    setPassword(e.target.value);
-  };
+function loginBarBrowser(props: Props): JSX.Element {
+  const {
+    username,
+    password,
+    updateUsername,
+    updatePassword,
+    showPopOut,
+  } = props;
 
   const forgotUsername = () => {
-    showPopOutCallback(PopOutType.FORGOT_USERNAME);
+    showPopOut(PopOutType.FORGOT_USERNAME);
   };
 
   const forgotPassword = () => {
-    showPopOutCallback(PopOutType.FORGOT_PASSWORD);
+    showPopOut(PopOutType.FORGOT_PASSWORD);
   };
 
   const register = () => {
-    showPopOutCallback(PopOutType.REGISTER);
+    showPopOut(PopOutType.REGISTER);
   };
 
   return (
-    <div id="login-bar-container" style={styles.loginBarContainer}>
+    <div id="login-bar-container">
       <Nav style={styles.navStyle}>
         <NavItem>
           <NavLink
@@ -97,7 +88,7 @@ export default function LoginBar(showPopOutCallback) {
               type="text"
               id="username"
               onChange={updateUsername}
-              style={styles.inputStyle}
+              className={"input-style"}
             ></Input>
           </FormGroup>
           <FormGroup>
@@ -106,34 +97,25 @@ export default function LoginBar(showPopOutCallback) {
               type="password"
               id="password"
               onChange={updatePassword}
-              style={Object.assign(
-                {},
-                styles.inputStyle,
-                styles.passwordInputStyle
-              )}
+              className={"input-style"}
+              style={styles.passwordInputStyle}
             ></Input>
           </FormGroup>
           <Button
             onClick={() => {
-              onLoginClick(username, password);
+              _onLoginClick(username, password);
             }}
             size="sm"
-            style={Object.assign(
-              {},
-              styles.buttonStyle,
-              styles.loginButtonStyle
-            )}
+            className={"login-bar-button"}
+            style={styles.loginButtonStyle}
           >
             登入
           </Button>
           <Button
             onClick={register}
             size="sm"
-            style={Object.assign(
-              {},
-              styles.buttonStyle,
-              styles.registerButtonStyle
-            )}
+            className={"login-bar-button"}
+            style={styles.registerButtonStyle}
           >
             注册
           </Button>
@@ -143,6 +125,25 @@ export default function LoginBar(showPopOutCallback) {
   );
 }
 
-function onLoginClick(username, password): void {
+function loginBarMobile(props: Props): JSX.Element {
+  const { showPopOut } = props;
+
+  const register = () => {
+    showPopOut(PopOutType.REGISTER);
+  };
+
+  return (
+    <div id="login-bar-container-mobile">
+      <img src={"mobile/logo.png"} />
+      <div id="login-bar-label" onClick={register}>
+        登入 / 注册
+      </div>
+    </div>
+  );
+}
+
+function _onLoginClick(username: string, password: string): void {
   console.log(username, password);
 }
+
+export { renderLoginBar };

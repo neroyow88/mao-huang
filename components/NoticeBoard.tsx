@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function NoticeBoard() {
+export default function renderNoticeBoard() {
   return (
     <div id="notice-board-container">
       <div id="left-board-container">
@@ -18,3 +18,5 @@ export default function NoticeBoard() {
     </div>
   );
 }
+
+export { renderNoticeBoard };

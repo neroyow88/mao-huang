@@ -1,10 +1,21 @@
+@import "loginBar.scss", "noticeBoard.scss", "card.scss", "eventBar.scss",
+  "customerService.scss", "sponsor.scss", "popOut.scss";
+
 #main-container {
   position: relative;
 }
 
-#map {
+#map-browser,
+#map-mobile {
   position: absolute;
-  width: 1920px;
   transform-origin: top left;
   background-color: #1e202f;
+}
+
+#map-browser {
+  width: 1920px;
+}
+
+#map-mobile {
+  width: 375px;
 }

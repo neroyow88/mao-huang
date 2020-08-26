@@ -6,26 +6,26 @@ const iconType = {
   BROWSER: 2,
 };
 
-export default function CustomerService() {
+export default function renderCustomerService() {
   return (
     <div id="customer-service-container">
       <div id="left-service-container">
         <div className="icons-container">
-          {renderIcon("icon/icon_about.png", "关于猫皇", iconType.SERVICE)}
-          {renderIcon("icon/icon_service.png", "服务条款", iconType.SERVICE)}
-          {renderIcon("icon/icon_deposit.png", "游戏充值", iconType.SERVICE)}
+          {_renderIcon("icon/icon_about.png", "关于猫皇", iconType.SERVICE)}
+          {_renderIcon("icon/icon_service.png", "服务条款", iconType.SERVICE)}
+          {_renderIcon("icon/icon_deposit.png", "游戏充值", iconType.SERVICE)}
         </div>
         <div className="icons-container">
-          {renderIcon("icon/icon_withdraw.png", "快速提款", iconType.SERVICE)}
-          {renderIcon("icon/icon_qa.png", "常见问题", iconType.SERVICE)}
-          {renderIcon("icon/icon_privacy.png", "私隐保障", iconType.SERVICE)}
+          {_renderIcon("icon/icon_withdraw.png", "快速提款", iconType.SERVICE)}
+          {_renderIcon("icon/icon_qa.png", "常见问题", iconType.SERVICE)}
+          {_renderIcon("icon/icon_privacy.png", "私隐保障", iconType.SERVICE)}
         </div>
         <div id="suggestion-label">建议使用的浏览器</div>
         <div className="icons-container">
-          {renderIcon("browser/chrome.png", "谷歌", iconType.BROWSER)}
-          {renderIcon("browser/firefox.png", "火狐", iconType.BROWSER)}
-          {renderIcon("browser/zeus.png", "宙斯", iconType.BROWSER)}
-          {renderIcon("browser/quark.png", "夸克", iconType.BROWSER)}
+          {_renderIcon("browser/chrome.png", "谷歌", iconType.BROWSER)}
+          {_renderIcon("browser/firefox.png", "火狐", iconType.BROWSER)}
+          {_renderIcon("browser/zeus.png", "宙斯", iconType.BROWSER)}
+          {_renderIcon("browser/quark.png", "夸克", iconType.BROWSER)}
         </div>
       </div>
       <div id="right-service-container">
@@ -44,7 +44,7 @@ export default function CustomerService() {
   );
 }
 
-function renderIcon(img: string, label: string, type: number): JSX.Element {
+function _renderIcon(img: string, label: string, type: number): JSX.Element {
   let iconContainerStyle;
   let iconImageContainerStyle;
 
@@ -80,64 +80,4 @@ function renderIcon(img: string, label: string, type: number): JSX.Element {
     </div>
   );
 }
-
-// const customerServiceItems = [
-//   {
-//     src: "mamber.png",
-//   },
-//   {
-//     src: "mamber.png",
-//   },
-//   {
-//     src: "mamber.png",
-//   },
-// ];
-
-// function CustomerServiceSlider() {
-//   const [activeIndex, setActiveIndex] = useState(0);
-//   const [animating, setAnimating] = useState(false);
-
-//   const next = () => {
-//     if (animating) return;
-//     const nextIndex =
-//       activeIndex === customerServiceItems.length - 1 ? 0 : activeIndex + 1;
-//     setActiveIndex(nextIndex);
-//   };
-
-//   const previous = () => {
-//     if (animating) return;
-//     const nextIndex =
-//       activeIndex === 0 ? customerServiceItems.length - 1 : activeIndex - 1;
-//     setActiveIndex(nextIndex);
-//   };
-
-//   const goToIndex = (newIndex) => {
-//     if (animating) return;
-//     setActiveIndex(newIndex);
-//   };
-
-//   const slides = customerServiceItems.map((item, index: number) => {
-//     return (
-//       <CarouselItem
-//         onExiting={() => setAnimating(true)}
-//         onExited={() => setAnimating(false)}
-//         key={`slide-item-${index}`}
-//       >
-//         <img src={item.src} />
-//       </CarouselItem>
-//     );
-//   });
-
-//   return (
-//     <div id="slider-container">
-//       <Carousel activeIndex={activeIndex} next={next} previous={previous}>
-//         <CarouselIndicators
-//           items={customerServiceItems}
-//           activeIndex={activeIndex}
-//           onClickHandler={goToIndex}
-//         />
-//         {slides}
-//       </Carousel>
-//     </div>
-//   );
-// }
+export { renderCustomerService };

@@ -1,56 +1,67 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Carousel,
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
 } from "reactstrap";
-import customStyle from "../styles/carousel.module.scss";
+import customBrowserStyle from "../styles/module/carousel.module.scss";
+import customMobileStyle from "../styles/module/carouselMobile.module.scss";
 
 const items = [
   {
     src: "slider/promotion_slider_01.jpg",
   },
   {
-    src: "slider/promotion_slider_02.png",
+    src: "slider/promotion_slider_02.jpg",
   },
   {
-    src: "slider/promotion_slider_03.png",
+    src: "slider/promotion_slider_03.jpg",
   },
 ];
 
-export default function Slider() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
+function renderSlider(props: Props) {
+  const {
+    isMobile,
+    activeIndex,
+    updateActiveIndex,
+    animating,
+    updateAnimating,
+  } = props;
 
   const next = () => {
     if (animating) return;
-    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
-    setActiveIndex(nextIndex);
+    const nextIndex =
+      activeIndex === items.length - 1 ? 0 : props.activeIndex + 1;
+    updateActiveIndex(nextIndex);
   };
 
   const previous = () => {
     if (animating) return;
-    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
-    setActiveIndex(nextIndex);
+    const nextIndex =
+      activeIndex === 0 ? items.length - 1 : props.activeIndex - 1;
+    updateActiveIndex(nextIndex);
   };
 
   const goToIndex = (newIndex) => {
     if (animating) return;
-    setActiveIndex(newIndex);
+    updateActiveIndex(newIndex);
   };
 
   const slides = items.map((item, index: number) => {
+    const url = isMobile ? `mobile/${item.src}` : item.src;
     return (
       <CarouselItem
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
+        onExiting={() => updateAnimating(true)}
+        onExited={() => updateAnimating(false)}
         key={`slide-item-${index}`}
       >
-        <img src={item.src} style={{ width: "100%" }} />
+        <img src={url} style={{ width: "100%" }} />
       </CarouselItem>
     );
   });
+
+  const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
 
   return (
     <div id="slider-container">
@@ -78,3 +89,5 @@ export default function Slider() {
     </div>
   );
 }
+
+export { renderSlider };

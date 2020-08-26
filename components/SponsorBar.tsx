@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-export default function CustomerService() {
+function renderSponsorBar() {
   return (
     <div id="sponsor-bar-container">
       <div id="sponsor-container">
@@ -74,19 +74,12 @@ function _renderFeedback(): JSX.Element {
 }
 
 function _renderContact(): JSX.Element {
-  const [isChatOn, setIsChatOn] = useState(false);
-  const popOut = (): void => {
-    setIsChatOn(!isChatOn);
-    console.log(isChatOn);
-  };
-
   return (
     <div id="contact-container" className="child-container">
       <div className="sponsor-title-label">客服中心</div>
       <div id="contact-content-container">
         <div
           className="contact-content-row-container"
-          onClick={popOut}
           style={{ cursor: "pointer", userSelect: "none" }}
         >
           <div className="contact-image-container">
@@ -119,3 +112,5 @@ function _renderContact(): JSX.Element {
     </div>
   );
 }
+
+export { renderSponsorBar };

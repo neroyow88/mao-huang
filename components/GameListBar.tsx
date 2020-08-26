@@ -39,9 +39,9 @@ const styles = {
   },
 };
 
-export default function GameListBar() {
+function renderGameListBar() {
   const components = gameListModel.map((item, index: number) => {
-    return dropdownItem(item, index);
+    return _dropdownItem(item, index);
   });
 
   return (
@@ -53,7 +53,7 @@ export default function GameListBar() {
   );
 }
 
-function dropdownItem(content: IDropdownItem, index: number) {
+function _dropdownItem(content: IDropdownItem, index: number) {
   let dropdownChild = [];
   if (content.childs && content.childs.length > 0) {
     dropdownChild = content.childs.map((child: string, index: number) => {
@@ -84,3 +84,5 @@ function dropdownItem(content: IDropdownItem, index: number) {
     </UncontrolledDropdown>
   );
 }
+
+export { renderGameListBar };
