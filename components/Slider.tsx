@@ -62,16 +62,19 @@ function renderSlider(props: Props) {
   });
 
   const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
+  const indicator = isMobile ? null : (
+    <CarouselIndicators
+      items={items}
+      activeIndex={activeIndex}
+      onClickHandler={goToIndex}
+      cssModule={customStyle}
+    />
+  );
 
   return (
     <div id="slider-container">
       <Carousel activeIndex={activeIndex} next={next} previous={previous}>
-        <CarouselIndicators
-          items={items}
-          activeIndex={activeIndex}
-          onClickHandler={goToIndex}
-          cssModule={customStyle}
-        />
+        {indicator}
         {slides}
         <CarouselControl
           direction="prev"

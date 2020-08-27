@@ -3,6 +3,32 @@ import React from "react";
 const rewardToggles = [true, false, false];
 
 function renderEventBar(props: Props): JSX.Element {
+  const { isMobile } = props;
+
+  if (isMobile) {
+    return _eventBarMobile(props);
+  } else {
+    return _eventBarBrowser(props);
+  }
+}
+
+function _eventBarMobile(props: Props): JSX.Element {
+  return (
+    <div id="event-bar-container-mobile">
+      <div id="image-container-mobile">
+        <img src="mobile/event_bar/event_bg.png"></img>
+      </div>
+      <div id="number-image-container">
+        <img src="mobile/event_bar/event_title.png"></img>
+      </div>
+      <div id="number-image-container">
+        <img src="mobile/event_bar/event_title_2.png"></img>
+      </div>
+    </div>
+  );
+}
+
+function _eventBarBrowser(props: Props): JSX.Element {
   const { rewardState, rewardClaim } = props;
 
   for (let i = 0; i < rewardToggles.length; i++) {
@@ -14,8 +40,8 @@ function renderEventBar(props: Props): JSX.Element {
   }
 
   return (
-    <div id="event-bar-container">
-      <div id="image-container">
+    <div id="event-bar-container-browser">
+      <div id="image-container-browser">
         <img src="event_bar/520_slot_bar.png"></img>
       </div>
       <div id="number-image-container" onClick={rewardClaim}>

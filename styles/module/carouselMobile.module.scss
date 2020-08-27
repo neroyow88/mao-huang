@@ -25,34 +25,3 @@
   background-position-y: center;
   background-size: 100% 25%;
 }
-
-.carousel-indicators {
-  position: absolute;
-  top: 10px;
-  right: 0;
-  left: 0;
-  z-index: 15;
-  display: flex;
-  justify-content: center;
-  padding-left: 0;
-  margin-right: 15%;
-  margin-left: 15%;
-  list-style: none;
-
-  .active {
-    background-color: #fec72f;
-  }
-
-  li {
-    box-sizing: content-box;
-    flex: 0 1 auto;
-    border-radius: 10px;
-    width: 15px;
-    height: 15px;
-    margin-left: 5px;
-    margin-right: 5px;
-    cursor: pointer;
-    background-color: #fff;
-    transition: opacity 0.6s ease;
-  }
-}

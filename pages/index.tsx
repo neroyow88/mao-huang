@@ -119,6 +119,9 @@ function renderMobileView(props: Props): JSX.Element {
       <div id="map-mobile" style={{ transform: `scale(${props.scale})` }}>
         {renderLoginBar(props)}
         {renderSlider(props)}
+        {renderNoticeBoard(props)}
+        {renderCard(props)}
+        {renderEventBar(props)}
         {renderPopOut(props)}
       </div>
     </div>
@@ -133,8 +136,8 @@ function renderBrowserView(props: Props): JSX.Element {
         {renderUtilityBar()}
         {renderGameListBar()}
         {renderSlider(props)}
-        {renderNoticeBoard()}
-        {renderCard()}
+        {renderNoticeBoard(props)}
+        {renderCard(props)}
         {renderEventBar(props)}
         {renderCustomerService()}
         {renderSponsorBar()}

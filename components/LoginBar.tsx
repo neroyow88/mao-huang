@@ -35,13 +35,13 @@ function renderLoginBar(props: Props) {
   const { isMobile } = props;
 
   if (isMobile) {
-    return loginBarMobile(props);
+    return _loginBarMobile(props);
   } else {
-    return loginBarBrowser(props);
+    return _loginBarBrowser(props);
   }
 }
 
-function loginBarBrowser(props: Props): JSX.Element {
+function _loginBarBrowser(props: Props): JSX.Element {
   const {
     username,
     password,
@@ -125,7 +125,7 @@ function loginBarBrowser(props: Props): JSX.Element {
   );
 }
 
-function loginBarMobile(props: Props): JSX.Element {
+function _loginBarMobile(props: Props): JSX.Element {
   const { showPopOut } = props;
 
   const register = () => {

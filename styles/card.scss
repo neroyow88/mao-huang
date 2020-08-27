@@ -1,31 +1,60 @@
-#cards-container {
+#cards-container-browser {
   height: 725px;
+
+  #background-container {
+    position: absolute;
+    z-index: -1;
+  }
+
+  #card-item-container {
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    #card-01 {
+      transform: translate(-75px, 50px) rotate(-15deg);
+    }
+
+    #card-02 {
+      padding-left: 45px;
+      padding-right: 45px;
+    }
+
+    #card-03 {
+      transform: translate(75px, 50px) rotate(15deg);
+    }
+  }
 }
 
-#background-container {
-  position: absolute;
-  z-index: -1;
-}
+#cards-container-mobile {
+  height: 220px;
 
-#card-item-container {
-  height: 90%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
+  #card-item-container {
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
 
-#card-01 {
-  transform: translate(-75px, 50px) rotate(-15deg);
-}
+  #card-02 {
+    padding-left: 20px;
+    padding-right: 20px;
+    transform: translate(0px, -20px);
+  }
 
-#card-02 {
-  padding-left: 45px;
-  padding-right: 45px;
-}
+  #card-01,
+  #card-03 {
+    transform: translate(0px, 20px);
+  }
 
-#card-03 {
-  transform: translate(75px, 50px) rotate(15deg);
+  .label-container {
+    color: #ffffff;
+    text-align: center;
+  }
 }
 
 .flip-card {
