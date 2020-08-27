@@ -6,13 +6,13 @@ function renderEventBar(props: Props): JSX.Element {
   const { isMobile } = props;
 
   if (isMobile) {
-    return _eventBarMobile(props);
+    return _eventBarMobile();
   } else {
     return _eventBarBrowser(props);
   }
 }
 
-function _eventBarMobile(props: Props): JSX.Element {
+function _eventBarMobile(): JSX.Element {
   return (
     <div id="event-bar-container-mobile">
       <div id="image-container-mobile">
