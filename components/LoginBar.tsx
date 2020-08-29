@@ -31,119 +31,145 @@ const styles = {
   },
 };
 
-function renderLoginBar(props: Props) {
-  const { isMobile } = props;
+interface Props {
+  isMobile: boolean;
+  showPopOut: (any: number, data?: GenericObjectType) => void;
+}
 
-  if (isMobile) {
-    return _loginBarMobile(props);
-  } else {
-    return _loginBarBrowser(props);
+interface State {
+  username: string;
+  password: string;
+}
+
+class LoginBar extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      username: "",
+      password: "",
+    };
+
+    this._onLoginClicked = this._onLoginClicked.bind(this);
+    this._onRegisterClicked = this._onRegisterClicked.bind(this);
+    this._onForgotUsernameClicked = this._onForgotUsernameClicked.bind(this);
+    this._onForgotPasswordClicked = this._onForgotPasswordClicked.bind(this);
+    this._updateUsername = this._updateUsername.bind(this);
+    this._updatePassword = this._updatePassword.bind(this);
+  }
+
+  public render(): JSX.Element {
+    const { isMobile } = this.props;
+
+    if (isMobile) {
+      return (
+        <div id="login-bar-container-mobile">
+          <img src={"mobile/logo.png"} />
+          <div id="login-label" onClick={this._onLoginClicked}>
+            登入
+          </div>
+          <div id="register-label" onClick={this._onRegisterClicked}>
+            注册
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div id="login-bar-container">
+          <Nav style={styles.navStyle}>
+            <NavItem>
+              <NavLink
+                onClick={this._onForgotUsernameClicked}
+                style={{ color: "#FCB715", cursor: "pointer" }}
+              >
+                忘记账号
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                onClick={this._onForgotPasswordClicked}
+                style={{ color: "#FFFFFF", cursor: "pointer" }}
+              >
+                忘记密码
+              </NavLink>
+            </NavItem>
+            <Form inline>
+              <FormGroup>
+                <Input
+                  placeholder="猫皇账号"
+                  type="text"
+                  id="username"
+                  onChange={this._updateUsername}
+                  className={"input-style"}
+                ></Input>
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  placeholder="密码"
+                  type="password"
+                  id="password"
+                  onChange={this._updatePassword}
+                  className={"input-style"}
+                  style={styles.passwordInputStyle}
+                ></Input>
+              </FormGroup>
+              <Button
+                onClick={this._onLoginClicked}
+                size="sm"
+                className={"login-bar-button"}
+                style={styles.loginButtonStyle}
+              >
+                登入
+              </Button>
+              <Button
+                onClick={this._onRegisterClicked}
+                size="sm"
+                className={"login-bar-button"}
+                style={styles.registerButtonStyle}
+              >
+                注册
+              </Button>
+            </Form>
+          </Nav>
+        </div>
+      );
+    }
+  }
+
+  private _onLoginClicked(): void {
+    const { isMobile, showPopOut } = this.props;
+    if (isMobile) {
+      showPopOut && showPopOut(PopOutType.LOGIN);
+    } else {
+      const { username, password } = this.state;
+      console.log(username, password);
+    }
+  }
+
+  private _onRegisterClicked(): void {
+    const { showPopOut } = this.props;
+    showPopOut && showPopOut(PopOutType.REGISTER);
+  }
+
+  private _onForgotUsernameClicked(): void {
+    const { showPopOut } = this.props;
+    showPopOut && showPopOut(PopOutType.FORGOT_USERNAME);
+  }
+
+  private _onForgotPasswordClicked(): void {
+    const { showPopOut } = this.props;
+    showPopOut && showPopOut(PopOutType.FORGOT_PASSWORD);
+  }
+
+  private _updateUsername(e): void {
+    const username = e.target.value;
+    this.setState({ username });
+  }
+
+  private _updatePassword(e): void {
+    const password = e.target.value;
+    this.setState({ password });
   }
 }
 
-function _loginBarBrowser(props: Props): JSX.Element {
-  const {
-    username,
-    password,
-    updateUsername,
-    updatePassword,
-    showPopOut,
-  } = props;
-
-  const forgotUsername = () => {
-    showPopOut(PopOutType.FORGOT_USERNAME);
-  };
-
-  const forgotPassword = () => {
-    showPopOut(PopOutType.FORGOT_PASSWORD);
-  };
-
-  const register = () => {
-    showPopOut(PopOutType.REGISTER);
-  };
-
-  return (
-    <div id="login-bar-container">
-      <Nav style={styles.navStyle}>
-        <NavItem>
-          <NavLink
-            onClick={forgotUsername}
-            style={{ color: "#FCB715", cursor: "pointer" }}
-          >
-            忘记账号
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            onClick={forgotPassword}
-            style={{ color: "#FFFFFF", cursor: "pointer" }}
-          >
-            忘记密码
-          </NavLink>
-        </NavItem>
-        <Form inline>
-          <FormGroup>
-            <Input
-              placeholder="猫皇账号"
-              type="text"
-              id="username"
-              onChange={updateUsername}
-              className={"input-style"}
-            ></Input>
-          </FormGroup>
-          <FormGroup>
-            <Input
-              placeholder="密码"
-              type="password"
-              id="password"
-              onChange={updatePassword}
-              className={"input-style"}
-              style={styles.passwordInputStyle}
-            ></Input>
-          </FormGroup>
-          <Button
-            onClick={() => {
-              _onLoginClick(username, password);
-            }}
-            size="sm"
-            className={"login-bar-button"}
-            style={styles.loginButtonStyle}
-          >
-            登入
-          </Button>
-          <Button
-            onClick={register}
-            size="sm"
-            className={"login-bar-button"}
-            style={styles.registerButtonStyle}
-          >
-            注册
-          </Button>
-        </Form>
-      </Nav>
-    </div>
-  );
-}
-
-function _loginBarMobile(props: Props): JSX.Element {
-  const { showPopOut } = props;
-
-  const register = () => {
-    showPopOut(PopOutType.REGISTER);
-  };
-
-  return (
-    <div id="login-bar-container-mobile">
-      <img src={"mobile/logo.png"} />
-      <div id="login-bar-label" onClick={register}>
-        登入 / 注册
-      </div>
-    </div>
-  );
-}
-
-function _onLoginClick(username: string, password: string): void {
-  console.log(username, password);
-}
-
-export { renderLoginBar };
+export { LoginBar };

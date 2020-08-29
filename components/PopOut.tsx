@@ -12,110 +12,132 @@ import {
 } from "reactstrap";
 import { PopOutType } from "../model/WebConstant";
 
-function renderPopOut(props: Props): JSX.Element {
-  const { type, toggle, hidePopOut } = props;
+interface Props {
+  type: PopOutType;
+  toggle: boolean;
+  hidePopOut: NoParamReturnNulFunction;
+}
 
-  let component;
-  switch (type) {
-    case PopOutType.REGISTER:
-      component = _renderRegister(toggle, hidePopOut);
-      break;
-    case PopOutType.FORGOT_USERNAME:
-      component = _renderForgotUsername(toggle, hidePopOut);
-      break;
-    case PopOutType.FORGOT_PASSWORD:
-      component = _renderForgotPassword(toggle, hidePopOut);
-      break;
-    default:
-      break;
+class PopOut extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      type: PopOutType.NONE,
+      toggle: false,
+    };
+
+    this._renderRegister = this._renderRegister.bind(this);
+    this._renderForgotUsername = this._renderForgotUsername.bind(this);
+    this._renderForgotPassword = this._renderForgotPassword.bind(this);
+    this._hidePopOut = this._hidePopOut.bind(this);
   }
 
-  return (
-    <div id="pop-out-container" style={{ width: "100%" }}>
-      {component}
-    </div>
-  );
+  public render(): JSX.Element {
+    const { type } = this.props;
+    let component;
+    switch (type) {
+      case PopOutType.REGISTER:
+      case PopOutType.LOGIN:
+        component = this._renderRegister();
+        break;
+      case PopOutType.FORGOT_USERNAME:
+        component = this._renderForgotUsername();
+        break;
+      case PopOutType.FORGOT_PASSWORD:
+        component = this._renderForgotPassword();
+        break;
+      default:
+        component = null;
+        break;
+    }
+
+    return (
+      <div id="pop-out-container" style={{ width: "100%" }}>
+        {component}
+      </div>
+    );
+  }
+
+  private _renderRegister(): JSX.Element {
+    const { toggle } = this.props;
+    return (
+      <Modal isOpen={toggle} toggle={this._hidePopOut} centered>
+        <ModalHeader onClick={this._hidePopOut}>创建新账号</ModalHeader>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <Label>猫皇账号</Label>
+              <Input type="email" id="username" placeholder="猫皇账号"></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>密码</Label>
+              <Input type="password" id="password" placeholder="密码"></Input>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button>创建</Button>
+          <Button onClick={this._hidePopOut}>取消</Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
+
+  private _renderForgotUsername(): JSX.Element {
+    const { toggle } = this.props;
+    return (
+      <Modal isOpen={toggle} toggle={this._hidePopOut} centered>
+        <ModalHeader onClick={this._hidePopOut}>忘记账号</ModalHeader>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <Label>输入电子邮件</Label>
+              <Input
+                type="email"
+                id="username"
+                placeholder="输入电子邮件"
+              ></Input>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button>确定</Button>
+          <Button onClick={this._hidePopOut}>取消</Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
+
+  private _renderForgotPassword(): JSX.Element {
+    const { toggle } = this.props;
+    return (
+      <Modal isOpen={toggle} toggle={this._hidePopOut} centered>
+        <ModalHeader onClick={this._hidePopOut}>忘记密码</ModalHeader>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <Label>输入电子邮件</Label>
+              <Input
+                type="email"
+                id="username"
+                placeholder="输入电子邮件"
+              ></Input>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button>确定</Button>
+          <Button onClick={this._hidePopOut}>取消</Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
+
+  private _hidePopOut(): void {
+    const { hidePopOut } = this.props;
+    hidePopOut && hidePopOut();
+  }
 }
 
-function _renderRegister(
-  toggle: boolean,
-  close: NoParamReturnNulFunction
-): JSX.Element {
-  return (
-    <Modal isOpen={toggle} toggle={close} centered>
-      <ModalHeader onClick={close}>创建新账号</ModalHeader>
-      <ModalBody>
-        <Form>
-          <FormGroup>
-            <Label>猫皇账号</Label>
-            <Input type="email" id="username" placeholder="猫皇账号"></Input>
-          </FormGroup>
-          <FormGroup>
-            <Label>密码</Label>
-            <Input type="password" id="password" placeholder="密码"></Input>
-          </FormGroup>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button>创建</Button>
-        <Button onClick={close}>取消</Button>
-      </ModalFooter>
-    </Modal>
-  );
-}
-
-function _renderForgotUsername(
-  toggle: boolean,
-  close: NoParamReturnNulFunction
-): JSX.Element {
-  return (
-    <Modal isOpen={toggle} toggle={close} centered>
-      <ModalHeader onClick={close}>忘记账号</ModalHeader>
-      <ModalBody>
-        <Form>
-          <FormGroup>
-            <Label>输入电子邮件</Label>
-            <Input
-              type="email"
-              id="username"
-              placeholder="输入电子邮件"
-            ></Input>
-          </FormGroup>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button>确定</Button>
-        <Button onClick={close}>取消</Button>
-      </ModalFooter>
-    </Modal>
-  );
-}
-
-function _renderForgotPassword(
-  toggle: boolean,
-  close: NoParamReturnNulFunction
-): JSX.Element {
-  return (
-    <Modal isOpen={toggle} toggle={close} centered>
-      <ModalHeader onClick={close}>忘记密码</ModalHeader>
-      <ModalBody>
-        <Form>
-          <FormGroup>
-            <Label>输入电子邮件</Label>
-            <Input
-              type="email"
-              id="username"
-              placeholder="输入电子邮件"
-            ></Input>
-          </FormGroup>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button>确定</Button>
-        <Button onClick={close}>取消</Button>
-      </ModalFooter>
-    </Modal>
-  );
-}
-
-export { renderPopOut };
+export { PopOut };

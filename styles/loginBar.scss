@@ -29,8 +29,23 @@
     margin-left: calc(50% - 40px);
   }
 
-  #login-bar-label {
+  #login-label,
+  #register-label {
+    width: 49px;
+    height: 20px;
+    border: 1px solid #fcb715;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  #login-label {
+    background-color: #fcb715;
+    color: #ad0003;
+    margin-left: 34px;
+  }
+
+  #register-label {
+    background-color: #ad0003;
     color: #fcb715;
-    margin-left: 59px;
   }
 }

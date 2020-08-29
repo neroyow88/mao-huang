@@ -39,50 +39,60 @@ const styles = {
   },
 };
 
-function renderGameListBar() {
-  const components = gameListModel.map((item, index: number) => {
-    return _dropdownItem(item, index);
-  });
+interface Props {}
 
-  return (
-    <div id="game-list-bar-container" style={styles.gameListBarContainer}>
-      <Navbar style={styles.navbarStyle}>
-        <Nav style={styles.navStyle}>{components}</Nav>
-      </Navbar>
-    </div>
-  );
-}
-
-function _dropdownItem(content: IDropdownItem, index: number) {
-  let dropdownChild = [];
-  if (content.childs && content.childs.length > 0) {
-    dropdownChild = content.childs.map((child: string, index: number) => {
-      return (
-        <DropdownItem key={`dropdown-item-${index}`}>
-          <img src={`game_list/${content.prefix}/${child}_deactive.png`}></img>
-        </DropdownItem>
-      );
-    });
+class GameListBar extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
   }
 
-  return (
-    <UncontrolledDropdown nav inNavbar key={`uncontrolled-dropdown-${index}`}>
-      <DropdownToggle
-        key={`dropdown-toggle-${index}`}
-        nav
-        caret
-        style={styles.dropdownItem}
-      >
-        {content.label}
-      </DropdownToggle>
-      <DropdownMenu
-        key={`dropdown-menu-${index}`}
-        // cssModule={customStyles}
-      >
-        {dropdownChild}
-      </DropdownMenu>
-    </UncontrolledDropdown>
-  );
+  public render(): JSX.Element {
+    const components = gameListModel.map((item, index: number) => {
+      return this._dropdownItem(item, index);
+    });
+
+    return (
+      <div id="game-list-bar-container" style={styles.gameListBarContainer}>
+        <Navbar style={styles.navbarStyle}>
+          <Nav style={styles.navStyle}>{components}</Nav>
+        </Navbar>
+      </div>
+    );
+  }
+
+  private _dropdownItem(content: IDropdownItem, index: number): JSX.Element {
+    let dropdownChild = [];
+    if (content.childs && content.childs.length > 0) {
+      dropdownChild = content.childs.map((child: string, index: number) => {
+        return (
+          <DropdownItem key={`dropdown-item-${index}`}>
+            <img
+              src={`game_list/${content.prefix}/${child}_deactive.png`}
+            ></img>
+          </DropdownItem>
+        );
+      });
+    }
+
+    return (
+      <UncontrolledDropdown nav inNavbar key={`uncontrolled-dropdown-${index}`}>
+        <DropdownToggle
+          key={`dropdown-toggle-${index}`}
+          nav
+          caret
+          style={styles.dropdownItem}
+        >
+          {content.label}
+        </DropdownToggle>
+        <DropdownMenu
+          key={`dropdown-menu-${index}`}
+          // cssModule={customStyles}
+        >
+          {dropdownChild}
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    );
+  }
 }
 
-export { renderGameListBar };
+export { GameListBar };

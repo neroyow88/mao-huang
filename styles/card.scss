@@ -38,22 +38,39 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-  }
 
-  #card-02 {
-    padding-left: 20px;
-    padding-right: 20px;
-    transform: translate(0px, -20px);
-  }
+    #card-02 {
+      margin-left: 10px;
+      margin-right: 10px;
+      transform: translate(0px, -20px);
+    }
 
-  #card-01,
-  #card-03 {
-    transform: translate(0px, 20px);
-  }
+    #card-01,
+    #card-03 {
+      transform: translate(0px, 20px);
+    }
 
-  .label-container {
-    color: #ffffff;
-    text-align: center;
+    #card-01,
+    #card-02,
+    #card-03 {
+      width: 108px;
+      height: 108px;
+      position: relative;
+
+      .card-image-container {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        transform-origin: top left;
+        transform: scale(0.5);
+      }
+
+      .label-container {
+        color: #ffffff;
+        text-align: center;
+        padding-top: calc(100% + 6px);
+      }
+    }
   }
 }
 
@@ -87,4 +104,27 @@
 
 .flip-card-back {
   transform: rotateY(180deg);
+
+  .button-container {
+    position: absolute;
+    width: 140px;
+    height: 40px;
+    bottom: 10px;
+    left: 60px;
+    z-index: 1;
+    background: transparent linear-gradient(180deg, #ffd630 0%, #ffb300 100%);
+
+    .button-label {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      padding-top: 9px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    :hover {
+      cursor: pointer;
+    }
+  }
 }
