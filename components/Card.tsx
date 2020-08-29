@@ -66,8 +66,8 @@ class CardList extends React.Component<Props, State> {
 
   private _flipCard(index: number): JSX.Element {
     const convertIndex = index < 10 ? `0${index}` : index;
-    const buttonComponent =
-      index > 1 ? this._buttonItem("游戏充值", "#000000", index) : null;
+    // const buttonComponent =
+    //   index > 1 ? this._buttonItem("游戏充值", "#000000", index) : null;
 
     return (
       <div id={`card-${convertIndex}`}>
