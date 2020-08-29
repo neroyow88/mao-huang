@@ -19,3 +19,18 @@
 #map-mobile {
   width: 375px;
 }
+
+#loading-container {
+  position: absolute;
+  width: 100%;
+  background-color: #ffffff;
+  transition: opacity 1s;
+  z-index: 999;
+}
+
+.image-handler {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transform-origin: top left;
+}

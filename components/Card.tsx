@@ -1,5 +1,6 @@
 import React from "react";
 import { PopOutType } from "../model/WebConstant";
+import { ImageHandler } from "./ImageHandler";
 
 interface Props {
   isMobile: boolean;
@@ -13,7 +14,7 @@ class CardList extends React.Component<Props, State> {
     super(props);
 
     this._roundCard = this._roundCard.bind(this);
-    this._flipCard = this._roundCard.bind(this);
+    this._flipCard = this._flipCard.bind(this);
   }
 
   public render(): JSX.Element {
@@ -56,12 +57,10 @@ class CardList extends React.Component<Props, State> {
 
     return (
       <div id={`card-${convertIndex}`} onClick={onClickCallback}>
-        <div
-          className="card-image-container"
-          key={`card-image-container-${index}`}
-        >
-          <img src={`mobile/card/poker_${convertIndex}_round.png`} />
-        </div>
+        <ImageHandler
+          src={`mobile/card/poker_${convertIndex}_round.png`}
+          scale={0.5}
+        />
         <div className="label-container">{label}</div>
       </div>
     );
@@ -83,13 +82,13 @@ class CardList extends React.Component<Props, State> {
               className="flip-card-front"
               key={`flip-card-front-${convertIndex}`}
             >
-              <img src={`card/poker_${convertIndex}_front.png`} />
+              <ImageHandler src={`card/poker_${convertIndex}_front.png`} />
             </div>
             <div
               className="flip-card-back"
               key={`flip-card-back-${convertIndex}`}
             >
-              <img src={`card/poker_${convertIndex}_back.png`} />
+              <ImageHandler src={`card/poker_${convertIndex}_back.png`} />
               {/* {buttonComponent} */}
             </div>
           </div>
