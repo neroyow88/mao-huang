@@ -11,6 +11,9 @@ interface State {}
 class CardList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this._roundCard = this._roundCard.bind(this);
+    this._flipCard = this._roundCard.bind(this);
   }
 
   public render(): JSX.Element {
@@ -95,23 +98,23 @@ class CardList extends React.Component<Props, State> {
     );
   }
 
-  private _buttonItem(
-    label: string,
-    fontColor: string,
-    index: number
-  ): JSX.Element {
-    return (
-      <div className="button-container" key={`button-container-${index}`}>
-        <div
-          className="button-label"
-          key={`button-label-${index}`}
-          style={{ color: fontColor }}
-        >
-          {label}
-        </div>
-      </div>
-    );
-  }
+  // private _buttonItem(
+  //   label: string,
+  //   fontColor: string,
+  //   index: number
+  // ): JSX.Element {
+  //   return (
+  //     <div className="button-container" key={`button-container-${index}`}>
+  //       <div
+  //         className="button-label"
+  //         key={`button-label-${index}`}
+  //         style={{ color: fontColor }}
+  //       >
+  //         {label}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 }
 
 export { CardList };
