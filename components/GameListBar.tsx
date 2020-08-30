@@ -63,7 +63,9 @@ class GameListBar extends React.Component<Props> {
     });
     return (
       <div id="game-list-bar-container-mobile">
-        <div id="game-list-bar-title">娱乐游戏平台</div>
+        <div id="game-list-bar-title-container">
+          <div id="game-list-bar-title">娱乐游戏平台</div>
+        </div>
         {components}
       </div>
     );

@@ -13,6 +13,8 @@ class ImageHandler extends React.Component<Props> {
   }
 
   public componentDidMount(): void {
+    const { src } = this.props;
+    console.log(`Loading image from ${src}`);
     loadingManager.addNewTask();
   }
 
@@ -34,6 +36,8 @@ class ImageHandler extends React.Component<Props> {
   }
 
   private _onLoaded(): void {
+    const { src, scale } = this.props;
+    console.log(`${src} loaded complete and set scale to ${scale ? scale : 1}`);
     loadingManager.taskComplete();
   }
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import { utils } from "../model/Utils";
+import { ImageHandler } from "./ImageHandler";
 // import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
 
 const iconType = {
@@ -12,12 +14,30 @@ class CustomerService extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
+    this._renderMobileView = this._renderMobileView.bind(this);
+    this._renderBrowserView = this._renderBrowserView.bind(this);
     this._renderIcon = this._renderIcon.bind(this);
   }
 
   public render(): JSX.Element {
+    if (utils.isMobile) {
+      return this._renderMobileView();
+    } else {
+      return this._renderBrowserView();
+    }
+  }
+
+  private _renderMobileView(): JSX.Element {
     return (
-      <div id="customer-service-container">
+      <div id="customer-service-container-mobile">
+        {this._renderCustomerService("profile_1", "周文君")}
+      </div>
+    );
+  }
+
+  private _renderBrowserView(): JSX.Element {
+    return (
+      <div id="customer-service-container-browser">
         <div id="left-service-container">
           <div className="icons-container">
             {this._renderIcon(
@@ -58,16 +78,35 @@ class CustomerService extends React.Component<Props> {
           </div>
         </div>
         <div id="right-service-container">
-          <div className="profile-image-container">
-            <img src="customer_service/profile.png"></img>
-          </div>
-          <div id="name-label">周文君</div>
-          <div id="title-label">客服中心</div>
-          <div id="description-label">
-            <img src="customer_service/quation_left.png"></img>
-            24小时的专业客服团队,提供及时贴心的服务
-            <img src="customer_service/quation_right.png"></img>
-          </div>
+          {this._renderCustomerService("profile_1", "周文君")}
+        </div>
+      </div>
+    );
+  }
+
+  private _renderCustomerService(src: string, name: string): JSX.Element {
+    const url = utils.isMobile
+      ? "mobile/customer_service/"
+      : "customer_service/";
+
+    const profileScale = utils.isMobile ? 0.7 : 1;
+    const quationScale = utils.isMobile ? 0.5 : 1;
+
+    return (
+      <div className="profile-container">
+        <ImageHandler src={`${url}${src}.png`} scale={profileScale} />
+        <div className="name-label">{name}</div>
+        <div className="title-label">客服中心</div>
+        <div className="description-label">
+          <ImageHandler
+            src={"customer_service/quation_left.png"}
+            scale={quationScale}
+          />
+          24小时的专业客服团队,提供及时贴心的服务
+          <ImageHandler
+            src={"customer_service/quation_right.png"}
+            scale={quationScale}
+          />
         </div>
       </div>
     );

@@ -1,45 +1,115 @@
-#customer-service-container {
+#customer-service-container-mobile {
+  width: 100%;
+  height: 310px;
+  color: #ffffff;
+
+  .profile-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 115px;
+    align-items: center;
+
+    :nth-child(1) {
+      top: 25px;
+      left: calc(50% - 40px);
+    }
+
+    .name-label {
+      font-size: 16px;
+    }
+
+    .title-label {
+      padding-top: 4px;
+    }
+
+    .description-label {
+      position: relative;
+      padding-top: 22px;
+      font-size: 12px;
+
+      :nth-child(1),
+      :nth-child(2) {
+        top: 23px;
+      }
+
+      :nth-child(1) {
+        left: -17px;
+      }
+
+      :nth-child(2) {
+        left: 235px;
+      }
+    }
+  }
+}
+
+#customer-service-container-browser {
   display: flex;
   flex-direction: row;
   height: 400px;
   width: 80%;
   color: #ffffff;
   margin-left: 20%;
-}
 
-#left-service-container {
-  height: 100%;
-  width: 42%;
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-}
-
-#right-service-container {
-  height: 100%;
-  width: 560px;
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-  align-items: center;
-
-  #name-label {
-    font-size: 22px;
-    padding-top: 40px;
-  }
-
-  #title-label {
-    padding-top: 5px;
-  }
-
-  #description-label {
+  #left-service-container {
+    height: 100%;
+    width: 42%;
     display: flex;
-    flex-direction: row;
-    padding-top: 35px;
+    flex-direction: column;
+    padding-top: 50px;
 
-    img {
-      padding-left: 4px;
-      padding-right: 4px;
+    #suggestion-label {
+      padding-top: 20px;
+      padding-bottom: 26px;
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+    }
+  }
+
+  #right-service-container {
+    height: 100%;
+    width: 560px;
+
+    .profile-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding-top: 164px;
+      align-items: center;
+
+      :nth-child(1) {
+        left: 217.5px;
+      }
+
+      .name-label {
+        font-size: 22px;
+      }
+
+      .title-label {
+        padding-top: 5px;
+      }
+
+      .description-label {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        padding-top: 35px;
+
+        :nth-child(1),
+        :nth-child(2) {
+          top: 30px;
+        }
+
+        :nth-child(1) {
+          left: -35px;
+        }
+
+        :nth-child(2) {
+          left: 315px;
+        }
+      }
     }
   }
 }
@@ -49,14 +119,6 @@
   flex-direction: row;
   padding-bottom: 30px;
   width: 100%;
-}
-
-#suggestion-label {
-  padding-top: 20px;
-  padding-bottom: 26px;
-  width: 100%;
-  text-align: center;
-  font-size: 22px;
 }
 
 .icon-container {

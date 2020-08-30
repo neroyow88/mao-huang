@@ -8,26 +8,47 @@ interface State {}
 class NavigationBar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
-    this._navigationItem = this._navigationItem.bind(this);
   }
+
   public render(): JSX.Element {
     return (
       <div id="navigation-bar-container">
-        {this._navigationItem("home_inactive", "主页")}
-        {this._navigationItem("mail_inactive", "留言信息")}
-        {this._navigationItem("about", "关于")}
-        {this._navigationItem("service_inactive", "客服中心")}
-        {this._navigationItem("money_inactive", "财务中心")}
-      </div>
-    );
-  }
+        <div className="home-container">
+          <ImageHandler
+            src={`mobile/navigation_bar/home_inactive.png`}
+            scale={0.22}
+          />
+          <div className="navigation-label">主页</div>
+        </div>
 
-  private _navigationItem(src: string, label: string): JSX.Element {
-    return (
-      <div className="navigation-item-container">
-        <ImageHandler src={`mobile/navigation_bar/${src}.png`} />
-        <div className="navigation-label">{label}</div>
+        <div className="mail-container">
+          <ImageHandler
+            src={`mobile/navigation_bar/mail_inactive.png`}
+            scale={0.22}
+          />
+          <div className="navigation-label">留言信息</div>
+        </div>
+
+        <div className="about-container">
+          <ImageHandler src={`mobile/navigation_bar/about.png`} scale={0.5} />
+          <div className="navigation-label">关于</div>
+        </div>
+
+        <div className="service-container">
+          <ImageHandler
+            src={`mobile/navigation_bar/service_inactive.png`}
+            scale={0.22}
+          />
+          <div className="navigation-label">客服中心</div>
+        </div>
+
+        <div className="money-container">
+          <ImageHandler
+            src={`mobile/navigation_bar/money_inactive.png`}
+            scale={0.22}
+          />
+          <div className="navigation-label">财务中心</div>
+        </div>
       </div>
     );
   }

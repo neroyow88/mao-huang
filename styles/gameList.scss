@@ -1,14 +1,18 @@
 #game-list-bar-container-mobile {
   width: 100%;
-  margin-top: 25px;
 
-  #game-list-bar-title {
-    width: 100%;
-    height: 33px;
+  #game-list-bar-title-container {
     margin-bottom: 20px;
     background-color: #ad0003;
-    color: #ffffff;
-    text-align: center;
+    height: 33px;
+
+    #game-list-bar-title {
+      width: 100%;
+      color: #ffffff;
+      text-align: center;
+      padding-top: 3px;
+      font-weight: bold;
+    }
   }
 
   .game-list-item-container {

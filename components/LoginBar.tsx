@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { PopOutType } from "../model/WebConstant";
 import { utils } from "../model/Utils";
+import { ImageHandler } from "./ImageHandler";
 
 const styles = {
   navStyle: {
@@ -62,7 +63,7 @@ class LoginBar extends React.Component<Props, State> {
     if (utils.isMobile) {
       return (
         <div id="login-bar-container-mobile">
-          <img src={"mobile/logo.png"} />
+          <ImageHandler src={"mobile/logo.png"} scale={0.33} />
           <div id="login-label" onClick={this._onLoginClicked}>
             登入
           </div>

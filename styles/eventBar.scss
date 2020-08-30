@@ -5,18 +5,40 @@
 }
 
 #event-bar-container-mobile {
-  :nth-child(2) {
-    position: absolute;
-    top: 25px;
-    left: 112px;
+  height: 230px;
+
+  #image-container-mobile {
+    margin-top: 23px;
+    position: relative;
+
+    :nth-child(2) {
+      top: 25px;
+      left: 112px;
+    }
+
+    :nth-child(3) {
+      top: 75px;
+      left: 111px;
+    }
   }
 
-  :nth-child(3) {
-    position: absolute;
-    top: 75px;
-    left: 111px;
+  #button-container {
+    position: relative;
+    width: 144px;
+    height: 38px;
+    top: 147px;
+    left: 116px;
+
+    #button-label {
+      position: relative;
+      color: #000000;
+      text-align: center;
+      padding-top: 5px;
+      font-weight: bold;
+    }
   }
 }
+
 #event-bar-container-browser {
   height: 600px;
 

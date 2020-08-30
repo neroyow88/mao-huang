@@ -7,13 +7,57 @@
   flex-direction: row;
   background-color: #ffffff;
 
-  .navigation-item-container {
+  .home-container,
+  .mail-container,
+  .about-container,
+  .service-container,
+  .money-container {
+    width: 25%;
+    height: 60px;
     position: relative;
     display: flex;
     flex-direction: column;
 
     .navigation-label {
-      padding-top: 28px;
+      text-align: center;
+      padding-top: 38px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+
+  .home-container {
+    :nth-child(1) {
+      left: calc(50% - 13px);
+      top: 15px;
+    }
+  }
+
+  .mail-container {
+    :nth-child(1) {
+      left: calc(50% - 12px);
+      top: 18px;
+    }
+  }
+
+  .about-container {
+    :nth-child(1) {
+      left: calc(50% - 29px);
+      top: -25px;
+    }
+  }
+
+  .service-container {
+    :nth-child(1) {
+      left: calc(50% - 10px);
+      top: 14px;
+    }
+  }
+
+  .money-container {
+    :nth-child(1) {
+      left: calc(50% - 12px);
+      top: 12px;
     }
   }
 }

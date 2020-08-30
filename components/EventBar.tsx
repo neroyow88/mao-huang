@@ -1,5 +1,6 @@
 import React from "react";
 import { utils } from "../model/Utils";
+import { ImageHandler } from "./ImageHandler";
 
 const rewardToggles = [true, false, false];
 
@@ -26,13 +27,19 @@ class EventBar extends React.Component<Props, State> {
       return (
         <div id="event-bar-container-mobile">
           <div id="image-container-mobile">
-            <img src="mobile/event_bar/event_bg.png"></img>
+            <ImageHandler src={"mobile/event_bar/event_bg.png"} scale={0.33} />
+            <ImageHandler
+              src={"mobile/event_bar/event_title.png"}
+              scale={0.33}
+            />
+            <ImageHandler
+              src={"mobile/event_bar/event_title_2.png"}
+              scale={0.33}
+            />
           </div>
-          <div id="number-image-container">
-            <img src="mobile/event_bar/event_title.png"></img>
-          </div>
-          <div id="number-image-container">
-            <img src="mobile/event_bar/event_title_2.png"></img>
+          <div id="button-container">
+            <ImageHandler src={"mobile/event_bar/yellow_button.png"} />
+            <div id="button-label">打卡领现金</div>
           </div>
         </div>
       );

@@ -16,7 +16,7 @@ import { PopOutType } from "../model/WebConstant";
 import { loadingManager } from "../model/LoadingManager";
 import { LoadingView } from "../components/LoadingView";
 import { utils } from "../model/Utils";
-// import { NavigationBar } from "../components/NavigationBar";
+import { NavigationBar } from "../components/NavigationBar";
 
 interface Props {}
 
@@ -73,10 +73,13 @@ export default class Home extends React.Component<Props, State> {
         : this._renderBrowserView()
       : null;
 
+    const navigationBar = utils.isMobile ? <NavigationBar /> : null;
+
     return (
-      <div id="main-container">
+      <div id="main-container" style={{ height: height }}>
         <LoadingView isLoading={isLoading} height={height} />
         {content}
+        {navigationBar}
       </div>
     );
   }
@@ -91,8 +94,8 @@ export default class Home extends React.Component<Props, State> {
         <CardList showPopOut={this._showPopOut} />
         <EventBar />
         <GameListBar />
+        <CustomerService />
         <PopOut type={type} toggle={toggle} hidePopOut={this._hidePopOut} />
-        {/* <NavigationBar /> */}
       </div>
     );
   }

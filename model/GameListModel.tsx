@@ -1,7 +1,7 @@
 export const gameListModel = [
   {
     title: "开元棋牌",
-    description: "最全面的棋牌游戏，斗地主、三公、麻将、您会的这里都有。",
+    description: "炸金花、抢庄牛牛、龙虎、三公、麻将，您会的这里都有。",
     prefix: "KY",
     childs: [
       "KY_01",
@@ -35,7 +35,7 @@ export const gameListModel = [
   },
   {
     title: "乐游棋牌",
-    description: "最受玩家好评的棋牌平台，游戏齐全，画面精美，音效逼真。",
+    description: "过千万玩家的专业棋牌平台，游戏齐全，玩家对决，精彩绝伦。",
     prefix: "LE",
     childs: [
       "LE_01",
@@ -70,7 +70,7 @@ export const gameListModel = [
   },
   {
     title: "KG彩票",
-    description: "国内外官方最主流的彩票竞猜，快乐彩、时时彩、PK10、香港乐透。",
+    description: "国内国外官方主流彩票，快乐彩、时时彩、PK10、香港乐透。",
     prefix: "KG",
     childs: ["KG_baccarat", "KG_happy", "KG_hk", "KG_pk", "KG_ss"],
   },
@@ -122,7 +122,7 @@ export const gameListModel = [
   },
   {
     title: "AG真人",
-    description: "亚洲真人线上娱乐平台新秀，迅速占领全球玩家份额。",
+    description: "百家乐、轮盘、骰宝，捕鱼王、直播、体育，多元化实力平台。",
     prefix: "AG",
     childs: [
       "AG_europe",
@@ -144,7 +144,7 @@ export const gameListModel = [
   },
   {
     title: "E Bet真人",
-    description: "亚洲真人线上娱乐平台新秀，迅速占领全球玩家份额。",
+    description: "亚洲线上真人娱乐新秀，以玩家的赞誉迅速抢占全球市场份额。",
     prefix: "Ebet",
     childs: [
       "Ebet_bull",
@@ -157,7 +157,7 @@ export const gameListModel = [
   },
   {
     title: "N2 Live",
-    description: "欧洲线上真人娱乐场，欧洲荷官，欧陆风情，另有一番娱乐风尚。",
+    description: "欧式完善管理，欧洲性感荷官。不一样的风情，不一样的体验。",
     prefix: "N2Live",
     childs: ["N2Live_21", "N2Live_dice", "N2Live_hundred", "N2Live_roulette"],
   },
