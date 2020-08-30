@@ -8,6 +8,7 @@ import {
 import customBrowserStyle from "../styles/module/carousel.module.scss";
 import customMobileStyle from "../styles/module/carouselMobile.module.scss";
 import { utils } from "../model/Utils";
+import { ImageHandler } from "./ImageHandler";
 
 const items = [
   {
@@ -96,7 +97,10 @@ class Slider extends React.Component<Props, State> {
           onExited={() => this.setState({ animating: false })}
           key={`slide-item-${index}`}
         >
-          <img src={url} style={{ width: "100%" }} />
+          <div id="slider-item-container">
+            <ImageHandler src={url} scale={375 / 1080} />
+            {/* <img src={url} style={{ width: "100%" }} /> */}
+          </div>
         </CarouselItem>
       );
     });

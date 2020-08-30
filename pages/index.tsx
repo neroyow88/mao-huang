@@ -66,14 +66,16 @@ export default class Home extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isStart, isLoading, height } = this.state;
+    const { isStart, isLoading, height, scale } = this.state;
     const content = isStart
       ? utils.isMobile
         ? this._renderMobileView()
         : this._renderBrowserView()
       : null;
 
-    const navigationBar = utils.isMobile ? <NavigationBar /> : null;
+    const navigationBar = utils.isMobile ? (
+      <NavigationBar scale={scale} />
+    ) : null;
 
     return (
       <div id="main-container" style={{ height: height }}>
