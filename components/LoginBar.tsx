@@ -74,7 +74,7 @@ class LoginBar extends React.Component<Props, State> {
       );
     } else {
       return (
-        <div id="login-bar-container">
+        <div id="login-bar-container-browser">
           <Nav style={styles.navStyle}>
             <NavItem>
               <NavLink

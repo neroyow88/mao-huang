@@ -7,12 +7,6 @@ interface IUtilityItem {
 }
 
 const styles = {
-  utilityBarContainer: {
-    height: "90px",
-    width: "100%",
-    background: "#AD0002",
-    border: "2px solid #AD0002",
-  },
   navbarStyle: {
     height: "100%",
     width: "100%",
@@ -44,7 +38,7 @@ class UtilityBar extends React.Component<Props> {
   public render(): JSX.Element {
     const balance = 2432.13;
     return (
-      <div id="utility-bar-container" style={styles.utilityBarContainer}>
+      <div id="utility-bar-container">
         <Navbar style={styles.navbarStyle}>
           <Nav style={styles.navStyle}>
             <NavItem style={styles.navItemStyle}>
