@@ -91,15 +91,16 @@ class Slider extends React.Component<Props, State> {
   private _renderSlides(): JSX.Element[] {
     const slides = items.map((item, index: number) => {
       const url = utils.isMobile ? `mobile/${item.src}` : item.src;
+      const height = utils.isMobile ? 180 : 500;
+      const scale = utils.isMobile ? 375 / 1080 : 1;
       return (
         <CarouselItem
           onExiting={() => this.setState({ animating: true })}
           onExited={() => this.setState({ animating: false })}
           key={`slide-item-${index}`}
         >
-          <div id="slider-item-container">
-            <ImageHandler src={url} scale={375 / 1080} />
-            {/* <img src={url} style={{ width: "100%" }} /> */}
+          <div id="slider-item-container" style={{ height: `${height}px` }}>
+            <ImageHandler src={url} scale={scale} />
           </div>
         </CarouselItem>
       );

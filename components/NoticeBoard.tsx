@@ -1,5 +1,6 @@
 import React from "react";
 import { utils } from "../model/Utils";
+import { ImageHandler } from "./ImageHandler";
 
 interface Props {}
 
@@ -23,9 +24,7 @@ class NoticeBoard extends React.Component<Props> {
     return (
       <div id="notice-board-container-mobile">
         <div id="left-board-container-mobile">
-          <div id="notice-title-container-mobile">
-            <img src="icon_volume.png"></img>
-          </div>
+          <ImageHandler src={"icon_volume.png"} />
         </div>
         <div id="scroll-left-container">
           <div id="scroll-left-mobile">
