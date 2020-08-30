@@ -15,13 +15,14 @@ import { PopOut } from "../components/PopOut";
 import { PopOutType } from "../model/WebConstant";
 import { loadingManager } from "../model/LoadingManager";
 import { LoadingView } from "../components/LoadingView";
+import { utils } from "../model/Utils";
+// import { NavigationBar } from "../components/NavigationBar";
 
 interface Props {}
 
 interface State {
   isStart: boolean;
   isLoading: boolean;
-  isMobileDevice: boolean;
   scale: number;
   type: PopOutType;
   toggle: boolean;
@@ -35,7 +36,6 @@ export default class Home extends React.Component<Props, State> {
     this.state = {
       isStart: false,
       isLoading: true,
-      isMobileDevice: false,
       scale: 1,
       type: PopOutType.NONE,
       toggle: false,
@@ -53,7 +53,8 @@ export default class Home extends React.Component<Props, State> {
 
   public componentDidMount(): void {
     setInterval((): void => {
-      this.setState({ isMobileDevice: isMobile, isStart: true });
+      utils.isMobile = isMobile;
+      this.setState({ isStart: true });
       this._onResize();
       window.addEventListener("resize", this._onResize);
       loadingManager.setOnAllTasksComplete(this._onAllTasksCompleted);
@@ -65,9 +66,9 @@ export default class Home extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isStart, isLoading, isMobileDevice, height } = this.state;
+    const { isStart, isLoading, height } = this.state;
     const content = isStart
-      ? isMobileDevice
+      ? utils.isMobile
         ? this._renderMobileView()
         : this._renderBrowserView()
       : null;
@@ -81,30 +82,32 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _renderMobileView(): JSX.Element {
-    const { isMobileDevice, scale, type, toggle } = this.state;
+    const { scale, type, toggle } = this.state;
     return (
       <div id="map-mobile" style={{ transform: `scale(${scale})` }}>
-        <LoginBar isMobile={isMobileDevice} showPopOut={this._showPopOut} />
-        <Slider isMobile={isMobileDevice} />
-        <NoticeBoard isMobile={isMobileDevice} />
-        <CardList isMobile={isMobileDevice} showPopOut={this._showPopOut} />
-        <EventBar isMobile={isMobileDevice} />
+        <LoginBar showPopOut={this._showPopOut} />
+        <Slider />
+        <NoticeBoard />
+        <CardList showPopOut={this._showPopOut} />
+        <EventBar />
+        <GameListBar />
         <PopOut type={type} toggle={toggle} hidePopOut={this._hidePopOut} />
+        {/* <NavigationBar /> */}
       </div>
     );
   }
 
   private _renderBrowserView(): JSX.Element {
-    const { isMobileDevice, scale, type, toggle } = this.state;
+    const { scale, type, toggle } = this.state;
     return (
       <div id="map-browser" style={{ transform: `scale(${scale})` }}>
-        <LoginBar isMobile={isMobileDevice} showPopOut={this._showPopOut} />
+        <LoginBar showPopOut={this._showPopOut} />
         <UtilityBar />
         <GameListBar />
-        <Slider isMobile={isMobileDevice} />
-        <NoticeBoard isMobile={isMobileDevice} />
-        <CardList isMobile={isMobileDevice} showPopOut={this._showPopOut} />
-        <EventBar isMobile={isMobileDevice} />
+        <Slider />
+        <NoticeBoard />
+        <CardList showPopOut={this._showPopOut} />
+        <EventBar />
         <CustomerService />
         <SponsorBar />
         <PopOut type={type} toggle={toggle} hidePopOut={this._hidePopOut} />
@@ -121,9 +124,8 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _onResize(): void {
-    const { isMobileDevice } = this.state;
     let newScale;
-    if (isMobileDevice) {
+    if (utils.isMobile) {
       const maxWidth = 375;
       newScale = window.innerWidth / maxWidth;
     } else {

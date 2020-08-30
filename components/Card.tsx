@@ -1,9 +1,9 @@
 import React from "react";
 import { PopOutType } from "../model/WebConstant";
 import { ImageHandler } from "./ImageHandler";
+import { utils } from "../model/Utils";
 
 interface Props {
-  isMobile: boolean;
   showPopOut: (any: number, data?: GenericObjectType) => void;
 }
 
@@ -18,8 +18,8 @@ class CardList extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isMobile, showPopOut } = this.props;
-    if (isMobile) {
+    const { showPopOut } = this.props;
+    if (utils.isMobile) {
       return (
         <div id="cards-container-mobile">
           <div id="card-item-container">

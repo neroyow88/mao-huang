@@ -1,8 +1,7 @@
 import React from "react";
+import { utils } from "../model/Utils";
 
-interface Props {
-  isMobile: boolean;
-}
+interface Props {}
 
 class NoticeBoard extends React.Component<Props> {
   constructor(props: Props) {
@@ -13,9 +12,7 @@ class NoticeBoard extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = this.props;
-
-    if (isMobile) {
+    if (utils.isMobile) {
       return this._noticeBoardMobile();
     } else {
       return this._noticeBoardBrowser();

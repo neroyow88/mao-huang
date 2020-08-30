@@ -1,0 +1,67 @@
+#game-list-bar-container-mobile {
+  width: 100%;
+  margin-top: 25px;
+
+  #game-list-bar-title {
+    width: 100%;
+    height: 33px;
+    margin-bottom: 20px;
+    background-color: #ad0003;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .game-list-item-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+
+    .labels-container {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+      margin-left: 85px;
+
+      .title,
+      .description {
+        color: #ffffff;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+    }
+
+    .button {
+      display: flex;
+      width: 55px;
+      height: 35px;
+      background-color: #f7f7f7;
+      border: 1px solid #e6e6e6;
+      border-radius: 5px;
+      margin-left: 3px;
+      align-self: center;
+      font-size: 16px;
+
+      .button-label {
+        width: 100%;
+        padding-top: 4px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+#game-list-bar-container-browser {
+  width: 100%;
+  height: 70px;
+  background-color: #1e202f;
+  border: 2px solid #1e202f;
+}

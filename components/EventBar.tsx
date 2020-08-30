@@ -1,10 +1,9 @@
 import React from "react";
+import { utils } from "../model/Utils";
 
 const rewardToggles = [true, false, false];
 
-interface Props {
-  isMobile: boolean;
-}
+interface Props {}
 
 interface State {
   reward: number;
@@ -23,9 +22,7 @@ class EventBar extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = this.props;
-
-    if (isMobile) {
+    if (utils.isMobile) {
       return (
         <div id="event-bar-container-mobile">
           <div id="image-container-mobile">

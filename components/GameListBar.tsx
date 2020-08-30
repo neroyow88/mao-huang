@@ -8,20 +8,17 @@ import {
   DropdownItem,
 } from "reactstrap";
 import { gameListModel } from "../model/GameListModel";
+import { utils } from "../model/Utils";
+import { ImageHandler } from "./ImageHandler";
 
 interface IDropdownItem {
-  label: string;
+  title: string;
+  description: string;
   prefix: string;
   childs?: string[];
 }
 
 const styles = {
-  gameListBarContainer: {
-    width: "100%",
-    height: "70px",
-    backgroundColor: "#1E202F",
-    border: "2px solid #1E202F",
-  },
   navbarStyle: {
     height: "100%",
     width: "100%",
@@ -44,15 +41,73 @@ interface Props {}
 class GameListBar extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
+
+    this._renderGameListMobile = this._renderGameListMobile.bind(this);
+    this._renderGameListBrowser = this._renderGameListBrowser.bind(this);
+    this._listItem = this._listItem.bind(this);
+    this._dropdownItem = this._dropdownItem.bind(this);
+    this._onGameListButtonClicked = this._onGameListButtonClicked.bind(this);
   }
 
   public render(): JSX.Element {
+    if (utils.isMobile) {
+      return this._renderGameListMobile();
+    } else {
+      return this._renderGameListBrowser();
+    }
+  }
+
+  private _renderGameListMobile(): JSX.Element {
+    const components = gameListModel.map((item, index: number) => {
+      return this._listItem(item, index);
+    });
+    return (
+      <div id="game-list-bar-container-mobile">
+        <div id="game-list-bar-title">娱乐游戏平台</div>
+        {components}
+      </div>
+    );
+  }
+
+  private _listItem(content: IDropdownItem, index: number): JSX.Element {
+    return (
+      <div
+        className="game-list-item-container"
+        key={`game-list-item-container-${index}`}
+      >
+        <ImageHandler src={`mobile/game_list/${content.prefix}_logo.png`} />
+        <div className="labels-container" key={`label-container-${index}`}>
+          <div className="title" key={`title-${index}`}>
+            {content.title}
+          </div>
+          <div className="description" key={`description-${index}`}>
+            {content.description}
+          </div>
+        </div>
+        <div
+          className="button"
+          key={`button-${index}`}
+          onClick={(): void => {
+            this._onGameListButtonClicked(index);
+          }}
+        >
+          <div className="button-label">进入</div>
+        </div>
+      </div>
+    );
+  }
+
+  private _onGameListButtonClicked(index: number): void {
+    console.log(index);
+  }
+
+  private _renderGameListBrowser(): JSX.Element {
     const components = gameListModel.map((item, index: number) => {
       return this._dropdownItem(item, index);
     });
 
     return (
-      <div id="game-list-bar-container" style={styles.gameListBarContainer}>
+      <div id="game-list-bar-container-browser">
         <Navbar style={styles.navbarStyle}>
           <Nav style={styles.navStyle}>{components}</Nav>
         </Navbar>
@@ -82,7 +137,7 @@ class GameListBar extends React.Component<Props> {
           caret
           style={styles.dropdownItem}
         >
-          {content.label}
+          {content.title}
         </DropdownToggle>
         <DropdownMenu
           key={`dropdown-menu-${index}`}

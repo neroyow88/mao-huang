@@ -7,6 +7,7 @@ import {
 } from "reactstrap";
 import customBrowserStyle from "../styles/module/carousel.module.scss";
 import customMobileStyle from "../styles/module/carouselMobile.module.scss";
+import { utils } from "../model/Utils";
 
 const items = [
   {
@@ -20,9 +21,7 @@ const items = [
   },
 ];
 
-interface Props {
-  isMobile: boolean;
-}
+interface Props {}
 
 interface State {
   activeIndex: number;
@@ -46,10 +45,9 @@ class Slider extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = this.props;
     const { activeIndex } = this.state;
+    const customStyle = utils.isMobile ? customMobileStyle : customBrowserStyle;
 
-    const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
     return (
       <div id="slider-container">
         <Carousel
@@ -77,10 +75,9 @@ class Slider extends React.Component<Props, State> {
   }
 
   private _renderIndicator(): JSX.Element {
-    const { isMobile } = this.props;
     const { activeIndex } = this.state;
-    const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
-    return isMobile ? null : (
+    const customStyle = utils.isMobile ? customMobileStyle : customBrowserStyle;
+    return utils.isMobile ? null : (
       <CarouselIndicators
         items={items}
         activeIndex={activeIndex}
@@ -91,9 +88,8 @@ class Slider extends React.Component<Props, State> {
   }
 
   private _renderSlides(): JSX.Element[] {
-    const { isMobile } = this.props;
     const slides = items.map((item, index: number) => {
-      const url = isMobile ? `mobile/${item.src}` : item.src;
+      const url = utils.isMobile ? `mobile/${item.src}` : item.src;
       return (
         <CarouselItem
           onExiting={() => this.setState({ animating: true })}

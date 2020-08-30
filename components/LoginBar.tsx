@@ -9,6 +9,7 @@ import {
   FormGroup,
 } from "reactstrap";
 import { PopOutType } from "../model/WebConstant";
+import { utils } from "../model/Utils";
 
 const styles = {
   navStyle: {
@@ -32,7 +33,6 @@ const styles = {
 };
 
 interface Props {
-  isMobile: boolean;
   showPopOut: (any: number, data?: GenericObjectType) => void;
 }
 
@@ -59,9 +59,7 @@ class LoginBar extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = this.props;
-
-    if (isMobile) {
+    if (utils.isMobile) {
       return (
         <div id="login-bar-container-mobile">
           <img src={"mobile/logo.png"} />
@@ -137,8 +135,8 @@ class LoginBar extends React.Component<Props, State> {
   }
 
   private _onLoginClicked(): void {
-    const { isMobile, showPopOut } = this.props;
-    if (isMobile) {
+    const { showPopOut } = this.props;
+    if (utils.isMobile) {
       showPopOut && showPopOut(PopOutType.LOGIN);
     } else {
       const { username, password } = this.state;
