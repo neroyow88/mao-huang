@@ -77,7 +77,10 @@ class GameListBar extends React.Component<Props> {
         className="game-list-item-container"
         key={`game-list-item-container-${index}`}
       >
-        <ImageHandler src={`mobile/game_list/${content.prefix}_logo.png`} />
+        <ImageHandler
+          src={`mobile/game_list/${content.prefix}_logo.png`}
+          scale={0.33}
+        />
         <div className="labels-container" key={`label-container-${index}`}>
           <div className="title" key={`title-${index}`}>
             {content.title}
