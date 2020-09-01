@@ -141,22 +141,18 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _onResize(): void {
-    const { toggle } = this.state;
-
-    if (!toggle) {
-      let newScale;
-      if (utils.isMobile) {
-        const maxWidth = 375;
-        newScale = window.innerWidth / maxWidth;
-      } else {
-        const scrollBarWidth =
-          window.innerWidth - document.documentElement.clientWidth;
-        const maxWidth = 1920;
-        newScale = (window.innerWidth - scrollBarWidth) / maxWidth;
-        newScale = newScale <= 0.66 ? 0.66 : newScale;
-      }
-      this.setState({ scale: newScale, height: window.innerHeight });
+    let newScale;
+    if (utils.isMobile) {
+      const maxWidth = 375;
+      newScale = window.innerWidth / maxWidth;
+    } else {
+      const scrollBarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+      const maxWidth = 1920;
+      newScale = (window.innerWidth - scrollBarWidth) / maxWidth;
+      newScale = newScale <= 0.66 ? 0.66 : newScale;
     }
+    this.setState({ scale: newScale, height: window.innerHeight });
   }
 
   private _onAllTasksCompleted(): void {
