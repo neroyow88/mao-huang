@@ -240,7 +240,7 @@ class PopOut extends React.Component<Props, State> {
         cssModule={customCardMobileStyle}
       >
         <div id={`card-${convertIndex}`}>
-          <div className="flip-card" key={`flip-card-${convertIndex}`}>
+          <div className="flip-card-mobile" key={`flip-card-${convertIndex}`}>
             <div
               className="flip-card-inner"
               key={`flip-card-inner-${convertIndex}`}
