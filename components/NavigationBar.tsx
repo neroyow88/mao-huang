@@ -17,7 +17,7 @@ class NavigationBar extends React.Component<Props, State> {
       currentIndex: 1,
     };
 
-    this._renderAbout = this._renderAbout.bind(this);
+    this._renderAboutMenu = this._renderAboutMenu.bind(this);
     this._renderNavigationItem = this._renderNavigationItem.bind(this);
   }
 
@@ -29,21 +29,24 @@ class NavigationBar extends React.Component<Props, State> {
         id="navigation-bar-container"
         style={{ transform: `scale(${scale})` }}
       >
-        {this._renderAbout()}
+        {this._renderAboutMenu()}
         {this._renderNavigationBar()}
       </div>
     );
   }
 
-  private _renderAbout(): JSX.Element {
+  private _renderAboutMenu(): JSX.Element {
     const { currentIndex } = this.state;
-    const yPos = currentIndex === 3 ? -250 : 0;
+    const rot = currentIndex === 3 ? 0 : 180;
     const opacity = currentIndex === 3 ? 0.8 : 0;
 
     return (
       <div
         id="about-pop-up-container"
-        style={{ transform: `translateY(${yPos}px)`, opacity: opacity }}
+        style={{
+          transform: `translateY(-250px) rotate(${rot}deg)`,
+          opacity: opacity,
+        }}
       >
         <div id="first-row-container">
           {this._renderAboutItem("about", "关于猫皇", 0.1)}

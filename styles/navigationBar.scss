@@ -7,17 +7,15 @@
 
   #about-pop-up-container {
     position: absolute;
-    transform: translateY(-250px);
     left: -92.5px;
     width: 560px;
     height: 560px;
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
+    border-radius: 50%;
     background-color: #000000;
     opacity: 0.8;
     z-index: -1;
     color: #ffffff;
-    transition: transform 0.1s ease-out, opacity 0.3s ease-out;
+    transition: transform 0.4s ease-out, opacity 0.5s linear;
 
     #first-row-container,
     #second-row-container,

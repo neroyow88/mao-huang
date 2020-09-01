@@ -27,6 +27,7 @@ interface State {
   type: PopOutType;
   toggle: boolean;
   height: number;
+  customPopOutData?: GenericObjectType;
 }
 
 export default class Home extends React.Component<Props, State> {
@@ -40,6 +41,7 @@ export default class Home extends React.Component<Props, State> {
       type: PopOutType.NONE,
       toggle: false,
       height: 0,
+      customPopOutData: Object.create(null),
     };
 
     this._renderMobileView = this._renderMobileView.bind(this);
@@ -87,7 +89,7 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _renderMobileView(): JSX.Element {
-    const { scale, type, toggle } = this.state;
+    const { scale, type, toggle, customPopOutData } = this.state;
     return (
       <div id="map-mobile" style={{ transform: `scale(${scale})` }}>
         <LoginBar showPopOut={this._showPopOut} />
@@ -97,13 +99,18 @@ export default class Home extends React.Component<Props, State> {
         <EventBar />
         <GameListBar />
         <CustomerService />
-        <PopOut type={type} toggle={toggle} hidePopOut={this._hidePopOut} />
+        <PopOut
+          type={type}
+          toggle={toggle}
+          customPopOutData={customPopOutData}
+          hidePopOut={this._hidePopOut}
+        />
       </div>
     );
   }
 
   private _renderBrowserView(): JSX.Element {
-    const { scale, type, toggle } = this.state;
+    const { scale, type, toggle, customPopOutData } = this.state;
     return (
       <div id="map-browser" style={{ transform: `scale(${scale})` }}>
         <LoginBar showPopOut={this._showPopOut} />
@@ -115,13 +122,18 @@ export default class Home extends React.Component<Props, State> {
         <EventBar />
         <CustomerService />
         <SponsorBar />
-        <PopOut type={type} toggle={toggle} hidePopOut={this._hidePopOut} />
+        <PopOut
+          type={type}
+          toggle={toggle}
+          customPopOutData={customPopOutData}
+          hidePopOut={this._hidePopOut}
+        />
       </div>
     );
   }
 
-  private _showPopOut(type: PopOutType): void {
-    this.setState({ type, toggle: true });
+  private _showPopOut(type: PopOutType, customData?: GenericObjectType): void {
+    this.setState({ type, customPopOutData: customData, toggle: true });
   }
 
   private _hidePopOut(): void {
@@ -129,18 +141,22 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _onResize(): void {
-    let newScale;
-    if (utils.isMobile) {
-      const maxWidth = 375;
-      newScale = window.innerWidth / maxWidth;
-    } else {
-      const scrollBarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
-      const maxWidth = 1920;
-      newScale = (window.innerWidth - scrollBarWidth) / maxWidth;
-      newScale = newScale <= 0.66 ? 0.66 : newScale;
+    const { toggle } = this.state;
+
+    if (!toggle) {
+      let newScale;
+      if (utils.isMobile) {
+        const maxWidth = 375;
+        newScale = window.innerWidth / maxWidth;
+      } else {
+        const scrollBarWidth =
+          window.innerWidth - document.documentElement.clientWidth;
+        const maxWidth = 1920;
+        newScale = (window.innerWidth - scrollBarWidth) / maxWidth;
+        newScale = newScale <= 0.66 ? 0.66 : newScale;
+      }
+      this.setState({ scale: newScale, height: window.innerHeight });
     }
-    this.setState({ scale: newScale, height: window.innerHeight });
   }
 
   private _onAllTasksCompleted(): void {

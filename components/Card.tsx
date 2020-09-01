@@ -68,12 +68,9 @@ class CardList extends React.Component<Props, State> {
 
   private _flipCard(index: number): JSX.Element {
     const convertIndex = index < 10 ? `0${index}` : index;
-    // const buttonComponent =
-    //   index > 1 ? this._buttonItem("游戏充值", "#000000", index) : null;
-
     return (
       <div id={`card-${convertIndex}`}>
-        <div className="flip-card" key={`flip-card-${convertIndex}`}>
+        <div className="flip-card-browser" key={`flip-card-${convertIndex}`}>
           <div
             className="flip-card-inner"
             key={`flip-card-inner-${convertIndex}`}
@@ -89,31 +86,12 @@ class CardList extends React.Component<Props, State> {
               key={`flip-card-back-${convertIndex}`}
             >
               <ImageHandler src={`card/poker_${convertIndex}_back.png`} />
-              {/* {buttonComponent} */}
             </div>
           </div>
         </div>
       </div>
     );
   }
-
-  // private _buttonItem(
-  //   label: string,
-  //   fontColor: string,
-  //   index: number
-  // ): JSX.Element {
-  //   return (
-  //     <div className="button-container" key={`button-container-${index}`}>
-  //       <div
-  //         className="button-label"
-  //         key={`button-label-${index}`}
-  //         style={{ color: fontColor }}
-  //       >
-  //         {label}
-  //       </div>
-  //     </div>
-  //   );
-  // }
 }
 
 export { CardList };
