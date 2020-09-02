@@ -229,8 +229,6 @@ class PopOut extends React.Component<Props, State> {
     const { mobileCardRotation } = this.state;
     const { index } = customPopOutData;
     const convertIndex = index < 10 ? `0${index}` : index;
-    const buttonComponent =
-      index > 1 ? this._buttonItem("游戏充值", index) : null;
 
     return (
       <Modal
@@ -261,7 +259,7 @@ class PopOut extends React.Component<Props, State> {
                 <ImageHandler
                   src={`mobile/card/poker_${convertIndex}_back.png`}
                 />
-                {buttonComponent}
+                {this._cardButtonComponent(index)}
               </div>
             </div>
           </div>
@@ -279,15 +277,28 @@ class PopOut extends React.Component<Props, State> {
     }
   }
 
-  private _buttonItem(label: string, index: number): JSX.Element {
-    return (
-      <div className="button-container" key={`button-container-${index}`}>
-        <div className="button-label" key={`button-label-${index}`}>
-          {label}
+  private _cardButtonComponent(index: number): JSX.Element {
+    if (index > 1) {
+      const label = index === 1 ? "招财勋章" : "波斯勋章";
+      return (
+        <div id="card-buttons-container">
+          <div className="button-container" key={`button-container-left`}>
+            <div className="button-label" key={`button-label-left`}>
+              {label}
+            </div>
+          </div>
+          <div className="button-container" key={`button-container-right`}>
+            <div className="button-label" key={`button-label-right`}>
+              游戏充值
+            </div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
   }
+
   //#endregion
 }
 
