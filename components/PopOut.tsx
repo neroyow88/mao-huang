@@ -228,7 +228,6 @@ class PopOut extends React.Component<Props, State> {
     const { toggle, customPopOutData } = this.props;
     const { mobileCardRotation } = this.state;
     const { index } = customPopOutData;
-    const convertIndex = index < 10 ? `0${index}` : index;
 
     return (
       <Modal
@@ -237,28 +236,18 @@ class PopOut extends React.Component<Props, State> {
         centered
         cssModule={customCardMobileStyle}
       >
-        <div id={`card-${convertIndex}`}>
-          <div className="flip-card-mobile" key={`flip-card-${convertIndex}`}>
+        <div id={`card-0${index}`}>
+          <div className="flip-card-mobile" key={`flip-card-${index}`}>
             <div
               className="flip-card-inner"
-              key={`flip-card-inner-${convertIndex}`}
+              key={`flip-card-inner-${index}`}
               style={{ transform: `rotateY(${mobileCardRotation}deg)` }}
             >
-              <div
-                className="flip-card-front"
-                key={`flip-card-front-${convertIndex}`}
-              >
-                <ImageHandler
-                  src={`mobile/card/poker_${convertIndex}_front.png`}
-                />
+              <div className="flip-card-front" key={`flip-card-front-${index}`}>
+                <ImageHandler src={`mobile/card/poker_0${index}_front.png`} />
               </div>
-              <div
-                className="flip-card-back"
-                key={`flip-card-back-${convertIndex}`}
-              >
-                <ImageHandler
-                  src={`mobile/card/poker_${convertIndex}_back.png`}
-                />
+              <div className="flip-card-back" key={`flip-card-back-${index}`}>
+                <ImageHandler src={`mobile/card/poker_0${index}_back.png`} />
                 {this._cardButtonComponent(index)}
               </div>
             </div>
@@ -279,16 +268,16 @@ class PopOut extends React.Component<Props, State> {
 
   private _cardButtonComponent(index: number): JSX.Element {
     if (index > 1) {
-      const label = index === 1 ? "招财勋章" : "波斯勋章";
+      const label = index === 2 ? "招财勋章" : "波斯勋章";
       return (
         <div id="card-buttons-container">
-          <div className="button-container" key={`button-container-left`}>
-            <div className="button-label" key={`button-label-left`}>
+          <div className="card-button-container" key={`button-container-left`}>
+            <div className="card-button-label" key={`button-label-left`}>
               {label}
             </div>
           </div>
-          <div className="button-container" key={`button-container-right`}>
-            <div className="button-label" key={`button-label-right`}>
+          <div className="card-button-container" key={`button-container-right`}>
+            <div className="card-button-label" key={`button-label-right`}>
               游戏充值
             </div>
           </div>

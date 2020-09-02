@@ -15,6 +15,7 @@ class CardList extends React.Component<Props, State> {
 
     this._roundCard = this._roundCard.bind(this);
     this._flipCard = this._flipCard.bind(this);
+    this._cardButtonComponent = this._cardButtonComponent.bind(this);
   }
 
   public render(): JSX.Element {
@@ -50,15 +51,14 @@ class CardList extends React.Component<Props, State> {
     label: string,
     showPopOut: (any: number, data?: GenericObjectType) => void
   ): JSX.Element {
-    const convertIndex = `0${index}`;
     const onClickCallback = (): void => {
       showPopOut(PopOutType.CARD_MOBILE, { index });
     };
 
     return (
-      <div id={`card-${convertIndex}`} onClick={onClickCallback}>
+      <div id={`card-0${index}`} onClick={onClickCallback}>
         <ImageHandler
-          src={`mobile/card/poker_${convertIndex}_round.png`}
+          src={`mobile/card/poker_0${index}_round.png`}
           scale={0.5}
         />
         <div className="label-container">{label}</div>
@@ -67,30 +67,38 @@ class CardList extends React.Component<Props, State> {
   }
 
   private _flipCard(index: number): JSX.Element {
-    const convertIndex = index < 10 ? `0${index}` : index;
     return (
-      <div id={`card-${convertIndex}`}>
-        <div className="flip-card-browser" key={`flip-card-${convertIndex}`}>
-          <div
-            className="flip-card-inner"
-            key={`flip-card-inner-${convertIndex}`}
-          >
-            <div
-              className="flip-card-front"
-              key={`flip-card-front-${convertIndex}`}
-            >
-              <ImageHandler src={`card/poker_${convertIndex}_front.png`} />
+      <div id={`card-0${index}`}>
+        <div className="flip-card-browser" key={`flip-card-${index}`}>
+          <div className="flip-card-inner" key={`flip-card-inner-${index}`}>
+            <div className="flip-card-front" key={`flip-card-front-${index}`}>
+              <ImageHandler src={`card/poker_0${index}_front.png`} />
             </div>
-            <div
-              className="flip-card-back"
-              key={`flip-card-back-${convertIndex}`}
-            >
-              <ImageHandler src={`card/poker_${convertIndex}_back.png`} />
+            <div className="flip-card-back" key={`flip-card-back-${index}`}>
+              <ImageHandler src={`card/poker_0${index}_back.png`} />
+              {this._cardButtonComponent(index)}
             </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  private _cardButtonComponent(index: number): JSX.Element {
+    if (index > 1) {
+      const label = index === 2 ? "招财勋章" : "波斯勋章";
+      return (
+        <div id="card-buttons-container">
+          <div className="card-button-container" key={`button-container-left`}>
+            <div className="card-button-label" key={`button-label-left`}>
+              {label}
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }
 
