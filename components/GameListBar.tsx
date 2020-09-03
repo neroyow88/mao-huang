@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  Navbar,
-  Nav,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
 import { gameListModel } from "../model/GameListModel";
 import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
@@ -18,34 +10,26 @@ interface IDropdownItem {
   childs?: string[];
 }
 
-const styles = {
-  navbarStyle: {
-    height: "100%",
-    width: "100%",
-  },
-  navStyle: {
-    height: "100%",
-    width: "100%",
-    paddingLeft: "10%",
-    alignContent: "center",
-    fontSize: "18px",
-  },
-  dropdownItem: {
-    color: "#FFFFFF",
-    paddingRight: "118px",
-  },
-};
-
 interface Props {}
 
-class GameListBar extends React.Component<Props> {
+interface State {
+  toggleIndex: number;
+  itemIndex: number;
+}
+
+class GameListBar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      toggleIndex: -1,
+      itemIndex: -1,
+    };
 
     this._renderGameListMobile = this._renderGameListMobile.bind(this);
     this._renderGameListBrowser = this._renderGameListBrowser.bind(this);
     this._listItem = this._listItem.bind(this);
-    this._dropdownItem = this._dropdownItem.bind(this);
+    this._dropdownToggle = this._dropdownToggle.bind(this);
     this._onGameListButtonClicked = this._onGameListButtonClicked.bind(this);
   }
 
@@ -107,51 +91,107 @@ class GameListBar extends React.Component<Props> {
   }
 
   private _renderGameListBrowser(): JSX.Element {
-    const components = gameListModel.map((item, index: number) => {
-      return this._dropdownItem(item, index);
+    const toggleComponents = gameListModel.map((item, index: number) => {
+      return this._dropdownToggle(item, index);
+    });
+
+    const menuComponents = gameListModel.map((item, index: number) => {
+      return this._dropdownMenu(item, index);
     });
 
     return (
       <div id="game-list-bar-container-browser">
-        <Navbar style={styles.navbarStyle}>
-          <Nav style={styles.navStyle}>{components}</Nav>
-        </Navbar>
+        <div id="game-list-toggle-container">{toggleComponents}</div>
+        {menuComponents}
       </div>
     );
   }
 
-  private _dropdownItem(content: IDropdownItem, index: number): JSX.Element {
+  private _dropdownToggle(content: IDropdownItem, index: number): JSX.Element {
+    const { toggleIndex } = this.state;
+    const color = toggleIndex === index ? "#FF0000" : "#FFFFFF";
+
+    return (
+      <div
+        className="dropdown-toggle-container"
+        key={`dropdown-toggle-container-${index}`}
+        onClick={(): void => {
+          this._onToggle(index);
+        }}
+        style={{ color: color }}
+      >
+        {content.title}
+        <div
+          className="arrow-down"
+          key={`arrow-down-${index}`}
+          style={{ borderTop: `5px solid ${color}` }}
+        ></div>
+      </div>
+    );
+  }
+
+  private _dropdownMenu(content: IDropdownItem, index: number): JSX.Element {
     let dropdownChild = [];
     if (content.childs && content.childs.length > 0) {
-      dropdownChild = content.childs.map((child: string, index: number) => {
+      dropdownChild = content.childs.map((child: string, id: number) => {
+        const { itemIndex } = this.state;
+        const parentIndex = Math.floor(itemIndex / 100);
+        const childIndex = itemIndex % 100;
+        const active =
+          parentIndex === index && childIndex === id ? "active" : "deactive";
         return (
-          <DropdownItem key={`dropdown-item-${index}`}>
+          <div
+            className="dropdown-item-container"
+            key={`dropdown-item-container${index}${id}`}
+            onMouseEnter={(): void => {
+              const convertIndex = index * 100 + id;
+              this._onUpdateItem(convertIndex);
+            }}
+            onMouseLeave={(): void => {
+              this._onUpdateItem(-1);
+            }}
+          >
             <img
-              src={`game_list/${content.prefix}/${child}_deactive.png`}
+              src={`game_list/${content.prefix}/${child}_${active}.png`}
             ></img>
-          </DropdownItem>
+          </div>
         );
       });
     }
 
+    const { toggleIndex } = this.state;
+    const yPos = toggleIndex === index ? -1 : -100;
+
     return (
-      <UncontrolledDropdown nav inNavbar key={`uncontrolled-dropdown-${index}`}>
-        <DropdownToggle
-          key={`dropdown-toggle-${index}`}
-          nav
-          caret
-          style={styles.dropdownItem}
+      <div className="dropdown-mask" key={`dropdown-mask-${index}`}>
+        <div
+          className="dropdown-menu-container"
+          key={`dropdown-menu-container-${index}`}
+          style={{ transform: `translateY(${yPos}%)` }}
         >
-          {content.title}
-        </DropdownToggle>
-        <DropdownMenu
-          key={`dropdown-menu-${index}`}
-          // cssModule={customStyles}
-        >
-          {dropdownChild}
-        </DropdownMenu>
-      </UncontrolledDropdown>
+          <div
+            className="dropdown-menu-grid"
+            key={`dropdown-menu-grid-${index}`}
+          >
+            {dropdownChild}
+          </div>
+        </div>
+      </div>
     );
+  }
+
+  private _onToggle(index: number): void {
+    const { toggleIndex } = this.state;
+    if (toggleIndex === index) {
+      this.setState({ toggleIndex: -1 });
+    } else {
+      this.setState({ toggleIndex: index });
+    }
+  }
+
+  private _onUpdateItem(index: number): void {
+    console.log(index);
+    this.setState({ itemIndex: index });
   }
 }
 
