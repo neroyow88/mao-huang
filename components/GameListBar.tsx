@@ -10,7 +10,9 @@ interface IDropdownItem {
   childs?: string[];
 }
 
-interface Props {}
+interface Props {
+  isLoaded?: boolean;
+}
 
 interface State {
   toggleIndex: number;
@@ -139,6 +141,10 @@ class GameListBar extends React.Component<Props, State> {
         const { hoverIndex: itemIndex } = this.state;
         const convertIndex = index * 100 + id;
         const active = itemIndex === convertIndex ? "active" : "deactive";
+        const preloadLogo = this.props.isLoaded ? null : (
+          <img src={`game_list/${content.prefix}/${child}_active.png`}></img>
+        );
+
         return (
           <div
             className="dropdown-item-container"
@@ -156,6 +162,7 @@ class GameListBar extends React.Component<Props, State> {
             <img
               src={`game_list/${content.prefix}/${child}_${active}.png`}
             ></img>
+            {preloadLogo}
           </div>
         );
       });

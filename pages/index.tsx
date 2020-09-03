@@ -110,12 +110,12 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _renderBrowserView(): JSX.Element {
-    const { scale, type, toggle, customPopOutData } = this.state;
+    const { isLoading, scale, type, toggle, customPopOutData } = this.state;
     return (
       <div id="map-browser" style={{ transform: `scale(${scale})` }}>
         <LoginBar showPopOut={this._showPopOut} />
         <UtilityBar />
-        <GameListBar />
+        <GameListBar isLoaded={!isLoading} />
         <Slider />
         <NoticeBoard />
         <CardList showPopOut={this._showPopOut} />
