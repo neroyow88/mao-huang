@@ -14,7 +14,8 @@ interface Props {}
 
 interface State {
   toggleIndex: number;
-  itemIndex: number;
+  hoverIndex: number;
+  selectedIndex: number;
 }
 
 class GameListBar extends React.Component<Props, State> {
@@ -23,7 +24,8 @@ class GameListBar extends React.Component<Props, State> {
 
     this.state = {
       toggleIndex: -1,
-      itemIndex: -1,
+      hoverIndex: -1,
+      selectedIndex: -1,
     };
 
     this._renderGameListMobile = this._renderGameListMobile.bind(this);
@@ -134,21 +136,21 @@ class GameListBar extends React.Component<Props, State> {
     let dropdownChild = [];
     if (content.childs && content.childs.length > 0) {
       dropdownChild = content.childs.map((child: string, id: number) => {
-        const { itemIndex } = this.state;
-        const parentIndex = Math.floor(itemIndex / 100);
-        const childIndex = itemIndex % 100;
-        const active =
-          parentIndex === index && childIndex === id ? "active" : "deactive";
+        const { hoverIndex: itemIndex } = this.state;
+        const convertIndex = index * 100 + id;
+        const active = itemIndex === convertIndex ? "active" : "deactive";
         return (
           <div
             className="dropdown-item-container"
             key={`dropdown-item-container${index}${id}`}
             onMouseEnter={(): void => {
-              const convertIndex = index * 100 + id;
               this._onUpdateItem(convertIndex);
             }}
             onMouseLeave={(): void => {
               this._onUpdateItem(-1);
+            }}
+            onClick={(): void => {
+              this._onItemSelected(convertIndex);
             }}
           >
             <img
@@ -190,8 +192,11 @@ class GameListBar extends React.Component<Props, State> {
   }
 
   private _onUpdateItem(index: number): void {
-    console.log(index);
-    this.setState({ itemIndex: index });
+    this.setState({ hoverIndex: index });
+  }
+
+  private _onItemSelected(index: number): void {
+    this.setState({ selectedIndex: index });
   }
 }
 
