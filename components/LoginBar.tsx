@@ -8,7 +8,7 @@ import {
   Form,
   FormGroup,
 } from "reactstrap";
-import { PopOutType, NoticeType } from "../model/WebConstant";
+import { PopOutType } from "../model/WebConstant";
 import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
 
