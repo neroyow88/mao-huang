@@ -1,5 +1,5 @@
 import React from "react";
-import { gameListModel } from "../model/GameListModel";
+import { gameListModel } from "../model/GameListConstant";
 import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
 

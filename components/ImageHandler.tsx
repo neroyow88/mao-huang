@@ -4,6 +4,7 @@ import { loadingManager } from "../model/LoadingManager";
 interface Props {
   src: string;
   scale?: number;
+  onClick?: NoParamReturnNulFunction;
 }
 
 class ImageHandler extends React.Component<Props> {
@@ -23,12 +24,13 @@ class ImageHandler extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { src, scale } = this.props;
+    const { src, scale, onClick } = this.props;
     const newScale = scale ? scale : 1;
     return (
       <div
         className="image-handler"
         style={{ transform: `scale(${newScale})` }}
+        onClick={onClick && onClick}
       >
         <img src={src} onLoad={this._onLoaded} />
       </div>

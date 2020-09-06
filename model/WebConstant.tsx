@@ -6,4 +6,12 @@ export enum PopOutType {
   FORGOT_PASSWORD = 4,
 
   CARD_MOBILE = 20,
+
+  NOTICE = 99,
+}
+
+export enum NoticeType {
+  SUCCESS = 1,
+  ERROR = 2,
+  ACCOUNT = 3,
 }

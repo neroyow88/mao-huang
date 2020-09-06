@@ -11,7 +11,7 @@ import { CardList } from "../components/Card";
 import { EventBar } from "../components/EventBar";
 import { CustomerService } from "../components/CustomerService";
 import { SponsorBar } from "../components/SponsorBar";
-import { PopOut } from "../components/PopOut";
+import { PopOut } from "../components/PopOut/PopOut";
 import { PopOutType } from "../model/WebConstant";
 import { loadingManager } from "../model/LoadingManager";
 import { LoadingView } from "../components/LoadingView";
@@ -24,10 +24,12 @@ interface State {
   isStart: boolean;
   isLoading: boolean;
   scale: number;
-  type: PopOutType;
-  toggle: boolean;
   height: number;
-  customPopOutData?: GenericObjectType;
+  popOutConfig: {
+    toggle: boolean;
+    type: PopOutType;
+    customPopOutData?: GenericObjectType;
+  };
 }
 
 export default class Home extends React.Component<Props, State> {
@@ -38,10 +40,12 @@ export default class Home extends React.Component<Props, State> {
       isStart: false,
       isLoading: true,
       scale: 1,
-      type: PopOutType.NONE,
-      toggle: false,
       height: 0,
-      customPopOutData: Object.create(null),
+      popOutConfig: {
+        toggle: false,
+        type: PopOutType.NONE,
+        customPopOutData: Object.create(null),
+      },
     };
 
     this._renderMobileView = this._renderMobileView.bind(this);
@@ -89,7 +93,9 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _renderMobileView(): JSX.Element {
-    const { scale, type, toggle, customPopOutData } = this.state;
+    const { scale, popOutConfig } = this.state;
+    const { type, toggle, customPopOutData } = popOutConfig;
+
     return (
       <div id="map-mobile" style={{ transform: `scale(${scale})` }}>
         <LoginBar showPopOut={this._showPopOut} />
@@ -110,7 +116,9 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _renderBrowserView(): JSX.Element {
-    const { isLoading, scale, type, toggle, customPopOutData } = this.state;
+    const { isLoading, scale, popOutConfig } = this.state;
+    const { type, toggle, customPopOutData } = popOutConfig;
+
     return (
       <div id="map-browser" style={{ transform: `scale(${scale})` }}>
         <LoginBar showPopOut={this._showPopOut} />
@@ -133,11 +141,23 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _showPopOut(type: PopOutType, customData?: GenericObjectType): void {
-    this.setState({ type, customPopOutData: customData, toggle: true });
+    this.setState({
+      popOutConfig: {
+        toggle: true,
+        type,
+        customPopOutData: customData,
+      },
+    });
   }
 
   private _hidePopOut(): void {
-    this.setState({ type: PopOutType.NONE, toggle: false });
+    this.setState({
+      popOutConfig: {
+        toggle: false,
+        type: PopOutType.NONE,
+        customPopOutData: Object.create(null),
+      },
+    });
   }
 
   private _onResize(): void {
