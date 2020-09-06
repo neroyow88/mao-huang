@@ -19,6 +19,8 @@ import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
 import customStyle from "../../styles/module/modal.module.scss";
 import { MobileCardPopOut } from "./MobileCardPopOut";
 import { ForgotUsernamePopOut } from "./ForgotUsernamePopOut";
+import { LoginPopOut } from "./LoginPopOut";
+import { RegisterPopOut } from "./RegisterPopOut";
 
 interface Props {
   type: PopOutType;
@@ -58,10 +60,22 @@ class PopOut extends React.Component<Props, State> {
     let component;
     switch (type) {
       case PopOutType.LOGIN:
-        component = this._renderLogin();
+        component = (
+          <LoginPopOut
+            toggle={toggle}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+          />
+        );
         break;
       case PopOutType.REGISTER:
-        component = this._renderRegister();
+        component = (
+          <RegisterPopOut
+            toggle={toggle}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+          />
+        );
         break;
       case PopOutType.FORGOT_USERNAME:
         component = (

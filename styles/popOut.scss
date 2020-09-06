@@ -72,6 +72,47 @@
   }
 }
 
+#login-form-container {
+  form {
+    :nth-child(1) {
+      margin-bottom: 5px;
+    }
+
+    :nth-child(2) {
+      margin-bottom: 15px;
+    }
+
+    :nth-child(3) {
+      margin-bottom: 5px;
+    }
+
+    :nth-child(4) {
+      margin-bottom: 35px;
+    }
+
+    :nth-child(5) {
+      margin-bottom: 37px;
+    }
+
+    :nth-child(6) {
+      margin-bottom: 85px;
+    }
+
+    #login-help-bar {
+      width: 100%;
+      height: 25px;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+
+      :nth-child(2) {
+        margin-left: 32px;
+        margin-right: 32px;
+      }
+    }
+  }
+}
+
 #fu-form-container {
   form {
     :nth-child(1) {
@@ -88,7 +129,26 @@
   }
 }
 
-// #region FORGOT PASSWORD
+#register-form-container {
+  #register-help-bar {
+    width: 100%;
+    height: 25px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+
+    :nth-child(2) {
+      margin-right: 24px;
+    }
+
+    #form-label {
+      font-size: 18px;
+      color: #ffffff;
+    }
+  }
+}
+
+#register-form-container,
 #fp-form-container {
   form {
     :nth-child(1) {
@@ -118,9 +178,12 @@
     :nth-child(7) {
       margin-bottom: 40px;
     }
+
+    :nth-child(8) {
+      margin-bottom: 21px;
+    }
   }
 }
-//#endregion
 
 // #region NOTICE
 #notice-title-container {
@@ -207,4 +270,9 @@
   font-size: 15px;
 }
 
+.form-link {
+  color: #fcb715;
+  font-size: 18px;
+  cursor: pointer;
+}
 //#endregion

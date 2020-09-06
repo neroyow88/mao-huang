@@ -43,6 +43,8 @@ interface State {
 }
 
 class LoginBar extends React.Component<Props, State> {
+  private _loginCount: number = 0;
+
   constructor(props: Props) {
     super(props);
 
@@ -142,6 +144,10 @@ class LoginBar extends React.Component<Props, State> {
     } else {
       const { username, password } = this.state;
       console.log(username, password);
+      this._loginCount++;
+      if (this._loginCount >= 3) {
+        showPopOut && showPopOut(PopOutType.LOGIN);
+      }
     }
   }
 
