@@ -8,6 +8,7 @@ import customStyle from "../../styles/module/noticeModal.module.scss";
 
 interface Props {
   toggle: boolean;
+  scale: number;
   hidePopOut: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
   customPopOutData: GenericObjectType;
@@ -33,7 +34,7 @@ class NoticePopOut extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { toggle, hidePopOut, customPopOutData } = this.props;
+    const { toggle, scale, hidePopOut, customPopOutData } = this.props;
     const { noticeType, title, description, button } = customPopOutData;
     const src = this._getNoticeType(noticeType);
 
@@ -44,19 +45,21 @@ class NoticePopOut extends React.Component<Props> {
         centered
         cssModule={customStyle}
       >
-        <div id="notice-title-container">
-          <div id="notice-title">{title}</div>
-          <div id="cross" onClick={hidePopOut}>
-            <ImageHandler src="pop_out/close.png" scale={0.5} />
+        <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
+          <div id="notice-title-container">
+            <div id="notice-title">{title}</div>
+            <div id="cross" onClick={hidePopOut}>
+              <ImageHandler src="pop_out/close.png" scale={0.5} />
+            </div>
           </div>
-        </div>
-        <div id="pop-out-image-container">
-          <ImageHandler src={`pop_out/${src}`} scale={0.57} />
-        </div>
-        <div id="notice-description">{description}</div>
-        <div id="notice-button-container">
-          <div id="notice-button">
-            <div id="notice-button-label">{button}</div>
+          <div id="pop-out-image-container">
+            <ImageHandler src={`pop_out/${src}`} scale={0.57} />
+          </div>
+          <div id="notice-description">{description}</div>
+          <div id="notice-button-container">
+            <div id="notice-button">
+              <div id="notice-button-label">{button}</div>
+            </div>
           </div>
         </div>
       </Modal>

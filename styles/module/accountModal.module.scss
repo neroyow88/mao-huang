@@ -4,15 +4,9 @@
 }
 
 .modal-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
   pointer-events: auto;
-  background: transparent
-    linear-gradient(180deg, #7a4e12 0%, #1f212e 9%, #1e202f 100%) 0% 0%
-    no-repeat padding-box;
-  border: 3px solid #ffd678;
-  border-radius: 38px;
+  background: none;
+  border: none;
 
   width: 1000px;
   height: 600px;

@@ -25,6 +25,7 @@ import { RegisterPopOut } from "./RegisterPopOut";
 interface Props {
   type: PopOutType;
   toggle: boolean;
+  scale: number;
   customPopOutData: GenericObjectType;
   hidePopOut: NoParamReturnNulFunction;
 }
@@ -56,13 +57,14 @@ class PopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { type, toggle, customPopOutData } = this.props;
+    const { type, toggle, scale, customPopOutData } = this.props;
     let component;
     switch (type) {
       case PopOutType.LOGIN:
         component = (
           <LoginPopOut
             toggle={toggle}
+            scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -72,6 +74,7 @@ class PopOut extends React.Component<Props, State> {
         component = (
           <RegisterPopOut
             toggle={toggle}
+            scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -81,6 +84,7 @@ class PopOut extends React.Component<Props, State> {
         component = (
           <ForgotUsernamePopOut
             toggle={toggle}
+            scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -90,11 +94,24 @@ class PopOut extends React.Component<Props, State> {
         component = (
           <ForgotPasswordPopOut
             toggle={toggle}
+            scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
         );
         break;
+      case PopOutType.NOTICE:
+        component = (
+          <NoticePopOut
+            toggle={toggle}
+            scale={scale}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
+          />
+        );
+        break;
+
       case PopOutType.CARD_MOBILE:
         component = (
           <MobileCardPopOut
@@ -106,13 +123,13 @@ class PopOut extends React.Component<Props, State> {
         );
 
         break;
-      case PopOutType.NOTICE:
+      case PopOutType.LOGIN_MOBILE:
         component = (
-          <NoticePopOut
+          <LoginPopOut
             toggle={toggle}
+            scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
           />
         );
         break;
@@ -121,7 +138,7 @@ class PopOut extends React.Component<Props, State> {
         break;
     }
 
-    return <div id="pop-out-container">{component}</div>;
+    return component;
   }
 
   private _renderLogin(): JSX.Element {
