@@ -21,6 +21,7 @@ import { MobileCardPopOut } from "./MobileCardPopOut";
 import { ForgotUsernamePopOut } from "./ForgotUsernamePopOut";
 import { LoginPopOut } from "./LoginPopOut";
 import { RegisterPopOut } from "./RegisterPopOut";
+import { ProfilePopOut } from "./ProfilePopOut";
 
 interface Props {
   type: PopOutType;
@@ -45,6 +46,7 @@ class PopOut extends React.Component<Props, State> {
     this._renderLogin = this._renderLogin.bind(this);
     this._renderRegister = this._renderRegister.bind(this);
     this._renderForgotUsername = this._renderForgotUsername.bind(this);
+
     this._hidePopOut = this._hidePopOut.bind(this);
     this._transitionComplete = this._transitionComplete.bind(this);
   }
@@ -73,6 +75,16 @@ class PopOut extends React.Component<Props, State> {
       case PopOutType.REGISTER:
         component = (
           <RegisterPopOut
+            toggle={toggle}
+            scale={scale}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.PROFILE:
+        component = (
+          <ProfilePopOut
             toggle={toggle}
             scale={scale}
             hidePopOut={this._hidePopOut}

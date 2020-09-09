@@ -1,6 +1,6 @@
 import React from "react";
-import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
+import { dataSource } from "../model/DataSource";
 
 const rewardToggles = [true, false, false];
 
@@ -23,7 +23,8 @@ class EventBar extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    if (utils.isMobile) {
+    const { isMobile } = dataSource.systemModel;
+    if (isMobile) {
       return (
         <div id="event-bar-container-mobile">
           <div id="image-container-mobile">

@@ -15,8 +15,8 @@ import { PopOut } from "../components/PopOut/PopOut";
 import { PopOutType } from "../model/WebConstant";
 import { loadingManager } from "../model/LoadingManager";
 import { LoadingView } from "../components/LoadingView";
-import { utils } from "../model/Utils";
 import { NavigationBar } from "../components/NavigationBar";
+import { dataSource } from "../model/DataSource";
 
 interface Props {}
 
@@ -58,8 +58,24 @@ export default class Home extends React.Component<Props, State> {
   }
 
   public componentDidMount(): void {
+    // temp
+    const url = new URL(window.location.href);
+    const query = new URLSearchParams(url.search);
+    const username = query.get("username");
+    if (username) {
+      dataSource.updatePlayerModel({
+        isLogin: true,
+        username,
+        balance: 100000,
+      });
+    } else {
+      dataSource.updatePlayerModel({
+        isLogin: false,
+      });
+    }
+
     setInterval((): void => {
-      utils.isMobile = isMobile;
+      dataSource.updateSystemModel({ isMobile });
       this.setState({ isStart: true });
       this._onResize();
       window.addEventListener("resize", this._onResize);
@@ -73,15 +89,14 @@ export default class Home extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const { isStart, isLoading, height, scale } = this.state;
+    const { isMobile } = dataSource.systemModel;
+
     const content = isStart
-      ? utils.isMobile
+      ? isMobile
         ? this._renderMobileView()
         : this._renderBrowserView()
       : null;
-
-    const navigationBar = utils.isMobile ? (
-      <NavigationBar scale={scale} />
-    ) : null;
+    const navigationBar = isMobile ? <NavigationBar scale={scale} /> : null;
 
     return (
       <div id="main-container" style={{ height: height }}>
@@ -163,8 +178,9 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _onResize(): void {
+    const { isMobile } = dataSource.systemModel;
     let newScale;
-    if (utils.isMobile) {
+    if (isMobile) {
       const maxWidth = 375;
       newScale = window.innerWidth / maxWidth;
     } else {

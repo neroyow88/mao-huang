@@ -7,8 +7,8 @@ import {
 } from "reactstrap";
 import customBrowserStyle from "../styles/module/carousel.module.scss";
 import customMobileStyle from "../styles/module/carouselMobile.module.scss";
-import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
+import { dataSource } from "../model/DataSource";
 
 const items = [
   {
@@ -47,7 +47,8 @@ class Slider extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const { activeIndex } = this.state;
-    const customStyle = utils.isMobile ? customMobileStyle : customBrowserStyle;
+    const { isMobile } = dataSource.systemModel;
+    const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
 
     return (
       <div id="slider-container">
@@ -77,8 +78,10 @@ class Slider extends React.Component<Props, State> {
 
   private _renderIndicator(): JSX.Element {
     const { activeIndex } = this.state;
-    const customStyle = utils.isMobile ? customMobileStyle : customBrowserStyle;
-    return utils.isMobile ? null : (
+    const { isMobile } = dataSource.systemModel;
+    const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
+
+    return isMobile ? null : (
       <CarouselIndicators
         items={items}
         activeIndex={activeIndex}
@@ -90,9 +93,10 @@ class Slider extends React.Component<Props, State> {
 
   private _renderSlides(): JSX.Element[] {
     const slides = items.map((item, index: number) => {
-      const url = utils.isMobile ? `mobile/${item.src}` : item.src;
-      const height = utils.isMobile ? 180 : 500;
-      const scale = utils.isMobile ? 375 / 1080 : 1;
+      const { isMobile } = dataSource.systemModel;
+      const url = isMobile ? `mobile/${item.src}` : item.src;
+      const height = isMobile ? 180 : 500;
+      const scale = isMobile ? 375 / 1080 : 1;
       return (
         <CarouselItem
           onExiting={() => this.setState({ animating: true })}

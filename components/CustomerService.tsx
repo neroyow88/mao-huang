@@ -1,6 +1,6 @@
 import React from "react";
-import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
+import { dataSource } from "../model/DataSource";
 // import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
 
 const iconType = {
@@ -20,7 +20,8 @@ class CustomerService extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    if (utils.isMobile) {
+    const { isMobile } = dataSource.systemModel;
+    if (isMobile) {
       return this._renderMobileView();
     } else {
       return this._renderBrowserView();
@@ -85,12 +86,10 @@ class CustomerService extends React.Component<Props> {
   }
 
   private _renderCustomerService(src: string, name: string): JSX.Element {
-    const url = utils.isMobile
-      ? "mobile/customer_service/"
-      : "customer_service/";
-
-    const profileScale = utils.isMobile ? 0.7 : 1;
-    const quationScale = utils.isMobile ? 0.5 : 1;
+    const { isMobile } = dataSource.systemModel;
+    const url = isMobile ? "mobile/customer_service/" : "customer_service/";
+    const profileScale = isMobile ? 0.7 : 1;
+    const quationScale = isMobile ? 0.5 : 1;
 
     return (
       <div className="profile-container">

@@ -1,6 +1,6 @@
 import React from "react";
-import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
+import { dataSource } from "../model/DataSource";
 
 interface Props {}
 
@@ -13,7 +13,8 @@ class NoticeBoard extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    if (utils.isMobile) {
+    const { isMobile } = dataSource.systemModel;
+    if (isMobile) {
       return this._noticeBoardMobile();
     } else {
       return this._noticeBoardBrowser();

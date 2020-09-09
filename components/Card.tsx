@@ -1,7 +1,7 @@
 import React from "react";
-import { PopOutType } from "../model/WebConstant";
 import { ImageHandler } from "./ImageHandler";
-import { utils } from "../model/Utils";
+import { PopOutType } from "../model/WebConstant";
+import { dataSource } from "../model/DataSource";
 
 interface Props {
   showPopOut: (any: number, data?: GenericObjectType) => void;
@@ -20,7 +20,9 @@ class CardList extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const { showPopOut } = this.props;
-    if (utils.isMobile) {
+    const { isMobile } = dataSource.systemModel;
+
+    if (isMobile) {
       return (
         <div id="cards-container-mobile">
           <div id="card-item-container">

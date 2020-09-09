@@ -1,7 +1,7 @@
 import React from "react";
-import { gameListModel } from "../model/GameListConstant";
-import { utils } from "../model/Utils";
 import { ImageHandler } from "./ImageHandler";
+import { gameListModel } from "../model/GameListConstant";
+import { dataSource } from "../model/DataSource";
 
 interface IDropdownItem {
   title: string;
@@ -38,7 +38,8 @@ class GameListBar extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    if (utils.isMobile) {
+    const { isMobile } = dataSource.systemModel;
+    if (isMobile) {
       return this._renderGameListMobile();
     } else {
       return this._renderGameListBrowser();

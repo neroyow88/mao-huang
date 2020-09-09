@@ -26,16 +26,16 @@ class FormInputBox extends React.Component<Props> {
       max,
     } = this.props;
 
-    const background = {
+    const style = {
       backgroundImage: `${leftImage ? `url(${leftImage})` : ""}${
         leftImage && rightImage ? ", " : ""
       }${rightImage ? `url(${rightImage})` : ""}`,
       backgroundPosition: `${leftImage ? "5% 50%" : ""}${
         leftImage && rightImage ? ", " : ""
       }${rightImage ? "95% 50%" : ""}`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "20px",
-      paddingLeft: `${leftImage ? "40px" : "5px"}`,
+      backgroundRepeat: leftImage || rightImage ? "no-repeat" : "",
+      backgroundSize: leftImage || rightImage ? "20px" : "",
+      paddingLeft: leftImage ? "40px" : "5px",
     };
 
     const minLength = min ? min : 0;
@@ -47,7 +47,7 @@ class FormInputBox extends React.Component<Props> {
         id={id}
         name={id}
         placeholder={placeholder}
-        style={background}
+        style={style}
         required
         minLength={minLength}
         maxLength={maxLength}
