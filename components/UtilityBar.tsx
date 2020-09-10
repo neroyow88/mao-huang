@@ -1,79 +1,61 @@
 import React from "react";
-import { Nav, NavItem, Navbar, NavLink } from "reactstrap";
+import { ImageHandler } from "./ImageHandler";
+import { PopOutType } from "../model/WebConstant";
 
-interface IUtilityItem {
-  label: string;
-  image?: string;
+interface Props {
+  showPopOut: (any: number, data?: GenericObjectType) => void;
 }
-
-const styles = {
-  navbarStyle: {
-    height: "100%",
-    width: "100%",
-  },
-  navStyle: {
-    height: "100%",
-    width: "100%",
-    paddingLeft: "10%",
-    fontSize: "18px",
-  },
-  navItemStyle: {
-    paddingRight: "70px",
-  },
-  utilityItemContainer: {
-    marginTop: "40px",
-    paddingRight: "80px",
-  },
-};
-
-interface Props {}
 
 class UtilityBar extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
     this._renderUtilityItem = this._renderUtilityItem.bind(this);
+    this._onTopUpClick = this._onTopUpClick.bind(this);
   }
 
   public render(): JSX.Element {
     const balance = 2432.13;
+
     return (
       <div id="utility-bar-container">
-        <Navbar style={styles.navbarStyle}>
-          <Nav style={styles.navStyle}>
-            <NavItem style={styles.navItemStyle}>
-              <img src={"logo.png"} />
-            </NavItem>
-            {this._renderUtilityItem({ label: "猫皇", image: "520-logo2.png" })}
-            {this._renderUtilityItem({ label: "游戏充值" })}
-            {this._renderUtilityItem({ label: "快速提款" })}
-            {this._renderUtilityItem({ label: "户内转帐" })}
-            {this._renderUtilityItem({ label: "留言信息" })}
-            {this._renderUtilityItem({ label: `猫皇余额 : ${balance}` })}
-          </Nav>
-        </Navbar>
+        <div id="utility-items-container">
+          <div id="logo-container">
+            <ImageHandler src={"logo.png"} />
+          </div>
+          {this._renderUtilityItem("猫皇", undefined, "520-logo2.png")}
+          {this._renderUtilityItem("游戏充值", this._onTopUpClick)}
+          {this._renderUtilityItem("快速提款")}
+          {this._renderUtilityItem("户内转帐")}
+          {this._renderUtilityItem("留言信息")}
+          {this._renderUtilityItem(`猫皇余额 : ${balance}`)}
+        </div>
       </div>
     );
   }
 
-  private _renderUtilityItem(content: IUtilityItem): JSX.Element {
-    const imageComponent = content.image ? (
-      <img src="520-logo2.png"></img>
+  private _renderUtilityItem(
+    label: string,
+    onClick?: NoParamReturnNulFunction,
+    src?: string
+  ): JSX.Element {
+    const imageComponent = src ? (
+      <div className="utility-image">
+        <ImageHandler src={src} />
+      </div>
     ) : null;
 
     return (
-      <NavItem style={styles.utilityItemContainer}>
-        <NavLink
-          href=""
-          style={{
-            color: "#FCB715",
-          }}
-        >
-          {content.label}
-          {imageComponent}
-        </NavLink>
-      </NavItem>
+      <div className="utility-item-container" onClick={onClick}>
+        <div className="utility-label">{label}</div>
+        {imageComponent}
+      </div>
     );
+  }
+
+  private _onTopUpClick(): void {
+    const { showPopOut } = this.props;
+    showPopOut && showPopOut(PopOutType.TOP_UP_WALLET);
   }
 }
 

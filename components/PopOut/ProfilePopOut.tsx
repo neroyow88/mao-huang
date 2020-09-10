@@ -267,7 +267,7 @@ class ProfilePopOut extends React.Component<Props, State> {
     if (selectedIndex === index) {
       return { backgroundColor: "#E9A400" };
     } else {
-      return { backgroundColor: "#000000" };
+      return { backgroundColor: "black" };
     }
   }
 }

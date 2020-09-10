@@ -125,7 +125,7 @@ class LoginBar extends React.Component<Props, State> {
               <FormButton
                 label="登入"
                 background="transparent linear-gradient(180deg, #FCB715 0%, #E9A400 100%)"
-                color="#FFFFFF"
+                color="white"
                 submit
                 onClick={this._onLoginClicked}
               />

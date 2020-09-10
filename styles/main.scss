@@ -1,6 +1,6 @@
-@import "utilityBar.scss", "loginBar.scss", "noticeBoard.scss", "card.scss",
-  "eventBar.scss", "gameList.scss", "customerService.scss", "sponsor.scss",
-  "popOut.scss", "navigationBar.scss", "slider.scss";
+@import "LoginBar.scss", "UtilityBar.scss", "NoticeBoard.scss", "Card.scss",
+  "EventBar.scss", "GameList.scss", "CustomerService.scss", "Sponsor.scss",
+  "pop_out/PopOut.scss", "NavigationBar.scss", "Slider.scss";
 
 #main-container {
   position: relative;
@@ -24,7 +24,7 @@
 #loading-container {
   position: absolute;
   width: 100%;
-  background-color: #ffffff;
+  background-color: white;
   transition: opacity 1s;
   z-index: 999;
 }
@@ -41,5 +41,5 @@
 }
 
 .white {
-  color: #ffffff;
+  color: white;
 }

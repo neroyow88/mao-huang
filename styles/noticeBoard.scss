@@ -7,13 +7,13 @@
 #notice-board-container-mobile {
   display: flex;
   flex-direction: row;
-  background-color: #000000;
+  background-color: black;
   height: 25px;
 
   #left-board-container-mobile {
     width: 43px;
     position: relative;
-    background-color: #000000;
+    background-color: black;
     height: 25px;
 
     :nth-child(1) {
@@ -47,7 +47,7 @@
       flex-direction: row;
       bottom: 16px;
       left: 50%;
-      color: #ffffff;
+      color: white;
       align-items: center;
       z-index: 2;
 
@@ -81,7 +81,7 @@
   height: 100%;
   text-align: center;
   margin: 0;
-  color: #ffffff;
+  color: white;
 }
 
 #scroll-left-mobile {

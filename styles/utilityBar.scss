@@ -1,6 +1,43 @@
 #utility-bar-container {
-  height: 90px;
+  height: 106px;
   width: 100%;
   background: #ad0002;
   border: 2px solid #ad0002;
+  user-select: none;
+
+  #utility-items-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 240px;
+
+    #logo-container {
+      width: 210px;
+      height: 75px;
+      position: relative;
+    }
+
+    .utility-item-container {
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+      margin-left: 95px;
+
+      .utility-label {
+        color: #fcb715;
+        margin-top: 66px;
+        font-size: 18px;
+      }
+
+      .utility-image {
+        width: 57px;
+        height: 25px;
+        position: relative;
+        margin-top: 66px;
+      }
+    }
+  }
 }

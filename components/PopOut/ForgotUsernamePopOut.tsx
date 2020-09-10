@@ -52,7 +52,10 @@ class ForgotUsernamePopOut extends React.Component<Props> {
               onClick={hidePopOut}
             />
           </div>
-          <div id="fu-form-container" className="pop-out-form-container">
+          <div
+            id="forgot-username-form-container"
+            className="pop-out-form-container"
+          >
             <form autoComplete="off">
               <FormInputBox id="phonenumber" placeholder="请输入您的手机号码" />
               <FormButton

@@ -13,15 +13,16 @@ import {
 
 import { PopOutType } from "../../model/WebConstant";
 import { NoticePopOut } from "./NoticePopOut";
-import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
-
-// module scss
-import customStyle from "../../styles/module/modal.module.scss";
-import { MobileCardPopOut } from "./MobileCardPopOut";
 import { ForgotUsernamePopOut } from "./ForgotUsernamePopOut";
+import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
 import { LoginPopOut } from "./LoginPopOut";
 import { RegisterPopOut } from "./RegisterPopOut";
 import { ProfilePopOut } from "./ProfilePopOut";
+import { TopUpWalletPopOut } from "./TopUpWalletPopOut";
+import { MobileCardPopOut } from "./MobileCardPopOut";
+
+// module scss
+import customStyle from "../../styles/module/modal.module.scss";
 
 interface Props {
   type: PopOutType;
@@ -105,6 +106,16 @@ class PopOut extends React.Component<Props, State> {
       case PopOutType.FORGOT_PASSWORD:
         component = (
           <ForgotPasswordPopOut
+            toggle={toggle}
+            scale={scale}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.TOP_UP_WALLET:
+        component = (
+          <TopUpWalletPopOut
             toggle={toggle}
             scale={scale}
             hidePopOut={this._hidePopOut}

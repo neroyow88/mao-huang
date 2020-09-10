@@ -58,7 +58,10 @@ class ForgotPasswordPopOut extends React.Component<Props> {
               onClick={hidePopOut}
             />
           </div>
-          <div id="fp-form-container" className="pop-out-form-container">
+          <div
+            id="forgot-password-form-container"
+            className="pop-out-form-container"
+          >
             <form autoComplete="off">
               <FormInputBox
                 id="username"

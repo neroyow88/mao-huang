@@ -76,16 +76,11 @@ class EventBar extends React.Component<Props, State> {
             <img src="event_bar/title_02.png"></img>
           </div>
           <div id="buttons-container">
-            {this._renderButtonItem(
-              "button_blue.png",
-              "活动详情",
-              "#ffffff",
-              1
-            )}
+            {this._renderButtonItem("button_blue.png", "活动详情", "white", 1)}
             {this._renderButtonItem(
               "button_yellow.png",
               "打卡领现金",
-              "#000000",
+              "black",
               2
             )}
           </div>

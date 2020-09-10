@@ -138,7 +138,7 @@ export default class Home extends React.Component<Props, State> {
     return (
       <div id="map-browser" style={{ transform: `scale(${scale})` }}>
         <LoginBar showPopOut={this._showPopOut} />
-        <UtilityBar />
+        <UtilityBar showPopOut={this._showPopOut} />
         <GameListBar isLoaded={!isLoading} />
         <Slider />
         <NoticeBoard />
