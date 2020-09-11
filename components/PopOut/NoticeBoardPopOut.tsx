@@ -4,8 +4,7 @@ import { Modal } from "reactstrap";
 import { ImageHandler } from "../ImageHandler";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
-import { FormInputBox } from "./FormInputBox";
-import { FormButton } from "./FormButton";
+import { NewsModel } from "../../model/NewsModel";
 
 interface Props {
   toggle: boolean;
@@ -14,7 +13,7 @@ interface Props {
   transitionComplete: NoParamReturnNulFunction;
 }
 
-class ForgotUsernamePopOut extends React.Component<Props> {
+class NoticeBoardPopOut extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -33,6 +32,24 @@ class ForgotUsernamePopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale, hidePopOut } = this.props;
+    const components = NewsModel.map(
+      (model: GenericObjectType, index: number): JSX.Element => {
+        const bgColor = index % 2 === 0 ? "dark-background" : "";
+        return (
+          <div
+            className={`news-container ${bgColor}`}
+            key={`news-container-${index}`}
+          >
+            <div className="date-label yellow" key={`date-label-${index}`}>
+              {model.date}
+            </div>
+            <div className="news-label white" key={`news-label-${index}`}>
+              {model.news}
+            </div>
+          </div>
+        );
+      }
+    );
 
     return (
       <Modal
@@ -45,42 +62,18 @@ class ForgotUsernamePopOut extends React.Component<Props> {
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
           <div id="pop-out-title-container">
             <ImageHandler src="pop_out/title_bg.png" scale={0.47} />
-            <div id="pop-out-title">忘记帐号</div>
+            <div id="pop-out-title">公告栏</div>
             <ImageHandler
               src="pop_out/close_button.png"
               scale={0.44}
               onClick={hidePopOut}
             />
           </div>
-          <div
-            id="forgot-username-form-container"
-            className="pop-out-form-container"
-          >
-            <form autoComplete="off">
-              <FormInputBox id="phonenumber" placeholder="请输入您的手机号码" />
-              <FormButton
-                label="获取短信验证码"
-                background="#83D300"
-                onClick={(): void => {
-                  console.log("Verification code send");
-                }}
-              />
-              <FormInputBox
-                id="verificationcode"
-                placeholder="请输入短信验证码"
-                rightImage={"pop_out/password_eye.png"}
-              />
-              <FormButton
-                label="提交"
-                background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
-                submit
-              />
-            </form>
-          </div>
+          <div id="notice-board-container">{components}</div>
         </div>
       </Modal>
     );
   }
 }
 
-export { ForgotUsernamePopOut };
+export { NoticeBoardPopOut };

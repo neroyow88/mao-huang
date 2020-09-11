@@ -6,6 +6,7 @@ export enum PopOutType {
   FORGOT_USERNAME = 4,
   FORGOT_PASSWORD = 5,
   TOP_UP_WALLET = 6,
+  NEWS = 7,
 
   CARD_MOBILE = 21,
   LOGIN_MOBILE = 22,

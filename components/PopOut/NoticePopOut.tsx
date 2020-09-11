@@ -4,7 +4,7 @@ import { Modal } from "reactstrap";
 import { ImageHandler } from "../ImageHandler";
 import { NoticeType } from "../../model/WebConstant";
 
-import customStyle from "../../styles/module/noticeModal.module.scss";
+import customStyle from "../../styles/module/NoticeModal.module.scss";
 
 interface Props {
   toggle: boolean;

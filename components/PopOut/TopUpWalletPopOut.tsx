@@ -6,7 +6,8 @@ import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
 import { transactionModel } from "../../model/TopUpConstant";
 
-import customStyle from "../../styles/module/accountModal.module.scss";
+import customStyle from "../../styles/module/AccountModal.module.scss";
+import tutorialCustomStyle from "../../styles/module/TutorialModal.module.scss";
 
 interface Props {
   toggle: boolean;
@@ -100,13 +101,9 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
     );
   }
 
-  private _renderTopUpOptionMenu(
-    index: number,
-    src: string,
-    label: string,
-    subLabel: string
-  ): JSX.Element {
+  private _renderTopUpOptionMenu(index: number, src: string): JSX.Element {
     const { selectedIndex } = this.state;
+    const model = transactionModel[index];
     const opacity = selectedIndex === index ? 1 : 0.7;
     return (
       <div
@@ -117,11 +114,8 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
         style={{ opacity: opacity }}
       >
         <div className="option-image">
-          <ImageHandler src={src} scale={0.4} />
-        </div>
-        <div className="option-label-container">
-          <div className="option-label">{label}</div>
-          <div className="option-sub-label">{subLabel}</div>
+          <ImageHandler src={src} scale={0.6} />
+          <div className="round">{`${model.options.length}`}</div>
         </div>
       </div>
     );
@@ -141,8 +135,7 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
           <FormButton
             label="下一步"
             background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
-            submit
-          />{" "}
+          />
         </form>
       </div>
     );

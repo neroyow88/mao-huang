@@ -1,8 +1,11 @@
 import React from "react";
 import { ImageHandler } from "./ImageHandler";
 import { dataSource } from "../model/DataSource";
+import { PopOutType } from "../model/WebConstant";
 
-interface Props {}
+interface Props {
+  showPopOut?: (any: number, data?: GenericObjectType) => void;
+}
 
 class NoticeBoard extends React.Component<Props> {
   constructor(props: Props) {
@@ -10,6 +13,7 @@ class NoticeBoard extends React.Component<Props> {
 
     this._noticeBoardMobile = this._noticeBoardMobile.bind(this);
     this._noticeBoardBrowser = this._noticeBoardBrowser.bind(this);
+    this._onNewsClicked = this._onNewsClicked.bind(this);
   }
 
   public render(): JSX.Element {
@@ -40,7 +44,10 @@ class NoticeBoard extends React.Component<Props> {
     return (
       <div id="notice-board-container-browser">
         <div id="left-board-container-browser">
-          <div id="notice-title-container-browser">
+          <div
+            id="notice-title-container-browser"
+            onClick={this._onNewsClicked}
+          >
             <div>公告栏</div>
             <img src="icon_volume.png"></img>
           </div>
@@ -53,6 +60,11 @@ class NoticeBoard extends React.Component<Props> {
         </div>
       </div>
     );
+  }
+
+  private _onNewsClicked(): void {
+    const { showPopOut } = this.props;
+    showPopOut && showPopOut(PopOutType.NEWS);
   }
 }
 

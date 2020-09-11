@@ -3,7 +3,7 @@ import { Modal } from "reactstrap";
 
 import { ImageHandler } from "../ImageHandler";
 
-import customStyle from "../../styles/module/accountModal.module.scss";
+import customStyle from "../../styles/module/AccountModal.module.scss";
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
 import { dataSource } from "../../model/DataSource";

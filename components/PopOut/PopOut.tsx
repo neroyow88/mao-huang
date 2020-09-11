@@ -12,17 +12,18 @@ import {
 } from "reactstrap";
 
 import { PopOutType } from "../../model/WebConstant";
-import { NoticePopOut } from "./NoticePopOut";
 import { ForgotUsernamePopOut } from "./ForgotUsernamePopOut";
 import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
 import { LoginPopOut } from "./LoginPopOut";
 import { RegisterPopOut } from "./RegisterPopOut";
 import { ProfilePopOut } from "./ProfilePopOut";
 import { TopUpWalletPopOut } from "./TopUpWalletPopOut";
+import { NoticeBoardPopOut } from "./NoticeBoardPopOut";
 import { MobileCardPopOut } from "./MobileCardPopOut";
+import { NoticePopOut } from "./NoticePopOut";
 
 // module scss
-import customStyle from "../../styles/module/modal.module.scss";
+import customStyle from "../../styles/module/Modal.module.scss";
 
 interface Props {
   type: PopOutType;
@@ -123,14 +124,13 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
-      case PopOutType.NOTICE:
+      case PopOutType.NEWS:
         component = (
-          <NoticePopOut
+          <NoticeBoardPopOut
             toggle={toggle}
             scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
           />
         );
         break;
@@ -153,6 +153,18 @@ class PopOut extends React.Component<Props, State> {
             scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+
+      case PopOutType.NOTICE:
+        component = (
+          <NoticePopOut
+            toggle={toggle}
+            scale={scale}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
           />
         );
         break;

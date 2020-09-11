@@ -3,7 +3,7 @@ import { Modal } from "reactstrap";
 
 import { ImageHandler } from "../ImageHandler";
 
-import customStyle from "../../styles/module/cardMobileModal.module.scss";
+import customStyle from "../../styles/module/CardMobileModal.module.scss";
 
 interface Props {
   toggle: boolean;

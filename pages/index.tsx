@@ -141,7 +141,7 @@ export default class Home extends React.Component<Props, State> {
         <UtilityBar showPopOut={this._showPopOut} />
         <GameListBar isLoaded={!isLoading} />
         <Slider />
-        <NoticeBoard />
+        <NoticeBoard showPopOut={this._showPopOut} />
         <CardList showPopOut={this._showPopOut} />
         <EventBar />
         <CustomerService />

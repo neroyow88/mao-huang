@@ -180,6 +180,15 @@ class GameListBar extends React.Component<Props, State> {
           style={{ transform: `translateY(${yPos}%)` }}
         >
           <div
+            className="dropdown-menu-title"
+            key={`dropdown-menu-title-${index}`}
+          >
+            <img
+              src={`game_list/${content.prefix}/logo.png`}
+              style={{ transform: "scale(0.5)" }}
+            />
+          </div>
+          <div
             className="dropdown-menu-grid"
             key={`dropdown-menu-grid-${index}`}
           >

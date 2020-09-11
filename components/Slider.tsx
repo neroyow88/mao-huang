@@ -5,8 +5,8 @@ import {
   CarouselControl,
   CarouselIndicators,
 } from "reactstrap";
-import customBrowserStyle from "../styles/module/carousel.module.scss";
-import customMobileStyle from "../styles/module/carouselMobile.module.scss";
+import customBrowserStyle from "../styles/module/Carousel.module.scss";
+import customMobileStyle from "../styles/module/CarouselMobile.module.scss";
 import { ImageHandler } from "./ImageHandler";
 import { dataSource } from "../model/DataSource";
 
