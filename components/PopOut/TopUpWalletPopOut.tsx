@@ -7,7 +7,7 @@ import { FormButton } from "./FormButton";
 import { transactionModel } from "../../model/TopUpConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
-import tutorialCustomStyle from "../../styles/module/TutorialModal.module.scss";
+import { TutorialPopOut } from "./TutorialPopOut";
 
 interface Props {
   toggle: boolean;
@@ -18,6 +18,7 @@ interface Props {
 
 interface State {
   selectedIndex: number;
+  tutorialToggle: boolean;
 }
 
 class TopUpWalletPopOut extends React.Component<Props, State> {
@@ -26,12 +27,15 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
 
     this.state = {
       selectedIndex: 0,
+      tutorialToggle: false,
     };
 
     this._renderTopUpOptionMenu = this._renderTopUpOptionMenu.bind(this);
     this._renderTopUpContent = this._renderTopUpContent.bind(this);
     this._renderRadioButton = this._renderRadioButton.bind(this);
 
+    this._toggleTutorial = this._toggleTutorial.bind(this);
+    this.toNextStep = this.toNextStep.bind(this);
     this._changeIndex = this._changeIndex.bind(this);
   }
 
@@ -70,24 +74,9 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
             />
           </div>
           <div id="top-up-option-menu-container">
-            {this._renderTopUpOptionMenu(
-              0,
-              "wallet/pay_icon.png",
-              "支付宝",
-              "ALIPAY"
-            )}
-            {this._renderTopUpOptionMenu(
-              1,
-              "wallet/bank_icon.png",
-              "银行转账",
-              "充值返利0.5%"
-            )}
-            {this._renderTopUpOptionMenu(
-              2,
-              "wallet/pay_wechat_icon.png",
-              "支付宝或微信",
-              "转银行卡"
-            )}
+            {this._renderTopUpOptionMenu(0, "wallet/pay_icon.png")}
+            {this._renderTopUpOptionMenu(1, "wallet/bank_icon.png")}
+            {this._renderTopUpOptionMenu(2, "wallet/pay_wechat_icon.png")}
           </div>
           <div
             id="option-arrow"
@@ -122,7 +111,8 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
   }
 
   private _renderTopUpContent(): JSX.Element {
-    const { selectedIndex } = this.state;
+    const { scale } = this.props;
+    const { selectedIndex, tutorialToggle } = this.state;
     return (
       <div id="top-up-container">
         <form autoComplete="off">
@@ -135,6 +125,13 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
           <FormButton
             label="下一步"
             background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+            // onClick={this._topUpNextStep}
+            onClick={this._toggleTutorial}
+          />
+          <TutorialPopOut
+            toggle={tutorialToggle}
+            scale={scale}
+            hidePopOut={this._toggleTutorial}
           />
         </form>
       </div>
@@ -164,6 +161,13 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
       </div>
     );
   }
+
+  private _toggleTutorial(): void {
+    const { tutorialToggle } = this.state;
+    this.setState({ tutorialToggle: !tutorialToggle });
+  }
+
+  private toNextStep(): void {}
 
   private _changeIndex(index: number): void {
     this.setState({ selectedIndex: index });
