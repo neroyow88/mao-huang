@@ -40,10 +40,10 @@ class CustomerService extends React.Component<Props> {
     return (
       <div
         id="customer-service-container-browser"
-        className="row-container center center"
+        className="row-container center"
       >
         <div id="left-service-container" className="column-container center">
-          <div className="icons-container row-container center center">
+          <div className="icons-container row-container center">
             {this._renderIcon(
               "icon/icon_about.png",
               "关于猫皇",
