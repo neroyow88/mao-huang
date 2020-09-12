@@ -72,7 +72,10 @@ class ProfilePopOut extends React.Component<Props, State> {
               onClick={hidePopOut}
             />
           </div>
-          <div id="profile-selection-menu-container">
+          <div
+            id="profile-selection-menu-container"
+            className="row-container center"
+          >
             {this._renderProfileMenu(0, "会员资料")}
             {this._renderProfileMenu(1, "更改登录密码")}
             {this._renderProfileMenu(2, "设置提款密码")}
@@ -86,7 +89,7 @@ class ProfilePopOut extends React.Component<Props, State> {
   private _renderProfileMenu(index: number, label: string): JSX.Element {
     return (
       <div
-        className="profile-menu"
+        className="profile-menu column-container center"
         onClick={(): void => {
           this._changeIndex(index);
         }}
@@ -119,8 +122,8 @@ class ProfilePopOut extends React.Component<Props, State> {
   private _renderPlayerProfile(): JSX.Element {
     const { username } = dataSource.playerModel;
     return (
-      <div id="profile-container">
-        <div className="profile-row">
+      <div id="profile-container" className="column-container center">
+        <div className="profile-content row-container center">
           <div className="profile-box">
             <div className="profile-label">会员账号</div>
           </div>
@@ -128,7 +131,7 @@ class ProfilePopOut extends React.Component<Props, State> {
             <div className="profile-label">{username}</div>
           </div>
         </div>
-        <div className="profile-row">
+        <div className="profile-content row-container center">
           <div className="profile-box">
             <div className="profile-label">会员手机</div>
           </div>
@@ -186,7 +189,7 @@ class ProfilePopOut extends React.Component<Props, State> {
           />
           <FormButton
             label="提交"
-            background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+            backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
             submit
           />
         </form>
@@ -208,7 +211,7 @@ class ProfilePopOut extends React.Component<Props, State> {
           <FormInputBox id="phonenumber" placeholder="请输入注册手机号码" />
           <FormButton
             label="获取短信验证码"
-            background="#83D300"
+            backgroundColor="#83D300"
             onClick={(): void => {
               console.log("Verification code send");
             }}
@@ -241,7 +244,7 @@ class ProfilePopOut extends React.Component<Props, State> {
           />
           <FormButton
             label="提交"
-            background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+            backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
             submit
           />
         </form>

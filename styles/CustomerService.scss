@@ -5,10 +5,7 @@
 
   .profile-container {
     position: relative;
-    display: flex;
-    flex-direction: column;
     padding-top: 115px;
-    align-items: center;
 
     :nth-child(1) {
       top: 25px;
@@ -45,18 +42,14 @@
 }
 
 #customer-service-container-browser {
-  display: flex;
-  flex-direction: row;
   height: 400px;
-  width: 80%;
+  width: 100%;
   color: white;
-  margin-left: 20%;
+  margin-left: 2%;
 
   #left-service-container {
     height: 100%;
     width: 42%;
-    display: flex;
-    flex-direction: column;
     padding-top: 50px;
 
     #suggestion-label {
@@ -74,10 +67,7 @@
 
     .profile-container {
       position: relative;
-      display: flex;
-      flex-direction: column;
       padding-top: 164px;
-      align-items: center;
 
       :nth-child(1) {
         left: 217.5px;
@@ -93,8 +83,6 @@
 
       .description-label {
         position: relative;
-        display: flex;
-        flex-direction: row;
         padding-top: 35px;
 
         :nth-child(1),
@@ -115,20 +103,6 @@
 }
 
 .icons-container {
-  display: flex;
-  flex-direction: row;
   padding-bottom: 30px;
   width: 100%;
-}
-
-.icon-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  .icon-image-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }

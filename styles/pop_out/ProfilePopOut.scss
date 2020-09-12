@@ -1,16 +1,10 @@
 #profile-selection-menu-container {
   width: 100%;
   height: 46px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   margin-top: 42px;
 
   .profile-menu {
     width: 260px;
-    display: flex;
-    flex-direction: column;
     cursor: pointer;
 
     .label-container {
@@ -30,18 +24,11 @@
 }
 
 #profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   margin-top: 140px;
 
-  .profile-row {
+  .profile-content {
     width: 560px;
     height: 50px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 
     .profile-box {
       width: 50%;

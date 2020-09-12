@@ -8,10 +8,6 @@
 
   #card-item-container {
     height: 90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 
     #card-01 {
       transform: translate(-75px, 50px) rotate(-15deg);
@@ -33,10 +29,6 @@
 
   #card-item-container {
     height: 90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     user-select: none;
 
     #card-02 {
@@ -103,9 +95,6 @@
   width: 100%;
   height: 40px;
   position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   bottom: 30px;
   z-index: 1;
 
@@ -121,7 +110,7 @@
 .card-button-container {
   width: 120px;
   height: 40px;
-  background: transparent linear-gradient(180deg, #ffd630 0%, #ffb300 100%);
+  background-image: linear-gradient(180deg, #ffd630 0%, #ffb300 100%);
 
   .card-button-label {
     width: 100%;

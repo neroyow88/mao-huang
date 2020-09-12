@@ -48,15 +48,15 @@ class NavigationBar extends React.Component<Props, State> {
           opacity: opacity,
         }}
       >
-        <div id="first-row-container">
+        <div id="first-row-container" className="row-container center">
           {this._renderAboutItem("about", "关于猫皇", 0.1)}
         </div>
-        <div id="second-row-container">
+        <div id="second-row-container" className="row-container center">
           {this._renderAboutItem("withdraw", "快速提款", 0.28)}
           {this._renderAboutItem("deposit", "游戏充值", 0.35)}
           {this._renderAboutItem("question", "常见问题", 0.31)}
         </div>
-        <div id="third-row-container">
+        <div id="third-row-container" className="row-container center">
           {this._renderAboutItem("list", "服务条款", 0.36)}
           {this._renderAboutItem("privacy", "私隐保障", 0.35)}
         </div>
@@ -79,7 +79,7 @@ class NavigationBar extends React.Component<Props, State> {
 
   private _renderNavigationBar(): JSX.Element {
     return (
-      <div id="navigation-bar-background">
+      <div id="navigation-bar-background" className="row-container center">
         {this._renderNavigationItem("home", "主页", 0.22, 1)}
         {this._renderNavigationItem("mail", "留言信息", 0.22, 2)}
         {this._renderNavigationItem("about", "关于", 0.5, 3)}
@@ -108,6 +108,7 @@ class NavigationBar extends React.Component<Props, State> {
     return (
       <div
         id={`${id}-container`}
+        className="column-container center"
         onClick={(): void => {
           this._setCurrentIndex(index);
         }}

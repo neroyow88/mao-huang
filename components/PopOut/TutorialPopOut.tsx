@@ -45,7 +45,7 @@ class TutorialPopOut extends React.Component<Props, State> {
           className="tutorial-container"
           style={{ transform: `scale(${scale})` }}
         >
-          <div className="tutorial-option-menu">
+          <div className="tutorial-option-menu row-container center">
             {this._renderTutorialOption(0, "支付宝转银行卡 步骤说明")}
             {this._renderTutorialOption(1, "微信转银行卡 步骤说明")}
           </div>
@@ -66,9 +66,9 @@ class TutorialPopOut extends React.Component<Props, State> {
     const backgroundColor = index === tutorialIndex ? "#E9A400" : "#000000";
 
     return (
-      <div className="tutorial-option-column-container">
+      <div className="tutorial-option-column-container column-container center">
         <div
-          className="tutorial-option-row-container"
+          className="tutorial-option-row-container column-container center"
           onClick={(): void => {
             this._changeIndex(index);
           }}

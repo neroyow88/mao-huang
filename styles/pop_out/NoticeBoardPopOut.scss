@@ -1,15 +1,9 @@
 #notice-board-container {
   width: 100%;
   height: 360px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin-top: 57px;
 
   .news-container {
-    display: flex;
-    flex-direction: row;
     width: 685px;
     padding-top: 20px;
     padding-bottom: 20px;

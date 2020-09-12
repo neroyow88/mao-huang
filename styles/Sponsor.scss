@@ -6,9 +6,6 @@
 #sponsor-container {
   height: 260px;
   background-color: #ad0002;
-  display: flex;
-  flex-direction: row;
-  padding-left: 360px;
   color: white;
 
   .child-container {
@@ -33,9 +30,6 @@
     width: 260px;
 
     #payment-content-container {
-      display: flex;
-      flex-direction: column;
-
       .payment-image-container {
         padding-bottom: 24px;
       }
@@ -56,14 +50,11 @@
   #contact-container {
     width: 250px;
 
-    #contact-content-container {
-      display: flex;
-      flex-direction: column;
-
-      .contact-content-row-container {
-        display: flex;
-        flex-direction: row;
+    #contact-contents-container {
+      .contact-content-container {
         padding-bottom: 10px;
+        cursor: pointer;
+        user-select: none;
 
         .contact-image-container {
           padding-right: 10px;

@@ -15,7 +15,7 @@ class SponsorBar extends React.Component<Props> {
   public render(): JSX.Element {
     return (
       <div id="sponsor-bar-container">
-        <div id="sponsor-container">
+        <div id="sponsor-container" className="row-container center">
           {this._renderPlatform()}
           {this._renderPayment()}
           {this._renderFeedback()}
@@ -34,19 +34,19 @@ class SponsorBar extends React.Component<Props> {
       <div id="platform-container" className="child-container">
         <div className="sponsor-title-label">游戏平台</div>
         <div id="platform-content-container">
-          <div className="platform-content-row-container">
+          <div className="platform-content-row-container center">
             <img src="sponsor/logo_KY.png"></img>
             <img src="sponsor/logo_AG.png"></img>
           </div>
-          <div className="platform-content-row-container">
+          <div className="platform-content-row-container center">
             <img src="sponsor/logo_LEG.png"></img>
             <img src="sponsor/logo_ebet.png"></img>
           </div>
-          <div className="platform-content-row-container">
+          <div className="platform-content-row-container center">
             <img src="sponsor/logo_KG.png"></img>
             <img src="sponsor/logo_N2.png"></img>
           </div>
-          <div className="platform-content-row-container">
+          <div className="platform-content-row-container center">
             <img src="sponsor/logo_KMG.png"></img>
           </div>
         </div>
@@ -58,7 +58,7 @@ class SponsorBar extends React.Component<Props> {
     return (
       <div id="payment-container" className="child-container">
         <div className="sponsor-title-label">支付方式</div>
-        <div id="payment-content-container">
+        <div id="payment-content-container" className="column-container">
           <div className="payment-image-container">
             <img src="sponsor/pay_01.png"></img>
           </div>
@@ -89,32 +89,29 @@ class SponsorBar extends React.Component<Props> {
     return (
       <div id="contact-container" className="child-container">
         <div className="sponsor-title-label">客服中心</div>
-        <div id="contact-content-container">
-          <div
-            className="contact-content-row-container"
-            style={{ cursor: "pointer", userSelect: "none" }}
-          >
+        <div id="contact-contents-container" className="column-container">
+          <div className="contact-content-container row-container">
             <div className="contact-image-container">
               <img src="sponsor/contact_chat.png"></img>
             </div>
             在线客服
           </div>
 
-          <div className="contact-content-row-container">
+          <div className="contact-content-container row-container">
             <div className="contact-image-container">
               <img src="sponsor/contact_qq.png"></img>
             </div>
             1535291636
           </div>
 
-          <div className="contact-content-row-container">
+          <div className="contact-content-container row-container">
             <div className="contact-image-container">
               <img src="sponsor/contact_skype.png"></img>
             </div>
             cs.cat1688@gmail.com
           </div>
 
-          <div className="contact-content-row-container">
+          <div className="contact-content-container row-container">
             <div className="contact-image-container">
               <img src="sponsor/contact_email.png"></img>
             </div>

@@ -60,7 +60,11 @@ class EventBar extends React.Component<Props, State> {
           <div id="image-container-browser">
             <img src="event_bar/520_slot_bar.png"></img>
           </div>
-          <div id="number-image-container" onClick={this._onRewardClaim}>
+          <div
+            id="number-image-container"
+            className="row-container center"
+            onClick={this._onRewardClaim}
+          >
             <img
               src={`event_bar/5_${rewardToggles[0] ? "light" : "dark"}.png`}
             />
@@ -71,11 +75,11 @@ class EventBar extends React.Component<Props, State> {
               src={`event_bar/0_${rewardToggles[2] ? "light" : "dark"}.png`}
             />
           </div>
-          <div id="title-container">
+          <div id="title-container" className="row-container center">
             <img src="event_bar/title_01.png"></img>
             <img src="event_bar/title_02.png"></img>
           </div>
-          <div id="buttons-container">
+          <div id="buttons-container" className="row-container center">
             {this._renderButtonItem("button_blue.png", "活动详情", "white", 1)}
             {this._renderButtonItem(
               "button_yellow.png",

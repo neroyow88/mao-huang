@@ -27,7 +27,7 @@ class NoticeBoard extends React.Component<Props> {
 
   private _noticeBoardMobile(): JSX.Element {
     return (
-      <div id="notice-board-container-mobile">
+      <div id="notice-board-container-mobile" className="row-container center">
         <div id="left-board-container-mobile">
           <ImageHandler src={"icon_volume.png"} />
         </div>
@@ -46,6 +46,7 @@ class NoticeBoard extends React.Component<Props> {
         <div id="left-board-container-browser">
           <div
             id="notice-title-container-browser"
+            className="row-container center"
             onClick={this._onNewsClicked}
           >
             <div>公告栏</div>

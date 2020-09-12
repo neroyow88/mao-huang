@@ -82,7 +82,7 @@ class MobileCardPopOut extends React.Component<Props, State> {
     if (index > 1) {
       const label = index === 2 ? "招财勋章" : "波斯勋章";
       return (
-        <div id="card-buttons-container">
+        <div id="card-buttons-container" className="row-container">
           <div className="card-button-container" key={`button-container-left`}>
             <div className="card-button-label" key={`button-label-left`}>
               {label}

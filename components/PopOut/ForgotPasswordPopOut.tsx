@@ -89,7 +89,7 @@ class ForgotPasswordPopOut extends React.Component<Props> {
               <FormInputBox id="phonenumber" placeholder="请输入您的手机号码" />
               <FormButton
                 label="获取短信验证码"
-                background="#83D300"
+                backgroundColor="#83D300"
                 onClick={(): void => {
                   console.log("Verification code send");
                 }}
@@ -101,7 +101,7 @@ class ForgotPasswordPopOut extends React.Component<Props> {
               />
               <FormButton
                 label="提交"
-                background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+                backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
                 submit
               />
             </form>

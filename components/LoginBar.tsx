@@ -52,7 +52,7 @@ class LoginBar extends React.Component<Props, State> {
 
   private _renderLoginBarMobile(): JSX.Element {
     return (
-      <div id="login-bar-container-mobile">
+      <div id="login-bar-container-mobile" className="row-container center">
         <ImageHandler src={"mobile/logo.png"} scale={0.33} />
         <div id="login-label" onClick={this._onLoginClicked}>
           登入
@@ -70,7 +70,7 @@ class LoginBar extends React.Component<Props, State> {
     if (isLogin) {
       return (
         <div id="login-bar-container-browser">
-          <div id="login-bar-row-container" className="login-bar-not-login">
+          <div id="login-bar-login" className="row-container center">
             <div id="username-label">{`欢迎您 , ${username}`}</div>
             <div id="image-container">
               <ImageHandler src={"member.png"} />
@@ -84,7 +84,7 @@ class LoginBar extends React.Component<Props, State> {
             </div>
             <FormButton
               label="登出"
-              background="transparent linear-gradient(180deg, #F2F2F2 0%, #D2D2D2 100%)"
+              backgroundGradient="linear-gradient(180deg, #F2F2F2 0%, #D2D2D2 100%)"
               color="#606060"
               onClick={this._onLogoutClicked}
             />
@@ -94,7 +94,7 @@ class LoginBar extends React.Component<Props, State> {
     } else {
       return (
         <div id="login-bar-container-browser">
-          <div id="login-bar-row-container" className="login-bar-login">
+          <div id="login-bar-not-login" className="row-container center">
             <div
               className="label-button yellow"
               onClick={this._onForgotUsernameClicked}
@@ -124,14 +124,14 @@ class LoginBar extends React.Component<Props, State> {
               />
               <FormButton
                 label="登入"
-                background="transparent linear-gradient(180deg, #FCB715 0%, #E9A400 100%)"
+                backgroundGradient="linear-gradient(180deg, #FCB715 0%, #E9A400 100%)"
                 color="white"
                 submit
                 onClick={this._onLoginClicked}
               />
               <FormButton
                 label="注册"
-                background="transparent linear-gradient(180deg, #F2F2F2 0%, #D2D2D2 100%)"
+                backgroundGradient="linear-gradient(180deg, #F2F2F2 0%, #D2D2D2 100%)"
                 color="#606060"
                 onClick={this._onRegisterClicked}
               />

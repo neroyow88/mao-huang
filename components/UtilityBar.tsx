@@ -19,7 +19,7 @@ class UtilityBar extends React.Component<Props> {
 
     return (
       <div id="utility-bar-container">
-        <div id="utility-items-container">
+        <div id="utility-items-container" className="row-container center">
           <div id="logo-container">
             <ImageHandler src={"logo.png"} />
           </div>
@@ -46,7 +46,7 @@ class UtilityBar extends React.Component<Props> {
     ) : null;
 
     return (
-      <div className="utility-item-container" onClick={onClick}>
+      <div className="utility-item-container row-container" onClick={onClick}>
         <div className="utility-label">{label}</div>
         {imageComponent}
       </div>

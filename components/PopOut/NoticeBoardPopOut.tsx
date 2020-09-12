@@ -37,7 +37,7 @@ class NoticeBoardPopOut extends React.Component<Props> {
         const bgColor = index % 2 === 0 ? "dark-background" : "";
         return (
           <div
-            className={`news-container ${bgColor}`}
+            className={`news-container ${bgColor} row-container center"`}
             key={`news-container-${index}`}
           >
             <div className="date-label yellow" key={`date-label-${index}`}>
@@ -69,7 +69,9 @@ class NoticeBoardPopOut extends React.Component<Props> {
               onClick={hidePopOut}
             />
           </div>
-          <div id="notice-board-container">{components}</div>
+          <div id="notice-board-container" className="column-container center">
+            {components}
+          </div>
         </div>
       </Modal>
     );

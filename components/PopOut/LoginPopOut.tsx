@@ -59,7 +59,7 @@ class LoginPopOut extends React.Component<Props> {
             />
           </div>
           <div id="login-form-container" className="pop-out-form-container">
-            <form autoComplete="off">
+            <form autoComplete="off" className="column-container center">
               <FormInputBox
                 id="username"
                 placeholder="请输入用户名"
@@ -92,15 +92,15 @@ class LoginPopOut extends React.Component<Props> {
               />
               <FormButton
                 label="提交"
-                background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+                backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
                 submit
               />
-              <div id="login-help-bar">
-                <div className="form-link">立即注册</div>
-                <div className="form-link">忘记密码</div>
-                <div className="form-link">忘記账号</div>
-              </div>
             </form>
+            <div id="login-help-bar" className="row-container center">
+              <div className="form-link">立即注册</div>
+              <div className="form-link">忘记密码</div>
+              <div className="form-link">忘記账号</div>
+            </div>
           </div>
         </div>
       </Modal>

@@ -43,3 +43,20 @@
 .white {
   color: white;
 }
+
+.row-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}

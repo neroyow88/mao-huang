@@ -63,14 +63,17 @@ class GameListBar extends React.Component<Props, State> {
   private _listItem(content: IDropdownItem, index: number): JSX.Element {
     return (
       <div
-        className="game-list-item-container"
+        className="game-list-item-container row-container center"
         key={`game-list-item-container-${index}`}
       >
         <ImageHandler
           src={`mobile/game_list/${content.prefix}_logo.png`}
           scale={0.33}
         />
-        <div className="labels-container" key={`label-container-${index}`}>
+        <div
+          className="labels-container column-container"
+          key={`label-container-${index}`}
+        >
           <div className="title" key={`title-${index}`}>
             {content.title}
           </div>
@@ -106,7 +109,9 @@ class GameListBar extends React.Component<Props, State> {
 
     return (
       <div id="game-list-bar-container-browser">
-        <div id="game-list-toggle-container">{toggleComponents}</div>
+        <div id="game-list-toggle-container" className="row-container center">
+          {toggleComponents}
+        </div>
         {menuComponents}
       </div>
     );
@@ -118,7 +123,7 @@ class GameListBar extends React.Component<Props, State> {
 
     return (
       <div
-        className="dropdown-toggle-container"
+        className="dropdown-toggle-container row-container center"
         key={`dropdown-toggle-container-${index}`}
         onClick={(): void => {
           this._onToggle(index);
@@ -175,7 +180,7 @@ class GameListBar extends React.Component<Props, State> {
     return (
       <div className="dropdown-mask" key={`dropdown-mask-${index}`}>
         <div
-          className="dropdown-menu-container"
+          className="dropdown-menu-container column-container center"
           key={`dropdown-menu-container-${index}`}
           style={{ transform: `translateY(${yPos}%)` }}
         >

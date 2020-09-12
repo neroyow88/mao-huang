@@ -86,7 +86,7 @@ class RegisterPopOut extends React.Component<Props> {
               <FormInputBox id="phonenumber" placeholder="请输入您的手机号码" />
               <FormButton
                 label="获取短信验证码"
-                background="#83D300"
+                backgroundColor="#83D300"
                 onClick={(): void => {
                   console.log("Verification code send");
                 }}
@@ -98,15 +98,15 @@ class RegisterPopOut extends React.Component<Props> {
               />
               <FormButton
                 label="提交"
-                background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+                backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
                 submit
               />
-              <div id="register-help-bar">
-                <div id="form-label">注册即表示同意接受</div>
-                <div className="form-link">「服务条款」</div>
-                <div className="form-link">已有账号? 立即登录</div>
-              </div>
             </form>
+            <div id="register-help-bar" className="row-container center">
+              <div id="form-label">注册即表示同意接受</div>
+              <div className="form-link">「服务条款」</div>
+              <div className="form-link">已有账号? 立即登录</div>
+            </div>
           </div>
         </div>
       </Modal>

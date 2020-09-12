@@ -33,9 +33,10 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
     this._renderTopUpOptionMenu = this._renderTopUpOptionMenu.bind(this);
     this._renderTopUpContent = this._renderTopUpContent.bind(this);
     this._renderRadioButton = this._renderRadioButton.bind(this);
+    this._renderButton = this._renderButton.bind(this);
 
     this._toggleTutorial = this._toggleTutorial.bind(this);
-    this.toNextStep = this.toNextStep.bind(this);
+    this._toNextStep = this._toNextStep.bind(this);
     this._changeIndex = this._changeIndex.bind(this);
   }
 
@@ -73,7 +74,10 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
               onClick={hidePopOut}
             />
           </div>
-          <div id="top-up-option-menu-container">
+          <div
+            id="top-up-option-menu-container"
+            className="row-container center"
+          >
             {this._renderTopUpOptionMenu(0, "wallet/pay_icon.png")}
             {this._renderTopUpOptionMenu(1, "wallet/bank_icon.png")}
             {this._renderTopUpOptionMenu(2, "wallet/pay_wechat_icon.png")}
@@ -96,46 +100,70 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
     const opacity = selectedIndex === index ? 1 : 0.7;
     return (
       <div
-        className="top-up-option"
+        className="top-up-option row-container center"
         onClick={(): void => {
           this._changeIndex(index);
         }}
         style={{ opacity: opacity }}
       >
-        <div className="option-image">
-          <ImageHandler src={src} scale={0.6} />
-          <div className="round">{`${model.options.length}`}</div>
+        <div className="image-container">
+          <img src={src}></img>
         </div>
+        <div className="round">{`${model.options.length}`}</div>
       </div>
     );
   }
 
   private _renderTopUpContent(): JSX.Element {
-    const { scale } = this.props;
-    const { selectedIndex, tutorialToggle } = this.state;
+    const { selectedIndex } = this.state;
     return (
       <div id="top-up-container">
-        <form autoComplete="off">
+        <form autoComplete="off" className="column-container center">
           {this._renderRadioButton()}
           <div id="description-label">
             {transactionModel[selectedIndex].description}
           </div>
           <FormInputBox id="topupbalance" placeholder="请在此输入充值金额" />
           <div id="description-label">单笔充值 : 最低100元，最高9999元</div>
+          {this._renderButton()}
+        </form>
+      </div>
+    );
+  }
+
+  private _renderButton(): JSX.Element {
+    const { scale } = this.props;
+    const { selectedIndex, tutorialToggle } = this.state;
+    if (selectedIndex === 2) {
+      return (
+        <div id="top-up-buttons-container" className="row-container center">
+          <FormButton
+            label="参照截图"
+            backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+            image="wallet/search.png"
+            onClick={this._toggleTutorial}
+          />
           <FormButton
             label="下一步"
-            background="transparent linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
-            // onClick={this._topUpNextStep}
-            onClick={this._toggleTutorial}
+            backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+            onClick={this._toNextStep}
           />
           <TutorialPopOut
             toggle={tutorialToggle}
             scale={scale}
             hidePopOut={this._toggleTutorial}
           />
-        </form>
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <FormButton
+          label="下一步"
+          backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
+          onClick={this._toNextStep}
+        />
+      );
+    }
   }
 
   private _renderRadioButton(): JSX.Element {
@@ -155,7 +183,7 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
     });
 
     return (
-      <div id="radio-button-container">
+      <div id="radio-button-container" className="row-container center">
         <div className="label">请选择 :</div>
         {components}
       </div>
@@ -167,7 +195,7 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
     this.setState({ tutorialToggle: !tutorialToggle });
   }
 
-  private toNextStep(): void {}
+  private _toNextStep(): void {}
 
   private _changeIndex(index: number): void {
     this.setState({ selectedIndex: index });

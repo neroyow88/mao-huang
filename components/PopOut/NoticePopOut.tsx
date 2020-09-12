@@ -46,7 +46,7 @@ class NoticePopOut extends React.Component<Props> {
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <div id="notice-title-container">
+          <div id="notice-title-container" className="row-container center">
             <div id="notice-title">{title}</div>
             <div id="cross" onClick={hidePopOut}>
               <ImageHandler src="pop_out/close.png" scale={0.5} />

@@ -51,8 +51,6 @@
 
   #number-image-container {
     position: absolute;
-    display: flex;
-    flex-direction: row;
     top: 108px;
     left: 782px;
 
@@ -67,17 +65,11 @@
 }
 
 #title-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   padding-top: 380px;
   padding-left: 50px;
 }
 
 #buttons-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   padding-top: 26px;
   padding-left: 50px;
 

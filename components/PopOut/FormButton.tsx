@@ -2,10 +2,13 @@ import React from "react";
 
 interface Props {
   label: string;
-  background: string;
   color?: string;
+  backgroundColor?: string;
+  backgroundGradient?: string;
+  gradient?: boolean;
   submit?: boolean;
   onClick?: NoParamReturnNulFunction;
+  image?: string;
 }
 
 class FormButton extends React.Component<Props> {
@@ -14,11 +17,33 @@ class FormButton extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { label, background, color, submit, onClick } = this.props;
+    const {
+      label,
+      color,
+      backgroundColor,
+      backgroundGradient,
+      submit,
+      onClick,
+      image,
+    } = this.props;
     const button = submit ? "submit" : "button";
     const style = {
-      background: background,
       color: color,
+      backgroundColor: backgroundColor,
+
+      backgroundImage: `${image ? `url(${image})` : ""}${
+        image && backgroundGradient ? ", " : ""
+      }${backgroundGradient ? backgroundGradient : ""}`,
+
+      backgroundPosition: `${image ? "95% 50%" : ""}${
+        image && backgroundGradient ? ", " : ""
+      }${backgroundGradient ? "100%" : ""}`,
+
+      backgroundRepeat: `${image ? "no-repeat" : ""}`,
+
+      backgroundSize: `${image ? "15px" : ""}${
+        image && backgroundGradient ? ", " : ""
+      }${backgroundGradient ? "100%" : ""}`,
     };
 
     return (

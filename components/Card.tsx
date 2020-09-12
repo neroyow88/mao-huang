@@ -25,7 +25,7 @@ class CardList extends React.Component<Props, State> {
     if (isMobile) {
       return (
         <div id="cards-container-mobile">
-          <div id="card-item-container">
+          <div id="card-item-container" className="row-container center">
             {this._roundCard(1, "爱情猫", showPopOut)}
             {this._roundCard(2, "招财猫", showPopOut)}
             {this._roundCard(3, "波斯猫", showPopOut)}
@@ -38,7 +38,7 @@ class CardList extends React.Component<Props, State> {
           <div id="background-container">
             <img src="background.png"></img>
           </div>
-          <div id="card-item-container">
+          <div id="card-item-container" className="row-container center">
             {this._flipCard(1)}
             {this._flipCard(2)}
             {this._flipCard(3)}
@@ -90,7 +90,7 @@ class CardList extends React.Component<Props, State> {
     if (index > 1) {
       const label = index === 2 ? "招财勋章" : "波斯勋章";
       return (
-        <div id="card-buttons-container">
+        <div id="card-buttons-container" className="row-container center">
           <div className="card-button-container" key={`button-container-left`}>
             <div className="card-button-label" key={`button-label-left`}>
               {label}
