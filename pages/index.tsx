@@ -125,6 +125,7 @@ export default class Home extends React.Component<Props, State> {
           toggle={toggle}
           scale={scale}
           customPopOutData={customPopOutData}
+          showPopOut={this._showPopOut}
           hidePopOut={this._hidePopOut}
         />
       </div>
