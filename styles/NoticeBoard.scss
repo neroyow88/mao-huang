@@ -45,7 +45,6 @@
       left: 50%;
       color: white;
       z-index: 2;
-      cursor: pointer;
 
       img {
         padding-left: 12px;
@@ -123,12 +122,18 @@
 
 #scroll-left-browser {
   line-height: 50px;
+  font-size: 20px;
   -moz-transform: translateX(1920px);
   -webkit-transform: translateX(1920px);
   transform: translateX(1920px);
   -moz-animation: scroll-left-browser 20s linear infinite;
   -webkit-animation: scroll-left-browser 20s linear infinite;
   animation: scroll-left-browser 20s linear infinite;
+  cursor: pointer;
+}
+
+#scroll-left-browser:hover {
+  animation-play-state: paused;
 }
 
 @-moz-keyframes scroll-left-browser {

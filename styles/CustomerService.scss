@@ -59,6 +59,32 @@
       text-align: center;
       font-size: 22px;
     }
+
+    .icons-container {
+      padding-bottom: 30px;
+      width: 100%;
+
+      .icon-container-service {
+        cursor: pointer;
+        width: 33%;
+      }
+
+      .icon-image-container-service {
+        width: 70px;
+        height: 70px;
+        margin-right: 20px;
+      }
+
+      .icon-container-browser {
+        width: 25%;
+      }
+
+      .icon-image-container-browser {
+        width: 40%;
+        height: 40%;
+        margin-right: 12px;
+      }
+    }
   }
 
   #right-service-container {
@@ -100,9 +126,4 @@
       }
     }
   }
-}
-
-.icons-container {
-  padding-bottom: 30px;
-  width: 100%;
 }

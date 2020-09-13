@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
 import { ImageHandler } from "../ImageHandler";
@@ -8,6 +8,7 @@ import { transactionModel } from "../../model/TopUpConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
 import { TutorialPopOut } from "./TutorialPopOut";
+import { apiClient } from "../../model/ApiClient";
 
 interface Props {
   toggle: boolean;
@@ -19,16 +20,24 @@ interface Props {
 interface State {
   selectedIndex: number;
   tutorialToggle: boolean;
+  selectedTransaction: number;
 }
 
-class TopUpWalletPopOut extends React.Component<Props, State> {
+class DepositWalletPopOut extends React.Component<Props, State> {
+  private _transactionRef: RefObject<HTMLInputElement>;
+  private _balanceRef: RefObject<HTMLInputElement>;
+
   constructor(props: Props) {
     super(props);
 
     this.state = {
       selectedIndex: 0,
       tutorialToggle: false,
+      selectedTransaction: 0,
     };
+
+    this._transactionRef = React.createRef();
+    this._balanceRef = React.createRef();
 
     this._renderTopUpOptionMenu = this._renderTopUpOptionMenu.bind(this);
     this._renderTopUpContent = this._renderTopUpContent.bind(this);
@@ -118,7 +127,11 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
     const { selectedIndex } = this.state;
     return (
       <div id="top-up-container">
-        <form autoComplete="off" className="column-container center">
+        <form
+          autoComplete="off"
+          className="column-container center"
+          onSubmit={this._onFormSubmitted}
+        >
           {this._renderRadioButton()}
           <div id="description-label">
             {transactionModel[selectedIndex].description}
@@ -167,7 +180,7 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
   }
 
   private _renderRadioButton(): JSX.Element {
-    const { selectedIndex } = this.state;
+    const { selectedIndex, selectedTransaction } = this.state;
     const model = transactionModel[selectedIndex];
     const components = [];
     model.options.forEach((option: string, index: number): void => {
@@ -177,6 +190,10 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
           id={`${selectedIndex}${index}`}
           name="transaction"
           value={`${selectedIndex}${index}`}
+          onClick={(): void => {
+            this._updateTransaction(index);
+          }}
+          checked={selectedTransaction === index}
         />
       );
       components.push(<div className="label">{option}</div>);
@@ -198,8 +215,24 @@ class TopUpWalletPopOut extends React.Component<Props, State> {
   private _toNextStep(): void {}
 
   private _changeIndex(index: number): void {
-    this.setState({ selectedIndex: index });
+    this.setState({ selectedIndex: index, selectedTransaction: 0 });
+  }
+
+  private _updateTransaction(index: number): void {
+    this.setState({ selectedTransaction: index });
+  }
+
+  private _onFormSubmitted(e): void {
+    e.preventDefault();
+    // const transaction = this._transactionRef.current.value;
+    // const balance = this._balanceRef.current.value;
+
+    // const onResultReturn = (result: GenericObjectType, err: string): void => {
+    //   if (err) {
+    //   } else {
+    //   }
+    // };
   }
 }
 
-export { TopUpWalletPopOut };
+export { DepositWalletPopOut };

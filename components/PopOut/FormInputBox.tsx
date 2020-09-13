@@ -8,6 +8,8 @@ interface Props {
   rightImage?: string;
   min?: number;
   max?: number;
+  inputRef?: any;
+  number?: boolean;
 }
 
 class FormInputBox extends React.Component<Props> {
@@ -24,6 +26,8 @@ class FormInputBox extends React.Component<Props> {
       rightImage,
       min,
       max,
+      inputRef,
+      number,
     } = this.props;
 
     const style = {
@@ -44,13 +48,14 @@ class FormInputBox extends React.Component<Props> {
     return (
       <input
         type={type ? type : "text"}
-        id={id}
         name={id}
         placeholder={placeholder}
         style={style}
         required
         minLength={minLength}
         maxLength={maxLength}
+        ref={inputRef}
+        // pattern={number ? `^\d*$` : `^\w*$`}
       ></input>
     );
   }

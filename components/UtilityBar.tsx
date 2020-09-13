@@ -40,14 +40,16 @@ class UtilityBar extends React.Component<Props> {
     src?: string
   ): JSX.Element {
     const imageComponent = src ? (
-      <div className="utility-image">
+      <div className="utility-image" onClick={onClick}>
         <ImageHandler src={src} />
       </div>
     ) : null;
 
     return (
-      <div className="utility-item-container row-container" onClick={onClick}>
-        <div className="utility-label">{label}</div>
+      <div className="utility-item-container row-container">
+        <div className="utility-label" onClick={onClick}>
+          {label}
+        </div>
         {imageComponent}
       </div>
     );

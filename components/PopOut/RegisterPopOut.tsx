@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
 import { ImageHandler } from "../ImageHandler";
@@ -6,17 +6,44 @@ import { ImageHandler } from "../ImageHandler";
 import customStyle from "../../styles/module/AccountModal.module.scss";
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
+import { apiClient } from "../../model/ApiClient";
+import { PopOutType, NoticePopOutConfig } from "../../model/WebConstant";
+import { NoticePopOut } from "./NoticePopOut";
 
 interface Props {
   toggle: boolean;
   scale: number;
+  showPopOut: (any: number, data?: GenericObjectType) => void;
   hidePopOut: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
 
-class RegisterPopOut extends React.Component<Props> {
+interface State {
+  subToggle: boolean;
+  errorNotice: INoticePopOutConfig;
+}
+
+class RegisterPopOut extends React.Component<Props, State> {
+  private _usernameRef: RefObject<HTMLInputElement>;
+  private _passwordRef: RefObject<HTMLInputElement>;
+  private _phoneNumberRef: RefObject<HTMLInputElement>;
+  private _verificationCodeRef: RefObject<HTMLInputElement>;
+
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      subToggle: false,
+      errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
+    };
+
+    this._usernameRef = React.createRef();
+    this._passwordRef = React.createRef();
+    this._phoneNumberRef = React.createRef();
+    this._verificationCodeRef = React.createRef();
+
+    this._onFormSubmitted = this._onFormSubmitted.bind(this);
+    this._hidePopOut = this._hidePopOut.bind(this);
   }
 
   public componentDidMount(): void {
@@ -33,6 +60,7 @@ class RegisterPopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale, hidePopOut } = this.props;
+    const { subToggle, errorNotice } = this.state;
     const warning = {
       backgroundImage: "url(pop_out/warning.png)",
       backgroundPosition: "0% 50%",
@@ -59,7 +87,7 @@ class RegisterPopOut extends React.Component<Props> {
             />
           </div>
           <div id="register-form-container" className="pop-out-form-container">
-            <form autoComplete="off">
+            <form autoComplete="off" onSubmit={this._onFormSubmitted}>
               <FormInputBox
                 id="username"
                 placeholder="请输入用户名"
@@ -67,6 +95,7 @@ class RegisterPopOut extends React.Component<Props> {
                 rightImage={"pop_out/check.png"}
                 min={4}
                 max={11}
+                inputRef={this._usernameRef}
               />
               <div className="form-warning" style={warning}>
                 用户名由4~11位数字或字母组成
@@ -79,11 +108,16 @@ class RegisterPopOut extends React.Component<Props> {
                 rightImage={"pop_out/password_eye.png"}
                 min={6}
                 max={12}
+                inputRef={this._passwordRef}
               />
               <div className="form-warning" style={warning}>
                 密码由6~12位数字或小写字母组成
               </div>
-              <FormInputBox id="phonenumber" placeholder="请输入您的手机号码" />
+              <FormInputBox
+                id="phonenumber"
+                placeholder="请输入您的手机号码"
+                inputRef={this._phoneNumberRef}
+              />
               <FormButton
                 label="获取短信验证码"
                 backgroundColor="#83D300"
@@ -95,6 +129,7 @@ class RegisterPopOut extends React.Component<Props> {
                 id="verificationcode"
                 placeholder="请输入短信验证码"
                 rightImage={"pop_out/password_eye.png"}
+                inputRef={this._verificationCodeRef}
               />
               <FormButton
                 label="提交"
@@ -109,9 +144,55 @@ class RegisterPopOut extends React.Component<Props> {
             </div>
           </div>
         </div>
+        <NoticePopOut
+          toggle={subToggle}
+          scale={scale}
+          hidePopOut={this._hidePopOut}
+          customPopOutData={errorNotice}
+        />
       </Modal>
     );
   }
+
+  private _onFormSubmitted(e): void {
+    e.preventDefault();
+    const username = this._usernameRef.current.value;
+    const password = this._passwordRef.current.value;
+    const phoneNumber = this._phoneNumberRef.current.value;
+    const verificationCode = this._verificationCodeRef.current.value;
+
+    const { showPopOut } = this.props;
+    const onResultReturn = (result: GenericObjectType, err: string): void => {
+      if (err) {
+        if (err === "verification") {
+          console.log(err);
+          this.setState({
+            subToggle: true,
+            errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
+          });
+        } else if (err === "username") {
+          this.setState({
+            subToggle: true,
+            errorNotice: NoticePopOutConfig.USERNAME_ALREADY_EXIST,
+          });
+        }
+      } else {
+        showPopOut(PopOutType.NOTICE, NoticePopOutConfig.REGISTER_SUCCESS);
+      }
+    };
+
+    apiClient.register(
+      { username, password, phoneNumber, verificationCode },
+      onResultReturn
+    );
+  }
+
+  //#region Utils
+  private _hidePopOut(): void {
+    this.setState({ subToggle: false });
+  }
+
+  //#endregion
 }
 
 export { RegisterPopOut };

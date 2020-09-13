@@ -47,7 +47,6 @@ class NoticeBoard extends React.Component<Props> {
           <div
             id="notice-title-container-browser"
             className="row-container center"
-            onClick={this._onNewsClicked}
           >
             <div>公告栏</div>
             <img src="icon_volume.png"></img>
@@ -55,7 +54,7 @@ class NoticeBoard extends React.Component<Props> {
         </div>
         <div id="right-board-container"></div>
         <div id="scroll-left-container">
-          <div id="scroll-left-browser">
+          <div id="scroll-left-browser" onClick={this._onNewsClicked}>
             由于受疫情影响，原定于2020年7月21日（星期二）恢复的六合彩搅珠（第20/009期）再度延后，开启日期需等待官方另行通知。
           </div>
         </div>

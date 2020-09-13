@@ -10,8 +10,8 @@ interface Props {
   toggle: boolean;
   scale: number;
   hidePopOut: NoParamReturnNulFunction;
-  transitionComplete: NoParamReturnNulFunction;
   customPopOutData: GenericObjectType;
+  transitionComplete?: NoParamReturnNulFunction;
 }
 
 class NoticePopOut extends React.Component<Props> {
@@ -23,19 +23,21 @@ class NoticePopOut extends React.Component<Props> {
 
   public componentDidMount(): void {
     const { toggle, transitionComplete } = this.props;
-    if (toggle) {
-      const interval = setInterval((): void => {
+    if (transitionComplete) {
+      if (toggle) {
+        const interval = setInterval((): void => {
+          transitionComplete();
+          clearInterval(interval);
+        }, 1000);
+      } else {
         transitionComplete();
-        clearInterval(interval);
-      }, 500);
-    } else {
-      transitionComplete();
+      }
     }
   }
 
   public render(): JSX.Element {
     const { toggle, scale, hidePopOut, customPopOutData } = this.props;
-    const { noticeType, title, description, button } = customPopOutData;
+    const { noticeType, description, button } = customPopOutData;
     const src = this._getNoticeType(noticeType);
 
     return (
@@ -45,19 +47,22 @@ class NoticePopOut extends React.Component<Props> {
         centered
         cssModule={customStyle}
       >
-        <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
+        <div
+          id="notice-pop-out-container"
+          style={{ transform: `scale(${scale})` }}
+        >
           <div id="notice-title-container" className="row-container center">
-            <div id="notice-title">{title}</div>
+            <div id="notice-title">提示</div>
             <div id="cross" onClick={hidePopOut}>
               <ImageHandler src="pop_out/close.png" scale={0.5} />
             </div>
           </div>
-          <div id="pop-out-image-container">
+          <div id="notice-image-container">
             <ImageHandler src={`pop_out/${src}`} scale={0.57} />
           </div>
           <div id="notice-description">{description}</div>
           <div id="notice-button-container">
-            <div id="notice-button">
+            <div id="notice-button" onClick={hidePopOut}>
               <div id="notice-button-label">{button}</div>
             </div>
           </div>

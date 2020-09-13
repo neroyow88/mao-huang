@@ -120,33 +120,21 @@ class CustomerService extends React.Component<Props> {
 
     switch (type) {
       case iconType.SERVICE:
-        iconContainerStyle = {
-          width: "33%",
-        };
-        iconImageContainerStyle = {
-          width: "70px",
-          height: "70px",
-          marginRight: "20px",
-        };
+        iconContainerStyle = "icon-container-service";
+        iconImageContainerStyle = "icon-image-container-service";
         break;
       case iconType.BROWSER:
-        iconContainerStyle = {
-          width: "25%",
-        };
-        iconImageContainerStyle = {
-          width: "40px",
-          height: "40px",
-          marginRight: " 12px",
-        };
+        iconContainerStyle = "icon-container-browser";
+        iconImageContainerStyle = "icon-image-container-browser";
         break;
     }
 
     return (
-      <div className="row-container center" style={iconContainerStyle}>
-        <div className="row-container center" style={iconImageContainerStyle}>
+      <div className={`row-container center ${iconContainerStyle}`}>
+        <div className={`row-container center ${iconImageContainerStyle}`}>
           <img src={img}></img>
         </div>
-        <div className="label-container">{label}</div>
+        <div>{label}</div>
       </div>
     );
   }

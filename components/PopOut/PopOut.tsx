@@ -17,7 +17,7 @@ import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
 import { LoginPopOut } from "./LoginPopOut";
 import { RegisterPopOut } from "./RegisterPopOut";
 import { ProfilePopOut } from "./ProfilePopOut";
-import { TopUpWalletPopOut } from "./TopUpWalletPopOut";
+import { DepositWalletPopOut } from "./DepositWalletPopOut";
 import { NoticeBoardPopOut } from "./NoticeBoardPopOut";
 import { MobileCardPopOut } from "./MobileCardPopOut";
 import { NoticePopOut } from "./NoticePopOut";
@@ -30,6 +30,7 @@ interface Props {
   toggle: boolean;
   scale: number;
   customPopOutData: GenericObjectType;
+  showPopOut: (any: number, data?: GenericObjectType) => void;
   hidePopOut: NoParamReturnNulFunction;
 }
 
@@ -61,7 +62,7 @@ class PopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { type, toggle, scale, customPopOutData } = this.props;
+    const { type, toggle, scale, customPopOutData, showPopOut } = this.props;
     let component;
     switch (type) {
       case PopOutType.LOGIN:
@@ -79,6 +80,7 @@ class PopOut extends React.Component<Props, State> {
           <RegisterPopOut
             toggle={toggle}
             scale={scale}
+            showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -99,6 +101,7 @@ class PopOut extends React.Component<Props, State> {
           <ForgotUsernamePopOut
             toggle={toggle}
             scale={scale}
+            showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -109,6 +112,7 @@ class PopOut extends React.Component<Props, State> {
           <ForgotPasswordPopOut
             toggle={toggle}
             scale={scale}
+            showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -116,7 +120,7 @@ class PopOut extends React.Component<Props, State> {
         break;
       case PopOutType.TOP_UP_WALLET:
         component = (
-          <TopUpWalletPopOut
+          <DepositWalletPopOut
             toggle={toggle}
             scale={scale}
             hidePopOut={this._hidePopOut}
@@ -278,7 +282,6 @@ class PopOut extends React.Component<Props, State> {
   private _transitionComplete(): void {
     this.setState({ isTransitioning: false });
   }
-
   //#endregion
 }
 

@@ -19,3 +19,52 @@ export enum NoticeType {
   ERROR = 2,
   ACCOUNT = 3,
 }
+
+export const NoticePopOutConfig = {
+  REGISTER_SUCCESS: {
+    noticeType: NoticeType.SUCCESS,
+    description: "注册成功",
+    button: "回首页登入",
+  },
+  LOGIN_SUCCESS: {
+    noticeType: NoticeType.SUCCESS,
+    description: "登入成功",
+    button: "完成",
+  },
+  LOGOUT_SUCCESS: {
+    noticeType: NoticeType.SUCCESS,
+    description: "登出成功",
+    button: "完成",
+  },
+  GET_USERNAME_SUCCESS: {
+    noticeType: NoticeType.ACCOUNT,
+    description: "您的猫皇帐号为 abcd1234",
+    button: "回首页登入",
+  },
+  CHANGE_PASSWORD_SUCCESS: {
+    noticeType: NoticeType.SUCCESS,
+    description: "重置密码成功",
+    button: "回首页登入",
+  },
+  SET_PIN_SUCCESS: {
+    noticeType: NoticeType.SUCCESS,
+    description: "重置密码成功",
+    button: "回首页登入",
+  },
+
+  USERNAME_ALREADY_EXIST: {
+    noticeType: NoticeType.ERROR,
+    description: "用户已存在",
+    button: "返回操作",
+  },
+  VERIFICATION_CODE_INCORRECT: {
+    noticeType: NoticeType.ERROR,
+    description: "请填写正确的验证码",
+    button: "返回操作",
+  },
+  PIN_NOT_VERIFIED: {
+    noticeType: NoticeType.ERROR,
+    description: "请填写正确的验证码",
+    button: "返回操作",
+  },
+};

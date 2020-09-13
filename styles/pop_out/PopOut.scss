@@ -1,6 +1,6 @@
 @import "LoginPopOut.scss", "RegisterPopOut.scss", "ForgotUsernamePopOut.scss",
   "ForgotPasswordPopOut.scss", "ProfilePopOut.scss", "NoticePopOut.scss",
-  "TopUpWalletPopOut.scss", "NoticeBoardPopOut.scss";
+  "DepositWalletPopOut.scss", "NoticeBoardPopOut.scss";
 
 #pop-out-container {
   position: relative;
@@ -16,6 +16,7 @@
   );
   border: 3px solid #ffd678;
   border-radius: 38px;
+  user-select: none;
 }
 
 #pop-out-title-container {
@@ -57,16 +58,6 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-
-    input[type="text"]:focus,
-    input[type="password"]:focus {
-      outline-color: #fcb715;
-    }
-
-    input[type="button"]:focus,
-    input[type="submit"]:focus {
-      outline-style: none;
-    }
 
     input[type="text"],
     input[type="password"] {
