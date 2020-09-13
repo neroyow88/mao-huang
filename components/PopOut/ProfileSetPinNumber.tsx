@@ -116,17 +116,18 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
     const verifiedPin = this._verifiedPin.current.value;
 
     const onResultReturn = (result: GenericObjectType, err: string): void => {
-      console.log(result);
-      if (err === "pin") {
-        this.setState({
-          subToggle: true,
-          errorNotice: NoticePopOutConfig.PIN_NOT_VERIFIED,
-        });
-      } else if (err === "verification") {
-        this.setState({
-          subToggle: true,
-          errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
-        });
+      if (err && !result) {
+        if (err === "pin") {
+          this.setState({
+            subToggle: true,
+            errorNotice: NoticePopOutConfig.PIN_NOT_VERIFIED,
+          });
+        } else if (err === "verification") {
+          this.setState({
+            subToggle: true,
+            errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
+          });
+        }
       } else {
         this.setState({
           subToggle: true,

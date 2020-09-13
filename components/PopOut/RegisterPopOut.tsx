@@ -163,7 +163,7 @@ class RegisterPopOut extends React.Component<Props, State> {
 
     const { showPopOut } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err) {
+      if (err && !result) {
         if (err === "verification") {
           console.log(err);
           this.setState({

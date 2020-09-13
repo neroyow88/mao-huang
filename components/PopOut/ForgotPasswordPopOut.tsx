@@ -159,7 +159,7 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
 
     const { showPopOut } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err) {
+      if (err && !result) {
         this.setState({ subToggle: true });
       } else {
         showPopOut(

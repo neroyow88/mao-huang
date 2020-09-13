@@ -124,7 +124,7 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
 
     const { showPopOut } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err) {
+      if (err && !result) {
         this.setState({ subToggle: true });
       } else {
         showPopOut(PopOutType.NOTICE, NoticePopOutConfig.GET_USERNAME_SUCCESS);

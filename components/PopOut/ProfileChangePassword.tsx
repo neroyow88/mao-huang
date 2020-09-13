@@ -108,7 +108,7 @@ class ProfileChangePassword extends React.Component<Props, State> {
     const verifiedNewPassword = this._verifiedNewPasswordRef.current.value;
 
     const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err) {
+      if (err && !result) {
         this.setState({
           subToggle: true,
           errorNotice: NoticePopOutConfig.PIN_NOT_VERIFIED,
