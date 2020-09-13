@@ -27,7 +27,6 @@ class FormInputBox extends React.Component<Props> {
       min,
       max,
       inputRef,
-      number,
     } = this.props;
 
     const style = {
