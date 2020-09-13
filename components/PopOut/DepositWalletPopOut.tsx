@@ -8,7 +8,6 @@ import { transactionModel } from "../../model/TopUpConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
 import { TutorialPopOut } from "./TutorialPopOut";
-import { apiClient } from "../../model/ApiClient";
 
 interface Props {
   toggle: boolean;
@@ -224,8 +223,9 @@ class DepositWalletPopOut extends React.Component<Props, State> {
 
   private _onFormSubmitted(e): void {
     e.preventDefault();
-    // const transaction = this._transactionRef.current.value;
-    // const balance = this._balanceRef.current.value;
+    const transaction = this._transactionRef.current.value;
+    const balance = this._balanceRef.current.value;
+    console.log(transaction, balance);
 
     // const onResultReturn = (result: GenericObjectType, err: string): void => {
     //   if (err) {
