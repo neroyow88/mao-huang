@@ -5,12 +5,14 @@ export enum PopOutType {
   PROFILE = 3,
   FORGOT_USERNAME = 4,
   FORGOT_PASSWORD = 5,
-  TOP_UP_WALLET = 6,
-  NEWS = 7,
+
+  DEPOSIT_WALLET = 11,
+  DEPOSIT_INSTRUCTION = 12,
 
   CARD_MOBILE = 21,
   LOGIN_MOBILE = 22,
 
+  NEWS = 98,
   NOTICE = 99,
 }
 
@@ -18,6 +20,12 @@ export enum NoticeType {
   SUCCESS = 1,
   ERROR = 2,
   ACCOUNT = 3,
+}
+
+export enum DepositType {
+  ALIPAY = 0,
+  BANK = 1,
+  WECHAT = 2,
 }
 
 export const NoticePopOutConfig = {

@@ -57,7 +57,7 @@ class UtilityBar extends React.Component<Props> {
 
   private _onTopUpClick(): void {
     const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.TOP_UP_WALLET);
+    showPopOut && showPopOut(PopOutType.DEPOSIT_WALLET);
   }
 }
 

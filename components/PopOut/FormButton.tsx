@@ -35,7 +35,7 @@ class FormButton extends React.Component<Props> {
         image && backgroundGradient ? ", " : ""
       }${backgroundGradient ? backgroundGradient : ""}`,
 
-      backgroundPosition: `${image ? "95% 50%" : ""}${
+      backgroundPosition: `${image ? "90% 50%" : ""}${
         image && backgroundGradient ? ", " : ""
       }${backgroundGradient ? "100%" : ""}`,
 

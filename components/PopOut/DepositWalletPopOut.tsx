@@ -8,10 +8,12 @@ import { transactionModel } from "../../model/TopUpConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
 import { TutorialPopOut } from "./TutorialPopOut";
+import { DepositType, PopOutType } from "../../model/WebConstant";
 
 interface Props {
   toggle: boolean;
   scale: number;
+  showPopOut: (any: number, data?: GenericObjectType) => void;
   hidePopOut: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
@@ -44,8 +46,9 @@ class DepositWalletPopOut extends React.Component<Props, State> {
     this._renderButton = this._renderButton.bind(this);
 
     this._toggleTutorial = this._toggleTutorial.bind(this);
-    this._toNextStep = this._toNextStep.bind(this);
     this._changeIndex = this._changeIndex.bind(this);
+    this._updateTransaction = this._updateTransaction.bind(this);
+    this._onFormSubmitted = this._onFormSubmitted.bind(this);
   }
 
   public componentDidMount(): void {
@@ -83,12 +86,21 @@ class DepositWalletPopOut extends React.Component<Props, State> {
             />
           </div>
           <div
-            id="top-up-option-menu-container"
+            id="deposit-option-menu-container"
             className="row-container center"
           >
-            {this._renderTopUpOptionMenu(0, "wallet/pay_icon.png")}
-            {this._renderTopUpOptionMenu(1, "wallet/bank_icon.png")}
-            {this._renderTopUpOptionMenu(2, "wallet/pay_wechat_icon.png")}
+            {this._renderTopUpOptionMenu(
+              DepositType.ALIPAY,
+              "wallet/pay_icon.png"
+            )}
+            {this._renderTopUpOptionMenu(
+              DepositType.BANK,
+              "wallet/bank_icon.png"
+            )}
+            {this._renderTopUpOptionMenu(
+              DepositType.WECHAT,
+              "wallet/pay_wechat_icon.png"
+            )}
           </div>
           <div
             id="option-arrow"
@@ -108,7 +120,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
     const opacity = selectedIndex === index ? 1 : 0.7;
     return (
       <div
-        className="top-up-option row-container center"
+        className="deposit-option row-container center"
         onClick={(): void => {
           this._changeIndex(index);
         }}
@@ -125,7 +137,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
   private _renderTopUpContent(): JSX.Element {
     const { selectedIndex } = this.state;
     return (
-      <div id="top-up-container">
+      <div id="deposit-container">
         <form
           autoComplete="off"
           className="column-container center"
@@ -135,7 +147,11 @@ class DepositWalletPopOut extends React.Component<Props, State> {
           <div id="description-label">
             {transactionModel[selectedIndex].description}
           </div>
-          <FormInputBox id="topupbalance" placeholder="请在此输入充值金额" />
+          <FormInputBox
+            id="topupbalance"
+            placeholder="请在此输入充值金额"
+            inputRef={this._balanceRef}
+          />
           <div id="description-label">单笔充值 : 最低100元，最高9999元</div>
           {this._renderButton()}
         </form>
@@ -146,9 +162,9 @@ class DepositWalletPopOut extends React.Component<Props, State> {
   private _renderButton(): JSX.Element {
     const { scale } = this.props;
     const { selectedIndex, tutorialToggle } = this.state;
-    if (selectedIndex === 2) {
+    if (selectedIndex === DepositType.WECHAT) {
       return (
-        <div id="top-up-buttons-container" className="row-container center">
+        <div id="deposit-buttons-container" className="row-container center">
           <FormButton
             label="参照截图"
             backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
@@ -158,7 +174,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
           <FormButton
             label="下一步"
             backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
-            onClick={this._toNextStep}
+            submit
           />
           <TutorialPopOut
             toggle={tutorialToggle}
@@ -172,7 +188,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
         <FormButton
           label="下一步"
           backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
-          onClick={this._toNextStep}
+          submit
         />
       );
     }
@@ -211,8 +227,6 @@ class DepositWalletPopOut extends React.Component<Props, State> {
     this.setState({ tutorialToggle: !tutorialToggle });
   }
 
-  private _toNextStep(): void {}
-
   private _changeIndex(index: number): void {
     this.setState({ selectedIndex: index, selectedTransaction: 0 });
   }
@@ -223,15 +237,15 @@ class DepositWalletPopOut extends React.Component<Props, State> {
 
   private _onFormSubmitted(e): void {
     e.preventDefault();
-    const transaction = this._transactionRef.current.value;
     const balance = this._balanceRef.current.value;
-    console.log(transaction, balance);
 
-    // const onResultReturn = (result: GenericObjectType, err: string): void => {
-    //   if (err) {
-    //   } else {
-    //   }
-    // };
+    const { showPopOut } = this.props;
+    const { selectedIndex } = this.state;
+    showPopOut &&
+      showPopOut(PopOutType.DEPOSIT_INSTRUCTION, {
+        selectedIndex,
+        balance,
+      });
   }
 }
 

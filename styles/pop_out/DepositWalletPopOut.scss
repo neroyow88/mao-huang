@@ -1,10 +1,10 @@
-#top-up-option-menu-container {
+#deposit-option-menu-container {
   width: 100%;
   height: 89px;
   margin-top: 50px;
   user-select: none;
 
-  .top-up-option {
+  .deposit-option {
     width: 220px;
     height: 100%;
     border: 1px solid white;
@@ -43,7 +43,7 @@
   border-top: 6px solid white;
 }
 
-#top-up-container {
+#deposit-container {
   form {
     margin-top: 21px;
 
@@ -95,7 +95,7 @@
       margin-top: 50px;
     }
 
-    #top-up-buttons-container {
+    #deposit-buttons-container {
       :nth-child(1) {
         margin-right: 40px;
       }

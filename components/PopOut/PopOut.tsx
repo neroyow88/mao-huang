@@ -24,6 +24,7 @@ import { NoticePopOut } from "./NoticePopOut";
 
 // module scss
 import customStyle from "../../styles/module/Modal.module.scss";
+import { DepositInstructionPopOut } from "./DepositInstructionPopOut";
 
 interface Props {
   type: PopOutType;
@@ -65,22 +66,22 @@ class PopOut extends React.Component<Props, State> {
     const { type, toggle, scale, customPopOutData, showPopOut } = this.props;
     let component;
     switch (type) {
-      case PopOutType.LOGIN:
-        component = (
-          <LoginPopOut
-            toggle={toggle}
-            scale={scale}
-            hidePopOut={this._hidePopOut}
-            transitionComplete={this._transitionComplete}
-          />
-        );
-        break;
       case PopOutType.REGISTER:
         component = (
           <RegisterPopOut
             toggle={toggle}
             scale={scale}
             showPopOut={showPopOut}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.LOGIN:
+        component = (
+          <LoginPopOut
+            toggle={toggle}
+            scale={scale}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -118,23 +119,27 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
-      case PopOutType.TOP_UP_WALLET:
+
+      case PopOutType.DEPOSIT_WALLET:
         component = (
           <DepositWalletPopOut
             toggle={toggle}
             scale={scale}
+            showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
         );
         break;
-      case PopOutType.NEWS:
+      case PopOutType.DEPOSIT_INSTRUCTION:
         component = (
-          <NoticeBoardPopOut
+          <DepositInstructionPopOut
             toggle={toggle}
             scale={scale}
+            showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
           />
         );
         break;
@@ -161,6 +166,16 @@ class PopOut extends React.Component<Props, State> {
         );
         break;
 
+      case PopOutType.NEWS:
+        component = (
+          <NoticeBoardPopOut
+            toggle={toggle}
+            scale={scale}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
       case PopOutType.NOTICE:
         component = (
           <NoticePopOut
