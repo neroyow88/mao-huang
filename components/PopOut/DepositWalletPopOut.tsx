@@ -25,7 +25,6 @@ interface State {
 }
 
 class DepositWalletPopOut extends React.Component<Props, State> {
-  private _transactionRef: RefObject<HTMLInputElement>;
   private _balanceRef: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
@@ -37,7 +36,6 @@ class DepositWalletPopOut extends React.Component<Props, State> {
       selectedTransaction: 0,
     };
 
-    this._transactionRef = React.createRef();
     this._balanceRef = React.createRef();
 
     this._renderTopUpOptionMenu = this._renderTopUpOptionMenu.bind(this);
