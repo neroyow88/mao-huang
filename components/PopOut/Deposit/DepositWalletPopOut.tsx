@@ -1,14 +1,14 @@
 import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
-import { ImageHandler } from "../ImageHandler";
-import { FormInputBox } from "./FormInputBox";
-import { FormButton } from "./FormButton";
-import { transactionModel } from "../../model/TopUpConstant";
-
-import customStyle from "../../styles/module/AccountModal.module.scss";
+import { FormInputBox } from "../FormInputBox";
+import { FormButton } from "../FormButton";
 import { TutorialPopOut } from "./TutorialPopOut";
-import { DepositType, PopOutType } from "../../model/WebConstant";
+import { transactionModel } from "../../../model/TopUpConstant";
+import { DepositType, PopOutType } from "../../../model/WebConstant";
+
+import customStyle from "../../../styles/module/AccountModal.module.scss";
+import { PopOutTitle } from "../PopOutTitle";
 
 interface Props {
   toggle: boolean;
@@ -16,11 +16,12 @@ interface Props {
   showPopOut: (any: number, data?: GenericObjectType) => void;
   hidePopOut: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
+  customPopOutData: GenericObjectType;
 }
 
 interface State {
-  selectedIndex: number;
   tutorialToggle: boolean;
+  selectedIndex: number;
   selectedTransaction: number;
 }
 
@@ -29,11 +30,11 @@ class DepositWalletPopOut extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-
+    const { selectedIndex, selectedTransaction } = props.customPopOutData;
     this.state = {
-      selectedIndex: 0,
       tutorialToggle: false,
-      selectedTransaction: 0,
+      selectedIndex: selectedIndex,
+      selectedTransaction: selectedTransaction,
     };
 
     this._balanceRef = React.createRef();
@@ -74,15 +75,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <div id="pop-out-title-container">
-            <ImageHandler src="pop_out/title_bg.png" scale={0.47} />
-            <div id="pop-out-title">游戏充值</div>
-            <ImageHandler
-              src="pop_out/close_button.png"
-              scale={0.44}
-              onClick={hidePopOut}
-            />
-          </div>
+          <PopOutTitle label="游戏充值" hidePopOut={hidePopOut} />
           <div
             id="deposit-option-menu-container"
             className="row-container center"
@@ -142,7 +135,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
           onSubmit={this._onFormSubmitted}
         >
           {this._renderRadioButton()}
-          <div id="description-label">
+          <div className="description-label">
             {transactionModel[selectedIndex].description}
           </div>
           <FormInputBox
@@ -150,7 +143,9 @@ class DepositWalletPopOut extends React.Component<Props, State> {
             placeholder="请在此输入充值金额"
             inputRef={this._balanceRef}
           />
-          <div id="description-label">单笔充值 : 最低100元，最高9999元</div>
+          <div className="description-label">
+            单笔充值 : 最低100元，最高9999元
+          </div>
           {this._renderButton()}
         </form>
       </div>
@@ -238,10 +233,11 @@ class DepositWalletPopOut extends React.Component<Props, State> {
     const balance = this._balanceRef.current.value;
 
     const { showPopOut } = this.props;
-    const { selectedIndex } = this.state;
+    const { selectedIndex, selectedTransaction } = this.state;
     showPopOut &&
       showPopOut(PopOutType.DEPOSIT_INSTRUCTION, {
         selectedIndex,
+        selectedTransaction,
         balance,
       });
   }

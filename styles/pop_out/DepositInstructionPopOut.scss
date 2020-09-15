@@ -20,7 +20,7 @@
       }
 
       .instruction-label {
-        margin-left: 8px;
+        margin-left: 5px;
         font-size: 20px;
         color: #fcb715;
       }
@@ -47,6 +47,7 @@
         font-size: 15px;
         color: #ff0000;
         border: 1px solid #ff0000;
+        background-color: transparent;
         cursor: pointer;
       }
     }
@@ -94,6 +95,121 @@
       .deposit-button-label {
         font-size: 18px;
         color: white;
+      }
+    }
+  }
+}
+
+#deposit-qr-instruction-container {
+  width: 100%;
+  color: white;
+  form {
+    text-align: center;
+
+    #qr-code-instruction {
+      margin-top: 40px;
+      font-size: 15px;
+    }
+
+    #qr-code-image {
+      position: relative;
+      width: 100%;
+      height: 176px;
+      margin-top: 10px;
+
+      :nth-child(1) {
+        top: calc(50% - 88px);
+        left: calc(50% - 88px);
+      }
+    }
+
+    #deposit-balance-label {
+      color: #ffb100;
+      font-size: 20px;
+
+      span {
+        font-size: 25px;
+        font-weight: bold;
+      }
+    }
+
+    input[type="text"] {
+      margin-top: 44px;
+      width: 380px;
+      height: 40px;
+      font-size: 18px;
+      border-radius: 5px;
+      border-width: 0px;
+      text-align: center;
+    }
+
+    #deposit-sample-container {
+      margin-top: 6px;
+      width: 380px;
+      justify-content: space-between;
+
+      #deposit-sample-label-left,
+      #deposit-sample-label-right {
+        font-size: 15px;
+        text-decoration: underline;
+        text-align: start;
+        cursor: pointer;
+      }
+
+      #deposit-sample-label-left {
+        width: 133px;
+      }
+
+      #deposit-sample-label-right {
+        width: 93px;
+      }
+
+      #deposit-sample-label-left:hover #sample-image-left,
+      #deposit-sample-label-right:hover #sample-image-right,
+      #sample-image-left:hover,
+      #sample-image-right:hover {
+        display: block;
+      }
+
+      #sample-image-left,
+      #sample-image-right {
+        display: none;
+        position: absolute;
+        border: 8px solid white;
+      }
+
+      #sample-image-left {
+        width: 340px;
+        height: 270px;
+        top: 210px;
+        left: -35px;
+      }
+
+      #sample-image-right {
+        width: 336px;
+        height: 578px;
+        top: -15px;
+        right: -31px;
+      }
+    }
+
+    #deposit-buttons-container {
+      margin-top: 40px;
+      justify-content: space-between;
+
+      input[type="button"] {
+        width: 120px;
+      }
+
+      input[type="submit"] {
+        width: 230px;
+      }
+
+      input {
+        background-image: linear-gradient(180deg, #ff6363 0%, #d20000 100%);
+        border-radius: 5px;
+        border-width: 0px;
+        height: 40px;
       }
     }
   }

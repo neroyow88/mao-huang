@@ -1,13 +1,27 @@
-class Utils {
-  private _isMobile: boolean;
+export function copyToClipboard(elem: HTMLElement): boolean {
+  const targetId = "_hiddenCopyText_";
+  let target = document.getElementById(
+    "_hiddenCopyText_"
+  ) as HTMLTextAreaElement;
 
-  public set isMobile(value: boolean) {
-    this._isMobile = value;
+  if (!target) {
+    target = document.createElement("textarea");
+    target.style.position = "absolute";
+    target.style.left = "-9999px";
+    target.style.top = "0";
+    target.id = targetId;
+    document.body.appendChild(target);
   }
-  public get isMobile(): boolean {
-    return this._isMobile;
+
+  target.textContent = elem.textContent;
+  target.focus();
+  target.setSelectionRange(0, target.value.length);
+  let succeed;
+  try {
+    succeed = document.execCommand("copy");
+  } catch (e) {
+    succeed = false;
   }
+
+  return succeed;
 }
-
-const utils = new Utils();
-export { utils };

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import customStyle from "../../styles/module/TutorialModal.module.scss";
+import customStyle from "../../../styles/module/TutorialModal.module.scss";
 
 interface Props {
   toggle: boolean;

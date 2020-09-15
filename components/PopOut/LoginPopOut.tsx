@@ -1,11 +1,11 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { ImageHandler } from "../ImageHandler";
-
-import customStyle from "../../styles/module/AccountModal.module.scss";
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
+import { PopOutTitle } from "./PopOutTitle";
+
+import customStyle from "../../styles/module/AccountModal.module.scss";
 
 interface Props {
   toggle: boolean;
@@ -49,15 +49,7 @@ class LoginPopOut extends React.Component<Props> {
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <div id="pop-out-title-container">
-            <ImageHandler src="pop_out/title_bg.png" scale={0.47} />
-            <div id="pop-out-title">登入</div>
-            <ImageHandler
-              src="pop_out/close_button.png"
-              scale={0.44}
-              onClick={hidePopOut}
-            />
-          </div>
+          <PopOutTitle label="登入" hidePopOut={hidePopOut} />
           <div id="login-form-container" className="pop-out-form-container">
             <form autoComplete="off" className="column-container center">
               <FormInputBox

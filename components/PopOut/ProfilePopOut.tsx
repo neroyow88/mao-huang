@@ -1,12 +1,12 @@
 import React, { CSSProperties } from "react";
 import { Modal } from "reactstrap";
 
-import { ImageHandler } from "../ImageHandler";
-
-import customStyle from "../../styles/module/AccountModal.module.scss";
 import { ProfileUser } from "./ProfileUser";
 import { ProfileChangePassword } from "./ProfileChangePassword";
 import { ProfileSetPinNumber } from "./ProfileSetPinNumber";
+import { PopOutTitle } from "./PopOutTitle";
+
+import customStyle from "../../styles/module/AccountModal.module.scss";
 
 interface Props {
   toggle: boolean;
@@ -59,15 +59,7 @@ class ProfilePopOut extends React.Component<Props, State> {
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <div id="pop-out-title-container">
-            <ImageHandler src="pop_out/title_bg.png" scale={0.47} />
-            <div id="pop-out-title">会员中心</div>
-            <ImageHandler
-              src="pop_out/close_button.png"
-              scale={0.44}
-              onClick={hidePopOut}
-            />
-          </div>
+          <PopOutTitle label="会员中心" hidePopOut={hidePopOut} />
           <div
             id="profile-selection-menu-container"
             className="row-container center"

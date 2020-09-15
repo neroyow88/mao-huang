@@ -17,14 +17,14 @@ import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
 import { LoginPopOut } from "./LoginPopOut";
 import { RegisterPopOut } from "./RegisterPopOut";
 import { ProfilePopOut } from "./ProfilePopOut";
-import { DepositWalletPopOut } from "./DepositWalletPopOut";
 import { NoticeBoardPopOut } from "./NoticeBoardPopOut";
 import { MobileCardPopOut } from "./MobileCardPopOut";
 import { NoticePopOut } from "./NoticePopOut";
+import { DepositWalletPopOut } from "./Deposit/DepositWalletPopOut";
+import { DepositInstructionPopOut } from "./Deposit/DepositInstructionPopOut";
 
 // module scss
 import customStyle from "../../styles/module/Modal.module.scss";
-import { DepositInstructionPopOut } from "./DepositInstructionPopOut";
 
 interface Props {
   type: PopOutType;
@@ -128,6 +128,7 @@ class PopOut extends React.Component<Props, State> {
             showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
           />
         );
         break;

@@ -1,14 +1,14 @@
 import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
-import { ImageHandler } from "../ImageHandler";
-
-import customStyle from "../../styles/module/AccountModal.module.scss";
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
+import { NoticePopOut } from "./NoticePopOut";
+import { PopOutTitle } from "./PopOutTitle";
 import { apiClient } from "../../model/ApiClient";
 import { PopOutType, NoticePopOutConfig } from "../../model/WebConstant";
-import { NoticePopOut } from "./NoticePopOut";
+
+import customStyle from "../../styles/module/AccountModal.module.scss";
 
 interface Props {
   toggle: boolean;
@@ -77,15 +77,7 @@ class RegisterPopOut extends React.Component<Props, State> {
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <div id="pop-out-title-container">
-            <ImageHandler src="pop_out/title_bg.png" scale={0.47} />
-            <div id="pop-out-title">注册会员</div>
-            <ImageHandler
-              src="pop_out/close_button.png"
-              scale={0.44}
-              onClick={hidePopOut}
-            />
-          </div>
+          <PopOutTitle label="注册会员" hidePopOut={hidePopOut} />
           <div id="register-form-container" className="pop-out-form-container">
             <form autoComplete="off" onSubmit={this._onFormSubmitted}>
               <FormInputBox

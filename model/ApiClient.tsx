@@ -8,9 +8,12 @@ const API_PATH = {
   FORGOT_PASSWORD: "forgotPassword",
   CHANGE_PASSWORD: "changePassword",
   SET_PIN: "setPin",
+  GET_BANK_ACCOUNT: "getBankAccount",
 };
 
 class APIClient {
+  public getBankAccount(): void {}
+
   public register(data: GenericObjectType, callback: APIReturnFunction): void {
     const path = API_PATH.REGISTER;
     const apiReturn = (result: GenericObjectType, err: string): void => {
