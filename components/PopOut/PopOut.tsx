@@ -25,6 +25,7 @@ import { DepositInstructionPopOut } from "./Deposit/DepositInstructionPopOut";
 
 // module scss
 import customStyle from "../../styles/module/Modal.module.scss";
+import { WithdrawWalletPopOut } from "./WithdrawWalletPopOut";
 
 interface Props {
   type: PopOutType;
@@ -141,6 +142,17 @@ class PopOut extends React.Component<Props, State> {
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
             customPopOutData={customPopOutData}
+          />
+        );
+        break;
+      case PopOutType.WITHDRAW_WALLET:
+        component = (
+          <WithdrawWalletPopOut
+            toggle={toggle}
+            scale={scale}
+            showPopOut={showPopOut}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
           />
         );
         break;

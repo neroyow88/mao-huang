@@ -8,6 +8,7 @@ export enum PopOutType {
 
   DEPOSIT_WALLET = 11,
   DEPOSIT_INSTRUCTION = 12,
+  WITHDRAW_WALLET = 13,
 
   CARD_MOBILE = 21,
   LOGIN_MOBILE = 22,

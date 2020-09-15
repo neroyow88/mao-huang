@@ -12,8 +12,6 @@ const API_PATH = {
 };
 
 class APIClient {
-  public getBankAccount(): void {}
-
   public register(data: GenericObjectType, callback: APIReturnFunction): void {
     const path = API_PATH.REGISTER;
     const apiReturn = (result: GenericObjectType, err: string): void => {
@@ -179,6 +177,14 @@ class APIClient {
         isLogin: true,
         username: username,
         balance: 100000,
+        withdrawDetails: [
+          {
+            bankName: "工商银行",
+            cardType: "储蓄卡",
+            ownerName: "金城五",
+            cardNumber: "1234567824689999",
+          },
+        ],
       };
       cb && cb(result, undefined);
     } else {

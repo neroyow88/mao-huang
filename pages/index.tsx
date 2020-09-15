@@ -58,22 +58,6 @@ export default class Home extends React.Component<Props, State> {
   }
 
   public componentDidMount(): void {
-    // temp
-    const url = new URL(window.location.href);
-    const query = new URLSearchParams(url.search);
-    const username = query.get("username");
-    if (username) {
-      dataSource.updatePlayerModel({
-        isLogin: true,
-        username,
-        balance: 100000,
-      });
-    } else {
-      dataSource.updatePlayerModel({
-        isLogin: false,
-      });
-    }
-
     setInterval((): void => {
       dataSource.updateSystemModel({ isMobile });
       this.setState({ isStart: true });

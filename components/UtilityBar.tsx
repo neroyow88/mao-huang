@@ -11,7 +11,8 @@ class UtilityBar extends React.Component<Props> {
     super(props);
 
     this._renderUtilityItem = this._renderUtilityItem.bind(this);
-    this._onTopUpClick = this._onTopUpClick.bind(this);
+    this._onDepositClicked = this._onDepositClicked.bind(this);
+    this._onWithdrawClicked = this._onWithdrawClicked.bind(this);
   }
 
   public render(): JSX.Element {
@@ -24,8 +25,8 @@ class UtilityBar extends React.Component<Props> {
             <ImageHandler src={"logo.png"} />
           </div>
           {this._renderUtilityItem("猫皇", undefined, "520-logo2.png")}
-          {this._renderUtilityItem("游戏充值", this._onTopUpClick)}
-          {this._renderUtilityItem("快速提款")}
+          {this._renderUtilityItem("游戏充值", this._onDepositClicked)}
+          {this._renderUtilityItem("快速提款", this._onWithdrawClicked)}
           {this._renderUtilityItem("户内转帐")}
           {this._renderUtilityItem("留言信息")}
           {this._renderUtilityItem(`猫皇余额 : ${balance}`)}
@@ -55,13 +56,18 @@ class UtilityBar extends React.Component<Props> {
     );
   }
 
-  private _onTopUpClick(): void {
+  private _onDepositClicked(): void {
     const { showPopOut } = this.props;
     showPopOut &&
       showPopOut(PopOutType.DEPOSIT_WALLET, {
         selectedIndex: 0,
         selectedTransaction: 0,
       });
+  }
+
+  private _onWithdrawClicked(): void {
+    const { showPopOut } = this.props;
+    showPopOut && showPopOut(PopOutType.WITHDRAW_WALLET);
   }
 }
 
