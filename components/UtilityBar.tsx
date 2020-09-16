@@ -1,6 +1,7 @@
 import React from "react";
 import { ImageHandler } from "./ImageHandler";
 import { PopOutType } from "../model/WebConstant";
+import { dataSource } from "../model/DataSource";
 
 interface Props {
   showPopOut: (any: number, data?: GenericObjectType) => void;
@@ -16,7 +17,7 @@ class UtilityBar extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const balance = 2432.13;
+    const { balance } = dataSource.playerModel;
 
     return (
       <div id="utility-bar-container">
@@ -58,16 +59,26 @@ class UtilityBar extends React.Component<Props> {
 
   private _onDepositClicked(): void {
     const { showPopOut } = this.props;
-    showPopOut &&
-      showPopOut(PopOutType.DEPOSIT_WALLET, {
-        selectedIndex: 0,
-        selectedTransaction: 0,
-      });
+    const { isLogin } = dataSource.playerModel;
+    if (isLogin) {
+      showPopOut &&
+        showPopOut(PopOutType.DEPOSIT_WALLET, {
+          selectedIndex: 0,
+          selectedTransaction: 0,
+        });
+    } else {
+      showPopOut && showPopOut(PopOutType.LOGIN);
+    }
   }
 
   private _onWithdrawClicked(): void {
     const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.WITHDRAW_WALLET);
+    const { isLogin } = dataSource.playerModel;
+    if (isLogin) {
+      showPopOut && showPopOut(PopOutType.WITHDRAW_SELECTION);
+    } else {
+      showPopOut && showPopOut(PopOutType.LOGIN);
+    }
   }
 }
 

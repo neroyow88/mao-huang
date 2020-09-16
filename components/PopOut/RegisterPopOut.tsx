@@ -6,7 +6,11 @@ import { FormButton } from "./FormButton";
 import { NoticePopOut } from "./NoticePopOut";
 import { PopOutTitle } from "./PopOutTitle";
 import { apiClient } from "../../model/ApiClient";
-import { PopOutType, NoticePopOutConfig } from "../../model/WebConstant";
+import {
+  PopOutType,
+  NoticePopOutConfig,
+  ApiPath,
+} from "../../model/WebConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
 
@@ -157,7 +161,6 @@ class RegisterPopOut extends React.Component<Props, State> {
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
         if (err === "verification") {
-          console.log(err);
           this.setState({
             subToggle: true,
             errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
@@ -173,7 +176,8 @@ class RegisterPopOut extends React.Component<Props, State> {
       }
     };
 
-    apiClient.register(
+    apiClient.callApi(
+      ApiPath.REGISTER,
       { username, password, phoneNumber, verificationCode },
       onResultReturn
     );

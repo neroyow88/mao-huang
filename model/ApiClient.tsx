@@ -1,160 +1,47 @@
-import { dataSource } from "./DataSource";
-
-const API_PATH = {
-  REGISTER: "register",
-  LOGIN: "login",
-  LOGOUT: "logout",
-  FORGOT_USERNAME: "forgotUsername",
-  FORGOT_PASSWORD: "forgotPassword",
-  CHANGE_PASSWORD: "changePassword",
-  SET_PIN: "setPin",
-  GET_BANK_ACCOUNT: "getBankAccount",
-};
+import { ApiPath } from "./WebConstant";
 
 class APIClient {
-  public register(data: GenericObjectType, callback: APIReturnFunction): void {
-    const path = API_PATH.REGISTER;
-    const apiReturn = (result: GenericObjectType, err: string): void => {
-      console.log(`API return [${path}]: ${result}, ${err}`);
-      if (err) {
-        console.error(err);
-        callback(undefined, err);
-      } else {
-        callback(result, undefined);
-      }
-    };
-
-    this._callApi(path, data, apiReturn.bind(this));
-  }
-
-  public login(data: GenericObjectType, callback: APIReturnFunction): void {
-    const path = API_PATH.LOGIN;
-    const apiReturn = (result: GenericObjectType, err: string): void => {
-      console.log(`API return [${path}]: ${result}, ${err}`);
-      if (err) {
-        console.error(err);
-        callback(undefined, err);
-      } else {
-        dataSource.updatePlayerModel(result);
-        callback(result, undefined);
-      }
-    };
-
-    this._callApi(path, data, apiReturn.bind(this));
-  }
-
-  public logout(callback: APIReturnFunction): void {
-    const path = API_PATH.LOGOUT;
-    const apiReturn = (result: GenericObjectType, err: string): void => {
-      console.log(`API return [${path}]: ${result}, ${err}`);
-      if (err) {
-        console.error(err);
-        callback(undefined, err);
-      } else {
-        dataSource.updatePlayerModel(result);
-        callback(result, undefined);
-      }
-    };
-
-    this._callApi(path, undefined, apiReturn.bind(this));
-  }
-
-  public forgotUsername(
-    data: GenericObjectType,
+  public callApi(
+    path: ApiPath,
+    params: GenericObjectType,
     callback: APIReturnFunction
   ): void {
-    const path = API_PATH.FORGOT_USERNAME;
-    const apiReturn = (result: GenericObjectType, err: string): void => {
-      console.log(`API return [${path}]: ${result}, ${err}`);
-      if (err) {
-        console.error(err);
-        callback(undefined, err);
-      } else {
-        callback(result, undefined);
-      }
-    };
-
-    this._callApi(path, data, apiReturn.bind(this));
-  }
-
-  public forgotPassword(
-    data: GenericObjectType,
-    callback: APIReturnFunction
-  ): void {
-    const path = API_PATH.FORGOT_PASSWORD;
-    const apiReturn = (result: GenericObjectType, err: string): void => {
-      console.log(`API return [${path}]: ${result}, ${err}`);
-      if (err) {
-        console.error(err);
-        callback(undefined, err);
-      } else {
-        callback(result, undefined);
-      }
-    };
-
-    this._callApi(path, data, apiReturn.bind(this));
-  }
-
-  public changePassword(
-    data: GenericObjectType,
-    callback: APIReturnFunction
-  ): void {
-    const path = API_PATH.CHANGE_PASSWORD;
-    const apiReturn = (result: GenericObjectType, err: string): void => {
-      console.log(`API return [${path}]: ${result}, ${err}`);
-      if (err) {
-        console.error(err);
-        callback(undefined, err);
-      } else {
-        callback(result, undefined);
-      }
-    };
-
-    this._callApi(path, data, apiReturn.bind(this));
-  }
-
-  public setPin(data: GenericObjectType, callback: APIReturnFunction): void {
-    const path = API_PATH.SET_PIN;
-    const apiReturn = (result: GenericObjectType, err: string): void => {
-      console.log(`API return [${path}]: ${result}, ${err}`);
-      if (err) {
-        console.error(err);
-        callback(undefined, err);
-      } else {
-        callback(result, undefined);
-      }
-    };
-
-    this._callApi(path, data, apiReturn.bind(this));
+    this._callApi(path, params, callback);
   }
 
   ///#region temp
   private _callApi(
-    path: string,
+    path: ApiPath,
     dt: GenericObjectType,
     cb: APIReturnFunction
   ): void {
     switch (path) {
-      case API_PATH.REGISTER:
+      case ApiPath.REGISTER:
         this._register(dt, cb);
         break;
-      case API_PATH.LOGIN:
+      case ApiPath.LOGIN:
         this._login(dt, cb);
         break;
-      case API_PATH.LOGOUT:
+      case ApiPath.LOGOUT:
         this._logout(cb);
         break;
-      case API_PATH.FORGOT_USERNAME:
+      case ApiPath.FORGOT_USERNAME:
         this._forgotUsername(dt, cb);
         break;
-      case API_PATH.FORGOT_PASSWORD:
+      case ApiPath.FORGOT_PASSWORD:
         this._forgotPassword(dt, cb);
         break;
-      case API_PATH.CHANGE_PASSWORD:
+      case ApiPath.CHANGE_PASSWORD:
         this._changePassword(dt, cb);
         break;
-      case API_PATH.SET_PIN:
+      case ApiPath.SET_PIN:
         this._setPin(dt, cb);
+        break;
+      case ApiPath.GET_BANK_ACCOUNT:
+        this._addBankAccount(dt, cb);
+        break;
+      case ApiPath.WITHDRAW:
+        this._withdraw(dt, cb);
         break;
     }
   }
@@ -238,7 +125,42 @@ class APIClient {
       cb && cb({ success: true }, undefined);
     }
   }
+
+  private _addBankAccount(dt: GenericObjectType, cb: APIReturnFunction): void {
+    const {
+      bankType,
+      bankName,
+      username,
+      cardNumber,
+      verifiedCardNumber,
+      pinNumber,
+    } = dt;
+
+    if (cardNumber !== verifiedCardNumber) {
+      cb && cb(undefined, "card");
+    } else {
+      const result = { bankType, bankName, username, cardNumber, pinNumber };
+      cb && cb(result, undefined);
+    }
+  }
+
+  private _withdraw(dt: GenericObjectType, cb: APIReturnFunction): void {
+    const { pinNumber } = dt;
+    if (pinNumber === "0000") {
+      cb && cb(undefined, "pin");
+    } else {
+      cb && cb({ invoice: "000123456789" }, undefined);
+    }
+  }
   //#endregion
+
+  // private _logResult(
+  //   path: string,
+  //   result: GenericObjectType,
+  //   err: string
+  // ): void {
+  //   console.log(`API return [${path}]: ${result}, ${err}`);
+  // }
 }
 
 const apiClient = new APIClient();

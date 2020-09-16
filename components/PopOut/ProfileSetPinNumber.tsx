@@ -3,7 +3,7 @@ import React, { RefObject } from "react";
 import { FormButton } from "./FormButton";
 import { FormInputBox } from "./FormInputBox";
 import { NoticePopOut } from "./NoticePopOut";
-import { NoticePopOutConfig } from "../../model/WebConstant";
+import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 import { apiClient } from "../../model/ApiClient";
 
 interface Props {
@@ -136,7 +136,8 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
       }
     };
 
-    apiClient.setPin(
+    apiClient.callApi(
+      ApiPath.SET_PIN,
       { phoneNumber, verificationCode, pin, verifiedPin },
       onResultReturn
     );

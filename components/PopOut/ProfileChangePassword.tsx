@@ -3,7 +3,7 @@ import React, { RefObject } from "react";
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
 import { NoticePopOut } from "./NoticePopOut";
-import { NoticePopOutConfig } from "../../model/WebConstant";
+import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 import { apiClient } from "../../model/ApiClient";
 
 interface Props {
@@ -122,7 +122,8 @@ class ProfileChangePassword extends React.Component<Props, State> {
       }
     };
 
-    apiClient.changePassword(
+    apiClient.callApi(
+      ApiPath.CHANGE_PASSWORD,
       { oldPassword, newPassword, verifiedNewPassword },
       onResultReturn
     );

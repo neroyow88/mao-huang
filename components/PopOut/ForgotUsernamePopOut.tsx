@@ -5,7 +5,11 @@ import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
 import { NoticePopOut } from "./NoticePopOut";
 import { PopOutTitle } from "./PopOutTitle";
-import { PopOutType, NoticePopOutConfig } from "../../model/WebConstant";
+import {
+  PopOutType,
+  NoticePopOutConfig,
+  ApiPath,
+} from "../../model/WebConstant";
 import { apiClient } from "../../model/ApiClient";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
@@ -123,7 +127,11 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
       }
     };
 
-    apiClient.forgotUsername({ phoneNumber, verificationCode }, onResultReturn);
+    apiClient.callApi(
+      ApiPath.FORGOT_USERNAME,
+      { phoneNumber, verificationCode },
+      onResultReturn
+    );
   }
 
   //#region Utils

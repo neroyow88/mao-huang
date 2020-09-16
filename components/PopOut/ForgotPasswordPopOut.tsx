@@ -6,7 +6,11 @@ import { FormButton } from "./FormButton";
 import { NoticePopOut } from "./NoticePopOut";
 import { PopOutTitle } from "./PopOutTitle";
 import { apiClient } from "../../model/ApiClient";
-import { PopOutType, NoticePopOutConfig } from "../../model/WebConstant";
+import {
+  PopOutType,
+  NoticePopOutConfig,
+  ApiPath,
+} from "../../model/WebConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
 
@@ -161,7 +165,8 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
       }
     };
 
-    apiClient.forgotPassword(
+    apiClient.callApi(
+      ApiPath.FORGOT_PASSWORD,
       { username, password, phoneNumber, verificationCode },
       onResultReturn
     );

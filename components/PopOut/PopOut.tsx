@@ -22,10 +22,13 @@ import { MobileCardPopOut } from "./MobileCardPopOut";
 import { NoticePopOut } from "./NoticePopOut";
 import { DepositWalletPopOut } from "./Deposit/DepositWalletPopOut";
 import { DepositInstructionPopOut } from "./Deposit/DepositInstructionPopOut";
+import { WithdrawAccountSelectionPopOut } from "./Withdraw/WithdrawAccountSelectionPopOut";
 
 // module scss
 import customStyle from "../../styles/module/Modal.module.scss";
-import { WithdrawWalletPopOut } from "./WithdrawWalletPopOut";
+import { AddBankAccountPopOut } from "./Withdraw/AddBankAccountPopOut";
+import { WithdrawDetailPopOut } from "./Withdraw/WithdrawDetailPopOut";
+import { WithdrawSuccessPopOut } from "./Withdraw/WithdrawSuccessPopOut";
 
 interface Props {
   type: PopOutType;
@@ -145,14 +148,48 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
-      case PopOutType.WITHDRAW_WALLET:
+
+      case PopOutType.WITHDRAW_SELECTION:
         component = (
-          <WithdrawWalletPopOut
+          <WithdrawAccountSelectionPopOut
             toggle={toggle}
             scale={scale}
             showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.WITHDRAW_ACCOUNT_ADD:
+        component = (
+          <AddBankAccountPopOut
+            toggle={toggle}
+            scale={scale}
+            showPopOut={showPopOut}
+            transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.WITHDRAW_DETAIL:
+        component = (
+          <WithdrawDetailPopOut
+            toggle={toggle}
+            scale={scale}
+            showPopOut={showPopOut}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
+          />
+        );
+        break;
+      case PopOutType.WITHDRAW_SUCCESS:
+        component = (
+          <WithdrawSuccessPopOut
+            toggle={toggle}
+            scale={scale}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
           />
         );
         break;

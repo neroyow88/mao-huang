@@ -1,0 +1,26 @@
+#withdraw-add-form-container {
+  form {
+    select {
+      width: 280px;
+      height: 40px;
+      background-color: white;
+      color: gray;
+      border-radius: 5px;
+      border-width: 0px;
+      padding-left: 5px;
+
+      option {
+        color: black;
+      }
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      margin-top: 25px;
+    }
+
+    input[type="submit"] {
+      margin-top: 40px;
+    }
+  }
+}

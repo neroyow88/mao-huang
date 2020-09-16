@@ -1,0 +1,155 @@
+#withdraw-container {
+  width: 100%;
+
+  #withdraw-label {
+    margin-top: 40px;
+    color: white;
+    font-size: 18px;
+
+    span {
+      color: #ffb100;
+    }
+  }
+
+  #withdraw-bank-container {
+    margin-top: 27px;
+  }
+}
+
+#withdraw-detail-container {
+  width: 100%;
+  margin-top: 43px;
+
+  #withdraw-time-label,
+  #withdraw-limit-label {
+    width: 280px;
+    height: 30px;
+    font-size: 16px;
+    color: white;
+    text-align: justify;
+  }
+
+  #withdraw-time-label:after,
+  #withdraw-limit-label:after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+  }
+
+  #withdraw-time-label {
+    margin-top: 10px;
+  }
+
+  form {
+    width: 100%;
+
+    input[type="text"] {
+      margin-bottom: 25px;
+    }
+
+    #withdraw-buttons-container {
+      margin-top: 56px;
+      width: 280px;
+      height: 40px;
+      justify-content: space-between;
+
+      input[type="button"],
+      input[type="submit"] {
+        width: 120px;
+        height: 40px;
+      }
+    }
+  }
+}
+
+.withdraw-detail-container {
+  width: 500px;
+  height: 116px;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  .add-container {
+    font-size: 40px;
+    color: #cfcfcf;
+  }
+
+  .bank-logo {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    margin-right: 5px;
+  }
+
+  .bank-detail-container {
+    width: 70px;
+
+    .bank-label {
+      font-size: 15px;
+    }
+  }
+
+  .withdraw-label {
+    font-size: 18px;
+  }
+
+  .owner-detail-container {
+    height: 95px;
+    margin-top: 15px;
+    margin-right: 100px;
+    justify-content: space-between;
+
+    .bank-number-label {
+      width: 215px;
+      font-size: 25px;
+      font-weight: bolder;
+      justify-content: space-between;
+    }
+  }
+
+  .remove-label {
+    margin-top: 5px;
+    align-self: start;
+    color: #a6a6a6;
+    font-size: 16px;
+  }
+
+  .remove-label:hover {
+    color: black;
+  }
+}
+
+#withdraw-success-container {
+  #success-image-container {
+    position: relative;
+    width: 112px;
+    height: 58px;
+    margin-top: 120px;
+  }
+
+  #invoice-label-container {
+    color: white;
+    font-size: 20px;
+    margin-top: 60px;
+
+    span {
+      color: #ffb100;
+    }
+  }
+
+  #instruction-label-container {
+    width: 380px;
+    color: white;
+    font-size: 18px;
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  #success-button {
+    color: black;
+    font-size: 16px;
+    margin-top: 50px;
+    cursor: pointer;
+  }
+}

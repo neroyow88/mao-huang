@@ -1,6 +1,6 @@
 import React, { RefObject } from "react";
 import { ImageHandler } from "./ImageHandler";
-import { PopOutType, NoticePopOutConfig } from "../model/WebConstant";
+import { PopOutType, NoticePopOutConfig, ApiPath } from "../model/WebConstant";
 import { dataSource } from "../model/DataSource";
 import { FormInputBox } from "./PopOut/FormInputBox";
 import { FormButton } from "./PopOut/FormButton";
@@ -182,11 +182,12 @@ class LoginBar extends React.Component<Props, State> {
             showPopOut && showPopOut(PopOutType.LOGIN);
           }
         } else {
+          dataSource.updatePlayerModel(result);
           showPopOut(PopOutType.NOTICE, NoticePopOutConfig.LOGIN_SUCCESS);
         }
       };
 
-      apiClient.login({ username, password }, onResultReturn);
+      apiClient.callApi(ApiPath.LOGIN, { username, password }, onResultReturn);
     }
   }
 
@@ -201,10 +202,11 @@ class LoginBar extends React.Component<Props, State> {
       if (err && !result) {
         console.error("Logout failed: ", err);
       } else {
+        dataSource.updatePlayerModel(result);
         showPopOut(PopOutType.NOTICE, NoticePopOutConfig.LOGOUT_SUCCESS);
       }
     };
-    apiClient.logout(onResultReturn);
+    apiClient.callApi(ApiPath.LOGOUT, undefined, onResultReturn);
   }
 }
 

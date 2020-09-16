@@ -46,6 +46,7 @@ class FormInputBox extends React.Component<Props> {
 
     return (
       <input
+        id={id}
         type={type ? type : "text"}
         name={id}
         placeholder={placeholder}
@@ -54,7 +55,6 @@ class FormInputBox extends React.Component<Props> {
         minLength={minLength}
         maxLength={maxLength}
         ref={inputRef}
-        // pattern={number ? `^\d*$` : `^\w*$`}
       ></input>
     );
   }
