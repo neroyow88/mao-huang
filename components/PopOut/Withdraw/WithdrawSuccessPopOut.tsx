@@ -60,10 +60,11 @@ class WithdrawSuccessPopOut extends React.Component<Props, State> {
               提款申请已提交,您的提款编号是 <span>{invoice}</span>
             </div>
             <div id="instruction-label-container">
-              请留意查询银行帐户余额,如有任何疑问请联系
-              24小时在线客服提供协助,谢谢。
+              请留意查询银行帐户余额,如有任何疑问请联系24小时在线客服提供协助,谢谢。
             </div>
-            <div id="success-button">完成</div>
+            <div id="success-button" onClick={hidePopOut}>
+              完成
+            </div>
           </div>
         </div>
       </Modal>

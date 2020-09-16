@@ -26,7 +26,7 @@ interface State {
   subToggle: boolean;
 }
 
-class AddBankAccountPopOut extends React.Component<Props, State> {
+class BindBankAccountPopOut extends React.Component<Props, State> {
   private _bankTypeRef: RefObject<HTMLSelectElement>;
   private _bankNameRef: RefObject<HTMLInputElement>;
   private _usernameRef: RefObject<HTMLInputElement>;
@@ -192,4 +192,4 @@ class AddBankAccountPopOut extends React.Component<Props, State> {
   //#endregion
 }
 
-export { AddBankAccountPopOut };
+export { BindBankAccountPopOut };

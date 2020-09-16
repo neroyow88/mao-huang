@@ -26,7 +26,7 @@ import { WithdrawAccountSelectionPopOut } from "./Withdraw/WithdrawAccountSelect
 
 // module scss
 import customStyle from "../../styles/module/Modal.module.scss";
-import { AddBankAccountPopOut } from "./Withdraw/AddBankAccountPopOut";
+import { BindBankAccountPopOut } from "./Withdraw/BindBankAccountPopOut";
 import { WithdrawDetailPopOut } from "./Withdraw/WithdrawDetailPopOut";
 import { WithdrawSuccessPopOut } from "./Withdraw/WithdrawSuccessPopOut";
 
@@ -162,7 +162,7 @@ class PopOut extends React.Component<Props, State> {
         break;
       case PopOutType.WITHDRAW_ACCOUNT_ADD:
         component = (
-          <AddBankAccountPopOut
+          <BindBankAccountPopOut
             toggle={toggle}
             scale={scale}
             showPopOut={showPopOut}
