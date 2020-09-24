@@ -50,7 +50,7 @@ class BankAccount extends React.Component<Props, State> {
           <div className="bank-label">{cardType}</div>
         </div>
         <div className="owner-detail-container column-container center">
-          <div className="withdraw-label">{`卡戶名 : ${ownerName}`}</div>
+          <div className="withdraw-label">{`卡户名 : ${ownerName}`}</div>
           <div className="bank-number-label row-container">
             <span>****</span>
             <span>****</span>

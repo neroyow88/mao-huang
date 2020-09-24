@@ -45,7 +45,7 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
     this._verificationCodeRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hidePopOut = this._hidePopOut.bind(this);
+    this._hideNotice = this._hideNotice.bind(this);
   }
 
   public componentDidMount(): void {
@@ -139,7 +139,7 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
         <NoticePopOut
           toggle={subToggle}
           scale={scale}
-          hidePopOut={this._hidePopOut}
+          hidePopOut={this._hideNotice}
           customPopOutData={NoticePopOutConfig.VERIFICATION_CODE_INCORRECT}
         />
       </Modal>
@@ -173,7 +173,7 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
   }
 
   //#region Utils
-  private _hidePopOut(): void {
+  private _hideNotice(): void {
     this.setState({ subToggle: false });
   }
   //#endregion

@@ -20,15 +20,17 @@ import { ProfilePopOut } from "./ProfilePopOut";
 import { NoticeBoardPopOut } from "./NoticeBoardPopOut";
 import { MobileCardPopOut } from "./MobileCardPopOut";
 import { NoticePopOut } from "./NoticePopOut";
+
 import { DepositWalletPopOut } from "./Deposit/DepositWalletPopOut";
 import { DepositInstructionPopOut } from "./Deposit/DepositInstructionPopOut";
 import { WithdrawAccountSelectionPopOut } from "./Withdraw/WithdrawAccountSelectionPopOut";
-
-// module scss
-import customStyle from "../../styles/module/Modal.module.scss";
 import { BindBankAccountPopOut } from "./Withdraw/BindBankAccountPopOut";
 import { WithdrawDetailPopOut } from "./Withdraw/WithdrawDetailPopOut";
 import { WithdrawSuccessPopOut } from "./Withdraw/WithdrawSuccessPopOut";
+import { TransferWalletPopOut } from "./Transfer/TransferWalletPopOut";
+
+// module scss
+import customStyle from "../../styles/module/Modal.module.scss";
 
 interface Props {
   type: PopOutType;
@@ -86,6 +88,7 @@ class PopOut extends React.Component<Props, State> {
           <LoginPopOut
             toggle={toggle}
             scale={scale}
+            showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />
@@ -193,6 +196,18 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
+      case PopOutType.TRANSFER_WALLET:
+        component = (
+          <TransferWalletPopOut
+            toggle={toggle}
+            scale={scale}
+            showPopOut={showPopOut}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
+          />
+        );
+        break;
 
       case PopOutType.CARD_MOBILE:
         component = (
@@ -210,6 +225,7 @@ class PopOut extends React.Component<Props, State> {
           <LoginPopOut
             toggle={toggle}
             scale={scale}
+            showPopOut={showPopOut}
             hidePopOut={this._hidePopOut}
             transitionComplete={this._transitionComplete}
           />

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { copyToClipboard } from "../../../model/Utils";
+import { InstructionBox } from "./InstructionBox";
 
 interface Props {
   balance: number;
@@ -8,25 +8,15 @@ interface Props {
   onConfirm: NoParamReturnNulFunction;
 }
 
-interface State {
-  copiedId: number;
-}
-
-class BankDeposit extends React.Component<Props, State> {
+class BankDeposit extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      copiedId: -1,
-    };
-
-    this._instructionBox = this._instructionBox.bind(this);
     this._descriptionBox = this._descriptionBox.bind(this);
     this._renderButtons = this._renderButtons.bind(this);
 
     this._onBack = this._onBack.bind(this);
     this._onConfirm = this._onConfirm.bind(this);
-    this._onCopyText = this._onCopyText.bind(this);
   }
 
   public render(): JSX.Element {
@@ -39,11 +29,28 @@ class BankDeposit extends React.Component<Props, State> {
         style={{ background: "url(wallet/bank_bg.png) no-repeat center" }}
       >
         <div id="deposit-instruction-content" className="column-container">
-          {this._instructionBox(0, "开户银行", "平安银行")}
-          {this._instructionBox(1, "户名", "猫皇皇", true)}
-          {this._instructionBox(2, "卡(账)号", "6666555566663333999", true)}
-          {this._instructionBox(3, "充值金额", `${balance} 元`, true)}
-          {this._instructionBox(4, "附言或备注", "B44B", true, true)}
+          <InstructionBox index={0} title="开户银行" value="平安银行" />
+          <InstructionBox index={1} title="户名" value="猫皇皇" canCopy />
+          <InstructionBox
+            index={2}
+            title="卡(账)号"
+            value="6666555566663333999"
+            canCopy
+          />
+          <InstructionBox
+            index={3}
+            title="充值金额"
+            value={`${balance}`}
+            optionalText="元"
+            canCopy
+          />
+          <InstructionBox
+            index={4}
+            title="附言或备注"
+            value="B44B"
+            canCopy
+            isStar
+          />
         </div>
         <div id="deposit-description-content" className="column-container">
           <div className="description-label">
@@ -66,45 +73,6 @@ class BankDeposit extends React.Component<Props, State> {
           )}
         </div>
         {this._renderButtons()}
-      </div>
-    );
-  }
-
-  private _instructionBox(
-    index: number,
-    key: string,
-    value: string,
-    canCopy?: boolean,
-    isStar?: boolean
-  ): JSX.Element {
-    const { copiedId } = this.state;
-    const isCopied = copiedId === index;
-
-    const copy = canCopy ? (
-      <div
-        className="copy-container"
-        onClick={(): void => {
-          this._onCopyText(index);
-        }}
-        style={{
-          color: isCopied ? "white" : "#ff0000",
-          backgroundColor: isCopied ? "#ff0000" : "transparent",
-        }}
-      >
-        {isCopied ? "已复制" : "复制"}
-      </div>
-    ) : null;
-    const star = isStar ? <div className="star-container">*</div> : null;
-
-    return (
-      <div className="instruction-label-container row-container">
-        {star}
-        <div className="instruction-label-stretch">{`${key}`}</div>
-        <div className="instruction-label">:</div>
-        <div id={`instruction-${index}`} className="instruction-label">
-          {value}
-        </div>
-        {copy}
       </div>
     );
   }
@@ -143,15 +111,6 @@ class BankDeposit extends React.Component<Props, State> {
   private _onConfirm(): void {
     const { onConfirm } = this.props;
     onConfirm && onConfirm();
-  }
-
-  private _onCopyText(id: number): void {
-    const elem = document.getElementById(`instruction-${id}`);
-    const succeed = copyToClipboard(elem);
-
-    if (succeed) {
-      this.setState({ copiedId: id });
-    }
   }
 }
 

@@ -10,23 +10,13 @@ interface Props {
   showPopOut: (any: number, data?: GenericObjectType) => void;
 }
 
-interface State {
-  username: string;
-  password: string;
-}
-
-class LoginBar extends React.Component<Props, State> {
+class LoginBar extends React.Component<Props> {
   private _loginCount: number = 0;
   private _usernameRef: RefObject<HTMLInputElement>;
   private _passwordRef: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      username: "",
-      password: "",
-    };
 
     this._usernameRef = React.createRef();
     this._passwordRef = React.createRef();
@@ -73,7 +63,7 @@ class LoginBar extends React.Component<Props, State> {
     if (isLogin) {
       return (
         <div id="login-bar-container-browser">
-          <div id="login-bar-login" className="row-container center">
+          <div id="login-bar" className="row-container">
             <div id="username-label">{`欢迎您 , ${username}`}</div>
             <div id="image-container">
               <ImageHandler src={"member.png"} />
@@ -97,7 +87,7 @@ class LoginBar extends React.Component<Props, State> {
     } else {
       return (
         <div id="login-bar-container-browser">
-          <div id="login-bar-not-login" className="row-container center">
+          <div id="login-bar" className="row-container center">
             <div
               className="label-button yellow"
               onClick={this._onForgotUsernameClicked}
@@ -183,7 +173,6 @@ class LoginBar extends React.Component<Props, State> {
           }
         } else {
           dataSource.updatePlayerModel(result);
-          showPopOut(PopOutType.NOTICE, NoticePopOutConfig.LOGIN_SUCCESS);
         }
       };
 

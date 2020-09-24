@@ -19,6 +19,7 @@ export function copyToClipboard(elem: HTMLElement): boolean {
   let succeed;
   try {
     succeed = document.execCommand("copy");
+    console.log("succeed: ", succeed);
   } catch (e) {
     succeed = false;
   }

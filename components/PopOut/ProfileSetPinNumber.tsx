@@ -35,7 +35,7 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
     this._verifiedPin = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hidePopOut = this._hidePopOut.bind(this);
+    this._hideNotice = this._hideNotice.bind(this);
   }
 
   public render(): JSX.Element {
@@ -51,24 +51,6 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
     return (
       <div id="set-pin-container" className="pop-out-form-container">
         <form autoComplete="off" onSubmit={this._onFormSubmitted}>
-          <FormInputBox
-            id="phonenumber"
-            placeholder="请输入注册手机号码"
-            inputRef={this._phoneNumberRef}
-          />
-          <FormButton
-            label="获取短信验证码"
-            backgroundColor="#83D300"
-            onClick={(): void => {
-              console.log("Verification code send");
-            }}
-          />
-          <FormInputBox
-            id="verificationcode"
-            placeholder="请输入短信验证码"
-            rightImage={"pop_out/password_eye.png"}
-            inputRef={this._verificationCodeRef}
-          />
           <FormInputBox
             id="pin"
             placeholder="请设置新提款密码"
@@ -92,6 +74,24 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
             max={12}
             inputRef={this._verifiedPin}
           />
+          <FormInputBox
+            id="phonenumber"
+            placeholder="请输入注册手机号码"
+            inputRef={this._phoneNumberRef}
+          />
+          <FormButton
+            label="获取短信验证码"
+            backgroundColor="#83D300"
+            onClick={(): void => {
+              console.log("Verification code send");
+            }}
+          />
+          <FormInputBox
+            id="verificationcode"
+            placeholder="请输入短信验证码"
+            rightImage={"pop_out/password_eye.png"}
+            inputRef={this._verificationCodeRef}
+          />
           <FormButton
             label="提交"
             backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
@@ -101,7 +101,7 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
         <NoticePopOut
           toggle={subToggle}
           scale={scale}
-          hidePopOut={this._hidePopOut}
+          hidePopOut={this._hideNotice}
           customPopOutData={errorNotice}
         />
       </div>
@@ -144,7 +144,7 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
   }
 
   //#region Utils
-  private _hidePopOut(): void {
+  private _hideNotice(): void {
     this.setState({ subToggle: false });
   }
 

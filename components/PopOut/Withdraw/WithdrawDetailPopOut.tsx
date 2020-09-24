@@ -125,7 +125,7 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
         <NoticePopOut
           toggle={subToggle}
           scale={scale}
-          hidePopOut={this._hidePopOut}
+          hidePopOut={this._hideNotice}
           customPopOutData={NoticePopOutConfig.PIN_INCORRECT}
         />
       </Modal>
@@ -163,7 +163,7 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
     showPopOut && showPopOut(PopOutType.WITHDRAW_SELECTION);
   }
 
-  private _hidePopOut(): void {
+  private _hideNotice(): void {
     this.setState({ subToggle: false });
   }
 }

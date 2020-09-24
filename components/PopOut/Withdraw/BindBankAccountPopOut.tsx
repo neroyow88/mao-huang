@@ -49,7 +49,7 @@ class BindBankAccountPopOut extends React.Component<Props, State> {
     this._pinNumberRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hidePopOut = this._hidePopOut.bind(this);
+    this._hideNotice = this._hideNotice.bind(this);
   }
 
   public componentDidMount(): void {
@@ -71,13 +71,13 @@ class BindBankAccountPopOut extends React.Component<Props, State> {
     return (
       <Modal
         isOpen={toggle}
-        toggle={this._hidePopOut}
+        toggle={this._hideNotice}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="添加提款账号" hidePopOut={this._hidePopOut} />
+          <PopOutTitle label="添加提款账号" hidePopOut={this._hideNotice} />
           <div
             id="withdraw-add-form-container"
             className="pop-out-form-container"
@@ -135,7 +135,7 @@ class BindBankAccountPopOut extends React.Component<Props, State> {
         <NoticePopOut
           toggle={subToggle}
           scale={scale}
-          hidePopOut={this._hidePopOut}
+          hidePopOut={this._hideNotice}
           customPopOutData={NoticePopOutConfig.VERIFICATION_CARD_INCORRECT}
         />
       </Modal>
@@ -185,7 +185,7 @@ class BindBankAccountPopOut extends React.Component<Props, State> {
   }
 
   //#region Utils
-  private _hidePopOut(): void {
+  private _hideNotice(): void {
     const { showPopOut } = this.props;
     showPopOut && showPopOut(PopOutType.WITHDRAW_SELECTION);
   }

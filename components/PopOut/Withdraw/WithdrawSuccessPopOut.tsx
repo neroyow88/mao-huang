@@ -14,11 +14,7 @@ interface Props {
   customPopOutData: GenericObjectType;
 }
 
-interface State {
-  subToggle: boolean;
-}
-
-class WithdrawSuccessPopOut extends React.Component<Props, State> {
+class WithdrawSuccessPopOut extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -61,9 +57,6 @@ class WithdrawSuccessPopOut extends React.Component<Props, State> {
             </div>
             <div id="instruction-label-container">
               请留意查询银行帐户余额,如有任何疑问请联系24小时在线客服提供协助,谢谢。
-            </div>
-            <div id="success-button" onClick={hidePopOut}>
-              完成
             </div>
           </div>
         </div>
