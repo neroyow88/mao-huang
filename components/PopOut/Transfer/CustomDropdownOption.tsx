@@ -8,11 +8,12 @@ interface IDropdownOption {
 
 interface Props {
   options: IDropdownOption[];
+  selectedIndex: number;
+  onSelected: (index: number) => void;
 }
 
 interface State {
   toggle: boolean;
-  selectedIndex: number;
   hoverIndex: number;
 }
 
@@ -22,7 +23,6 @@ class CustomDropdownOption extends React.Component<Props, State> {
 
     this.state = {
       toggle: false,
-      selectedIndex: 0,
       hoverIndex: -1,
     };
 
@@ -30,8 +30,8 @@ class CustomDropdownOption extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { options } = this.props;
-    const { toggle, selectedIndex, hoverIndex } = this.state;
+    const { options, selectedIndex } = this.props;
+    const { toggle, hoverIndex } = this.state;
 
     const children = options.map(
       (option: IDropdownOption, index: number): JSX.Element => {
@@ -66,19 +66,26 @@ class CustomDropdownOption extends React.Component<Props, State> {
       }
     );
 
-    const selectedOption = options[selectedIndex];
+    const selectedOption =
+      selectedIndex === -1 ? undefined : options[selectedIndex];
     const style: CSSProperties = {
-      backgroundImage: `url(${selectedOption.src})`,
+      backgroundImage: selectedOption ? `url(${selectedOption.src})` : "",
       backgroundPosition: "5% 50%",
       backgroundRepeat: "no-repeat",
       backgroundSize: "35px",
       borderRadius: "5px",
     };
 
+    const spanStyle: CSSProperties = {
+      marginLeft: selectedOption ? "60px" : "15px",
+    };
+
     return (
       <div className="dropdown-container" onClick={this._onToggle}>
         <div className="option-container" style={style}>
-          <span>{selectedOption.label}</span>
+          <span style={spanStyle}>
+            {selectedOption ? selectedOption.label : "请选择"}
+          </span>
           <div className="arrow-down"></div>
         </div>
         <div
@@ -96,7 +103,9 @@ class CustomDropdownOption extends React.Component<Props, State> {
   }
 
   private _onSelected(index: number): void {
-    this.setState({ toggle: false, selectedIndex: index });
+    const { onSelected } = this.props;
+    onSelected && onSelected(index);
+    this.setState({ toggle: false });
   }
 
   private _onHover(index: number): void {

@@ -1,5 +1,15 @@
-#slider-item-container {
+.slider-item-container {
   width: 100%;
   height: 180px;
   position: relative;
+  cursor: pointer;
+}
+
+#banner-image-container {
+  position: relative;
+  height: 600px;
+
+  .image-handler {
+    left: calc(50% - 500px);
+  }
 }

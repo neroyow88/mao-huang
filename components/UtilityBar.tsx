@@ -17,6 +17,7 @@ class UtilityBar extends React.Component<Props> {
     this._onDepositClicked = this._onDepositClicked.bind(this);
     this._onWithdrawClicked = this._onWithdrawClicked.bind(this);
     this._onTransferClicked = this._onTransferClicked.bind(this);
+    this._onMailBoxClicked = this._onMailBoxClicked.bind(this);
   }
 
   public render(): JSX.Element {
@@ -35,7 +36,7 @@ class UtilityBar extends React.Component<Props> {
           {this._renderUtilityItem("游戏充值", this._onDepositClicked)}
           {this._renderUtilityItem("快速提款", this._onWithdrawClicked)}
           {this._renderUtilityItem("户内转帐", this._onTransferClicked)}
-          {this._renderUtilityItem("留言信息")}
+          {this._renderUtilityItem("留言信息", this._onMailBoxClicked)}
           {this._renderUtilityItem(`猫皇余额 : ${balance}`)}
         </div>
       </div>
@@ -92,6 +93,16 @@ class UtilityBar extends React.Component<Props> {
     const { isLogin } = dataSource.playerModel;
     if (isLogin) {
       showPopOut && showPopOut(PopOutType.TRANSFER_WALLET);
+    } else {
+      showPopOut && showPopOut(PopOutType.LOGIN);
+    }
+  }
+
+  private _onMailBoxClicked(): void {
+    const { showPopOut } = this.props;
+    const { isLogin } = dataSource.playerModel;
+    if (isLogin) {
+      showPopOut && showPopOut(PopOutType.MAILBOX);
     } else {
       showPopOut && showPopOut(PopOutType.LOGIN);
     }

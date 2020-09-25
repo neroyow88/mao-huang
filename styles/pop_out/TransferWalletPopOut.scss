@@ -6,7 +6,7 @@
     width: 765px;
     justify-content: space-between;
 
-    .transfer-label {
+    .transfer-option-label {
       width: 480px;
       color: white;
     }
@@ -36,12 +36,12 @@
 
   #transfer-label-container {
     width: 100%;
-    padding-left: 115px;
+    padding-left: 110px;
     padding-right: 115px;
     margin-top: 23px;
 
     .transfer-label {
-      width: 200px;
+      width: 198px;
       color: white;
       text-align: end;
     }
@@ -57,7 +57,7 @@
 
   form {
     width: 100%;
-    padding-left: 115px;
+    padding-left: 110px;
     margin-top: 4px;
 
     input[type="text"] {
@@ -140,6 +140,7 @@
   background-color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   span {
     font-size: 18px;
@@ -152,6 +153,6 @@
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 5px solid black;
-    margin-left: 50px;
+    margin-right: 10px;
   }
 }

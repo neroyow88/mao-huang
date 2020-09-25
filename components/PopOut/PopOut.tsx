@@ -1,15 +1,4 @@
 import React from "react";
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  ModalFooter,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-} from "reactstrap";
 
 import { PopOutType } from "../../model/WebConstant";
 import { ForgotUsernamePopOut } from "./ForgotUsernamePopOut";
@@ -28,9 +17,7 @@ import { BindBankAccountPopOut } from "./Withdraw/BindBankAccountPopOut";
 import { WithdrawDetailPopOut } from "./Withdraw/WithdrawDetailPopOut";
 import { WithdrawSuccessPopOut } from "./Withdraw/WithdrawSuccessPopOut";
 import { TransferWalletPopOut } from "./Transfer/TransferWalletPopOut";
-
-// module scss
-import customStyle from "../../styles/module/Modal.module.scss";
+import { MailboxPopOut } from "./Mail/MailboxPopOut";
 
 interface Props {
   type: PopOutType;
@@ -52,10 +39,6 @@ class PopOut extends React.Component<Props, State> {
     this.state = {
       isTransitioning: false,
     };
-
-    this._renderLogin = this._renderLogin.bind(this);
-    this._renderRegister = this._renderRegister.bind(this);
-    this._renderForgotUsername = this._renderForgotUsername.bind(this);
 
     this._hidePopOut = this._hidePopOut.bind(this);
     this._transitionComplete = this._transitionComplete.bind(this);
@@ -208,6 +191,18 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
+      case PopOutType.MAILBOX:
+        component = (
+          <MailboxPopOut
+            toggle={toggle}
+            scale={scale}
+            showPopOut={showPopOut}
+            hidePopOut={this._hidePopOut}
+            transitionComplete={this._transitionComplete}
+            customPopOutData={customPopOutData}
+          />
+        );
+        break;
 
       case PopOutType.CARD_MOBILE:
         component = (
@@ -259,96 +254,6 @@ class PopOut extends React.Component<Props, State> {
     }
 
     return component;
-  }
-
-  private _renderLogin(): JSX.Element {
-    const { toggle } = this.props;
-    return (
-      <Modal
-        isOpen={toggle}
-        toggle={this._hidePopOut}
-        centered
-        cssModule={customStyle}
-      >
-        <ModalHeader onClick={this._hidePopOut}>登入</ModalHeader>
-        <ModalBody>
-          <Form>
-            <FormGroup>
-              <Label>猫皇账号</Label>
-              <Input type="email" id="username" placeholder="猫皇账号"></Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>密码</Label>
-              <Input type="password" id="password" placeholder="密码"></Input>
-            </FormGroup>
-          </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button>登入</Button>
-          <Button onClick={this._hidePopOut}>取消</Button>
-        </ModalFooter>
-      </Modal>
-    );
-  }
-
-  private _renderRegister(): JSX.Element {
-    const { toggle } = this.props;
-    return (
-      <Modal
-        isOpen={toggle}
-        toggle={this._hidePopOut}
-        centered
-        cssModule={customStyle}
-      >
-        <ModalHeader onClick={this._hidePopOut}>创建新账号</ModalHeader>
-        <ModalBody>
-          <Form>
-            <FormGroup>
-              <Label>猫皇账号</Label>
-              <Input type="email" id="username" placeholder="猫皇账号"></Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>密码</Label>
-              <Input type="password" id="password" placeholder="密码"></Input>
-            </FormGroup>
-          </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button>创建</Button>
-          <Button onClick={this._hidePopOut}>取消</Button>
-        </ModalFooter>
-      </Modal>
-    );
-  }
-
-  private _renderForgotUsername(): JSX.Element {
-    const { toggle } = this.props;
-    return (
-      <Modal
-        isOpen={toggle}
-        toggle={this._hidePopOut}
-        centered
-        cssModule={customStyle}
-      >
-        <ModalHeader onClick={this._hidePopOut}>忘记账号</ModalHeader>
-        <ModalBody>
-          <Form>
-            <FormGroup>
-              <Label>输入电子邮件</Label>
-              <Input
-                type="email"
-                id="username"
-                placeholder="输入电子邮件"
-              ></Input>
-            </FormGroup>
-          </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button>确定</Button>
-          <Button onClick={this._hidePopOut}>取消</Button>
-        </ModalFooter>
-      </Modal>
-    );
   }
 
   //#region Utils

@@ -23,7 +23,10 @@ interface Props {
   customPopOutData: GenericObjectType;
 }
 
-interface State {}
+interface State {
+  toWalletIndex: number;
+  fromWalletIndex: number;
+}
 
 class TransferWalletPopOut extends React.Component<Props, State> {
   private _detail: IWithdrawDetails;
@@ -33,10 +36,17 @@ class TransferWalletPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
+    this.state = {
+      toWalletIndex: -1,
+      fromWalletIndex: -1,
+    };
+
     this._amountRef = React.createRef();
     this._pinNumberRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
+    this._toWalletSelected = this._toWalletSelected.bind(this);
+    this._fromWalletSelected = this._fromWalletSelected.bind(this);
   }
 
   public componentDidMount(): void {
@@ -53,6 +63,7 @@ class TransferWalletPopOut extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const { toggle, scale, hidePopOut } = this.props;
+    const { toWalletIndex, fromWalletIndex } = this.state;
     const wallets = DropdownOptions.map(
       (option, index): JSX.Element => {
         if (index > 0) {
@@ -80,7 +91,7 @@ class TransferWalletPopOut extends React.Component<Props, State> {
             className="column-container center"
           >
             <div id="transfer-option-container" className="row-container">
-              <div className="transfer-label">
+              <div className="transfer-option-label">
                 因每个游戏平台均有独立的钱包，请游戏前将资金转至该游戏平台，或使用【自动户内转账】功能。
               </div>
               <div id="auto-transfer-button">
@@ -100,11 +111,19 @@ class TransferWalletPopOut extends React.Component<Props, State> {
               className="row-container"
               onSubmit={this._onFormSubmitted}
             >
-              <CustomDropdownOption options={DropdownOptions} />
+              <CustomDropdownOption
+                options={DropdownOptions}
+                selectedIndex={toWalletIndex}
+                onSelected={this._toWalletSelected}
+              />
               <div id="transfer-logo-container">
                 <ImageHandler src="wallet/transfer_logo.png" scale={0.25} />
               </div>
-              <CustomDropdownOption options={DropdownOptions} />
+              <CustomDropdownOption
+                options={DropdownOptions}
+                selectedIndex={fromWalletIndex}
+                onSelected={this._fromWalletSelected}
+              />
               <FormInputBox
                 id="amount"
                 placeholder="请输入户内转帐金额"
@@ -132,9 +151,6 @@ class TransferWalletPopOut extends React.Component<Props, State> {
 
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        this.setState({
-          subToggle: true,
-        });
       } else {
         const { showPopOut } = this.props;
         const { invoice } = result;
@@ -148,6 +164,14 @@ class TransferWalletPopOut extends React.Component<Props, State> {
       detail,
     };
     apiClient.callApi(ApiPath.WITHDRAW, params, onResultReturn);
+  }
+
+  private _toWalletSelected(index: number): void {
+    this.setState({ toWalletIndex: index });
+  }
+
+  private _fromWalletSelected(index: number): void {
+    this.setState({ fromWalletIndex: index });
   }
 }
 
