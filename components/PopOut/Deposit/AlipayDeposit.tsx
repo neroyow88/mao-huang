@@ -71,7 +71,7 @@ class AlipayDeposit extends React.Component<Props, State> {
               </div>
             </div>
           </div>
-          <div id="deposit-buttons-container" className="row-container">
+          <div id="alipay-buttons-container" className="row-container">
             <FormButton
               label={"返回上页"}
               color="white"

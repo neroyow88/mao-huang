@@ -1,5 +1,16 @@
 #register-form-container {
-  height: calc(100% - 63px - 73px);
+  form {
+    height: 90%;
+
+    .input-box-container,
+    .form-submit-container {
+      margin-top: 40px;
+    }
+
+    .form-button-container {
+      margin-top: 10px;
+    }
+  }
 
   #register-help-bar {
     width: 100%;
@@ -12,27 +23,6 @@
     #form-label {
       font-size: 18px;
       color: white;
-    }
-  }
-
-  form {
-    :nth-child(1),
-    :nth-child(3) {
-      margin-bottom: 5px;
-    }
-
-    :nth-child(2),
-    :nth-child(4) {
-      margin-bottom: 15px;
-    }
-
-    :nth-child(5) {
-      margin-bottom: 10px;
-    }
-
-    :nth-child(6),
-    :nth-child(7) {
-      margin-bottom: 40px;
     }
   }
 }

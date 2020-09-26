@@ -3,7 +3,7 @@ import { isMobile } from "react-device-detect";
 
 // Components
 import { LoginBar } from "../components/LoginBar";
-import { UtilityBar } from "../components/UtilityBar";
+import { UtilityBar } from "../components/Utility/UtilityBar";
 import { GameListBar } from "../components/GameListBar";
 import { Slider } from "../components/Slider";
 import { NoticeBoard } from "../components/NoticeBoard";

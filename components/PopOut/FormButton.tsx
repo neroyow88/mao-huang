@@ -28,8 +28,8 @@ class FormButton extends React.Component<Props> {
     } = this.props;
     const button = submit ? "submit" : "button";
     const style = {
-      color: color,
-      backgroundColor: backgroundColor,
+      color: color ? color : "white",
+      backgroundColor: backgroundColor ? backgroundColor : "white",
 
       backgroundImage: `${image ? `url(${image})` : ""}${
         image && backgroundGradient ? ", " : ""
@@ -46,13 +46,19 @@ class FormButton extends React.Component<Props> {
       }${backgroundGradient ? "100%" : ""}`,
     };
 
+    const className = submit
+      ? "form-submit-container"
+      : "form-button-container";
+
     return (
-      <input
-        type={button}
-        value={label}
-        style={style}
-        onClick={onClick}
-      ></input>
+      <div className={className}>
+        <input
+          type={button}
+          value={label}
+          style={style}
+          onClick={onClick}
+        ></input>
+      </div>
     );
   }
 }

@@ -2,6 +2,10 @@
   "EventBar.scss", "GameList.scss", "CustomerService.scss", "Sponsor.scss",
   "pop_out/PopOut.scss", "NavigationBar.scss", "Slider.scss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 #main-container {
   position: relative;
   user-select: none;
@@ -62,6 +66,13 @@
   justify-content: center;
 }
 
+input {
+  width: inherit;
+  height: inherit;
+  border-radius: 5px;
+  border-width: 0px;
+}
+
 input[type="text"]:focus,
 input[type="password"]:focus {
   outline-color: #fcb715;
@@ -75,4 +86,17 @@ input[type="password"]:valid {
 input[type="button"]:focus,
 input[type="submit"]:focus {
   outline-style: none;
+}
+
+.input-box-container {
+  position: relative;
+
+  .icon-container {
+    position: absolute;
+    width: 20px;
+    height: 13px;
+    left: calc(91% - 10px);
+    top: calc(50% - 6.5px);
+    cursor: pointer;
+  }
 }

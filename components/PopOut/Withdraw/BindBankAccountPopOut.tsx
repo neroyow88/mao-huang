@@ -119,7 +119,6 @@ class BindBankAccountPopOut extends React.Component<Props, State> {
                 type="password"
                 placeholder="请输入提款密码"
                 leftImage={"pop_out/password_logo.png"}
-                rightImage={"pop_out/password_eye.png"}
                 inputRef={this._pinNumberRef}
                 number
               />

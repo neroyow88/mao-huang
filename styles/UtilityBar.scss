@@ -26,12 +26,12 @@
 
     .utility-item-container {
       margin: auto;
+      cursor: pointer;
 
       .utility-label {
         color: #fcb715;
         margin-top: 55px;
         font-size: 18px;
-        cursor: pointer;
       }
 
       .utility-image {
@@ -39,7 +39,6 @@
         height: 25px;
         position: relative;
         margin-top: 55px;
-        cursor: pointer;
       }
     }
   }

@@ -39,12 +39,6 @@ class ProfileChangePassword extends React.Component<Props, State> {
   public render(): JSX.Element {
     const { scale } = this.props;
     const { subToggle, errorNotice } = this.state;
-    const warning = {
-      backgroundImage: "url(pop_out/warning.png)",
-      backgroundPosition: "0% 50%",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "15px",
-    };
 
     return (
       <div id="change-password-container" className="pop-out-form-container">
@@ -54,33 +48,24 @@ class ProfileChangePassword extends React.Component<Props, State> {
             placeholder="请输入旧密码"
             type="password"
             leftImage={"pop_out/password_logo.png"}
-            rightImage={"pop_out/password_eye.png"}
             min={6}
             max={12}
             inputRef={this._oldPasswordRef}
           />
-          <div className="form-warning" style={warning}>
-            密码由6~12位数字或小写字母组成
-          </div>
           <FormInputBox
             id="newpassword"
             placeholder="请设置新密码"
             type="password"
             leftImage={"pop_out/password_logo.png"}
-            rightImage={"pop_out/password_eye.png"}
             min={6}
             max={12}
             inputRef={this._newPasswordRef}
           />
-          <div className="form-warning" style={warning}>
-            密码由6~12位数字或小写字母组成
-          </div>
           <FormInputBox
             id="verifiedpassword"
             placeholder="请再次确认新密码"
             type="password"
             leftImage={"pop_out/password_logo.png"}
-            rightImage={"pop_out/password_eye.png"}
             min={6}
             max={12}
             inputRef={this._verifiedNewPasswordRef}

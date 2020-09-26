@@ -91,7 +91,6 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
               <FormInputBox
                 id="verificationcode"
                 placeholder="请输入短信验证码"
-                rightImage={"pop_out/password_eye.png"}
                 inputRef={this._verificationCodeRef}
                 number
               />

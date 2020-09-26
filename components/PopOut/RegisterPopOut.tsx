@@ -65,12 +65,6 @@ class RegisterPopOut extends React.Component<Props, State> {
   public render(): JSX.Element {
     const { toggle, scale, hidePopOut } = this.props;
     const { subToggle, errorNotice } = this.state;
-    const warning = {
-      backgroundImage: "url(pop_out/warning.png)",
-      backgroundPosition: "0% 50%",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "15px",
-    };
 
     return (
       <Modal
@@ -93,22 +87,15 @@ class RegisterPopOut extends React.Component<Props, State> {
                 max={11}
                 inputRef={this._usernameRef}
               />
-              <div className="form-warning" style={warning}>
-                用户名由4~11位数字或字母组成
-              </div>
               <FormInputBox
                 id="password"
                 placeholder="请设置新密码"
                 type="password"
                 leftImage={"pop_out/password_logo.png"}
-                rightImage={"pop_out/password_eye.png"}
                 min={6}
                 max={12}
                 inputRef={this._passwordRef}
               />
-              <div className="form-warning" style={warning}>
-                密码由6~12位数字或小写字母组成
-              </div>
               <FormInputBox
                 id="phonenumber"
                 placeholder="请输入您的手机号码"
@@ -124,7 +111,6 @@ class RegisterPopOut extends React.Component<Props, State> {
               <FormInputBox
                 id="verificationcode"
                 placeholder="请输入短信验证码"
-                rightImage={"pop_out/password_eye.png"}
                 inputRef={this._verificationCodeRef}
               />
               <FormButton

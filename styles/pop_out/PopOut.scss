@@ -1,8 +1,8 @@
 @import "LoginPopOut.scss", "RegisterPopOut.scss", "ForgotUsernamePopOut.scss",
   "ForgotPasswordPopOut.scss", "ProfilePopOut.scss", "NoticePopOut.scss",
   "DepositWalletPopOut.scss", "DepositInstructionPopOut.scss",
-  "WithdrawPopOut.scss", "BindBankAccountPopOut.scss",
-  "TransferWalletPopOut.scss", "MailboxPopOut.scss", "NoticeBoardPopOut.scss";
+  "WithdrawPopOut.scss", "TransferWalletPopOut.scss", "MailboxPopOut.scss",
+  "NoticeBoardPopOut.scss";
 
 #pop-out-container {
   position: relative;
@@ -58,37 +58,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 100%;
 
-    input[type="text"],
-    input[type="password"] {
-      color: black;
-    }
-
-    input[type="button"],
-    input[type="submit"] {
-      color: white;
-    }
-
-    input {
+    .input-box-container,
+    .form-button-container,
+    .form-submit-container {
       width: 280px;
       height: 40px;
-      background-color: white;
-      border-radius: 5px;
-      border-width: 0px;
     }
   }
 }
 
 // #region Utils
-.form-warning {
-  width: 280px;
-  height: 20px;
-  color: white;
-  padding-left: 20px;
-  font-size: 15px;
-}
 
 .form-link {
   color: #fcb715;

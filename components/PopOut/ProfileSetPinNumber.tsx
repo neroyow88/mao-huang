@@ -41,12 +41,6 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
   public render(): JSX.Element {
     const { scale } = this.props;
     const { subToggle, errorNotice } = this.state;
-    const warning = {
-      backgroundImage: "url(pop_out/warning.png)",
-      backgroundPosition: "0% 50%",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "15px",
-    };
 
     return (
       <div id="set-pin-container" className="pop-out-form-container">
@@ -56,20 +50,15 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
             placeholder="请设置新提款密码"
             type="password"
             leftImage={"pop_out/password_logo.png"}
-            rightImage={"pop_out/password_eye.png"}
             min={6}
             max={12}
             inputRef={this._pin}
           />
-          <div className="form-warning" style={warning}>
-            密码由6~12位数字或小写字母组成
-          </div>
           <FormInputBox
             id="verifiedpin"
             placeholder="请再次确认新提款密码"
             type="password"
             leftImage={"pop_out/password_logo.png"}
-            rightImage={"pop_out/password_eye.png"}
             min={6}
             max={12}
             inputRef={this._verifiedPin}
@@ -89,7 +78,6 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
           <FormInputBox
             id="verificationcode"
             placeholder="请输入短信验证码"
-            rightImage={"pop_out/password_eye.png"}
             inputRef={this._verificationCodeRef}
           />
           <FormButton

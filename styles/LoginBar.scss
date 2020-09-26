@@ -12,25 +12,17 @@
       margin-right: 10px;
     }
 
-    input[type="text"],
-    input[type="password"] {
+    .input-box-container {
       width: 150px;
-      color: black;
+      height: 30px;
       margin-right: 10px;
     }
 
-    input[type="button"],
-    input[type="submit"] {
-      color: white;
+    .form-button-container,
+    .form-submit-container {
+      height: 30px;
       width: 75px;
       margin-right: 5px;
-    }
-
-    input {
-      height: 30px;
-      background-color: white;
-      border-radius: 5px;
-      border-width: 0px;
     }
 
     #username-label {

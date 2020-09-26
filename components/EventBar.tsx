@@ -57,12 +57,10 @@ class EventBar extends React.Component<Props, State> {
 
       return (
         <div id="event-bar-container-browser">
-          <div id="image-container-browser">
-            <img src="event_bar/520_slot_bar.png"></img>
-          </div>
+          <ImageHandler src="event_bar/520_slot_bar.png" />
           <div
             id="number-image-container"
-            className="row-container center"
+            className="row-container"
             onClick={this._onRewardClaim}
           >
             <img

@@ -100,7 +100,11 @@ class LoginBar extends React.Component<Props> {
             >
               忘记密码
             </div>
-            <form autoComplete="off" onSubmit={this._onFormSubmitted}>
+            <form
+              autoComplete="off"
+              className="row-container"
+              onSubmit={this._onFormSubmitted}
+            >
               <FormInputBox
                 id="username"
                 placeholder="猫皇账号"
@@ -112,7 +116,6 @@ class LoginBar extends React.Component<Props> {
                 id="password"
                 placeholder="密码"
                 type="password"
-                rightImage={"pop_out/password_eye.png"}
                 min={6}
                 max={12}
                 inputRef={this._passwordRef}

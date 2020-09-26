@@ -42,21 +42,16 @@
 #event-bar-container-browser {
   height: 600px;
 
-  #image-container-browser {
-    position: absolute;
-    left: 20%;
-    top: -50px;
+  .image-handler {
+    left: calc(50% - 565px);
     z-index: -1;
   }
 
   #number-image-container {
-    position: absolute;
-    top: 108px;
-    left: 782px;
-
-    img {
-      padding-right: 58px;
-    }
+    width: 420px;
+    padding-top: 155px;
+    margin-left: 790px;
+    justify-content: space-between;
 
     :hover {
       cursor: pointer;
@@ -65,13 +60,13 @@
 }
 
 #title-container {
-  padding-top: 380px;
-  padding-left: 50px;
+  margin-top: 100px;
+  margin-left: 50px;
 }
 
 #buttons-container {
-  padding-top: 26px;
-  padding-left: 50px;
+  margin-top: 26px;
+  margin-left: 50px;
 
   .button-container {
     width: 215px;

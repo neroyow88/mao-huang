@@ -21,7 +21,7 @@
   #mail-list-container {
     width: 300px;
     height: 370px;
-    justify-content: start;
+    justify-content: flex-start;
 
     .mail-title {
       position: relative;
@@ -45,7 +45,7 @@
       width: 570px;
       height: 370px;
       background-color: black;
-      justify-content: start;
+      justify-content: flex-start;
 
       .image-handler {
         top: 18%;
