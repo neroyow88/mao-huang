@@ -3,45 +3,33 @@ import { Modal } from "reactstrap";
 
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
-import { NoticePopOut } from "./NoticePopOut";
 import { PopOutTitle } from "./PopOutTitle";
-import {
-  PopOutType,
-  NoticePopOutConfig,
-  ApiPath,
-} from "../../model/WebConstant";
+import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 import { apiClient } from "../../model/ApiClient";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
+import { ErrorType } from "../../model/data/Error";
+import { popOutHandler } from "../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
 }
 
-interface State {
-  subToggle: boolean;
-}
-
-class ForgotUsernamePopOut extends React.Component<Props, State> {
+class ForgotUsernamePopOut extends React.Component<Props> {
   private _phoneNumberRef: RefObject<HTMLInputElement>;
   private _verificationCodeRef: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      subToggle: false,
-    };
-
     this._phoneNumberRef = React.createRef();
     this._verificationCodeRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hideNotice = this._hideNotice.bind(this);
+    this._getVerificationCode = this._getVerificationCode.bind(this);
   }
 
   public componentDidMount(): void {
@@ -57,19 +45,18 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
-    const { subToggle } = this.state;
+    const { toggle, scale, onHide } = this.props;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="忘记帐号" hidePopOut={hidePopOut} />
+          <PopOutTitle label="忘记帐号" onHide={onHide} />
           <div
             id="forgot-username-form-container"
             className="pop-out-form-container"
@@ -84,9 +71,7 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
               <FormButton
                 label="获取短信验证码"
                 backgroundColor="#83D300"
-                onClick={(): void => {
-                  console.log("Verification code send");
-                }}
+                onClick={this._getVerificationCode}
               />
               <FormInputBox
                 id="verificationcode"
@@ -102,12 +87,6 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
             </form>
           </div>
         </div>
-        <NoticePopOut
-          toggle={subToggle}
-          scale={scale}
-          hidePopOut={this._hideNotice}
-          customPopOutData={NoticePopOutConfig.VERIFICATION_CODE_INCORRECT}
-        />
       </Modal>
     );
   }
@@ -117,12 +96,21 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
     const phoneNumber = this._phoneNumberRef.current.value;
     const verificationCode = this._verificationCodeRef.current.value;
 
-    const { showPopOut } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        this.setState({ subToggle: true });
+        if (err === ErrorType.INVALID_VERIFICATION_CODE) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        } else if (err === ErrorType.INVALID_PHONE_NUMBER) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        }
       } else {
-        showPopOut(PopOutType.NOTICE, NoticePopOutConfig.GET_USERNAME_SUCCESS);
+        const { username } = result;
+        console.log("My username: ", username);
+        popOutHandler.showNotice(NoticePopOutConfig.GET_USERNAME_SUCCESS);
       }
     };
 
@@ -133,11 +121,24 @@ class ForgotUsernamePopOut extends React.Component<Props, State> {
     );
   }
 
-  //#region Utils
-  private _hideNotice(): void {
-    this.setState({ subToggle: false });
+  private _getVerificationCode(): void {
+    const phoneNumber = this._phoneNumberRef.current.value;
+    const onResultReturn = (result: GenericObjectType, err: string): void => {
+      if (err && !result) {
+        if (err === ErrorType.INVALID_PHONE_NUMBER) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        }
+      }
+    };
+
+    apiClient.callApi(
+      ApiPath.REQUEST_VERIFICATION_CODE,
+      { phoneNumber },
+      onResultReturn
+    );
   }
-  //#endregion
 }
 
 export { ForgotUsernamePopOut };

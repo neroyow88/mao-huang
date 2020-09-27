@@ -205,7 +205,8 @@
     }
 
     #alipay-buttons-container {
-      .form-button-container {
+      .form-button-container,
+      .form-submit-container {
         width: 180px;
         height: 40px;
       }

@@ -2,11 +2,6 @@ import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
 import { PopOutTitle } from "../PopOutTitle";
-
-import { apiClient } from "../../../model/ApiClient";
-import { PopOutType, ApiPath } from "../../../model/WebConstant";
-
-import customStyle from "../../../styles/module/AccountModal.module.scss";
 import { FormInputBox } from "../FormInputBox";
 import { FormButton } from "../FormButton";
 import { CustomDropdownOption } from "./CustomDropdownOption";
@@ -14,13 +9,18 @@ import { DropdownOptions } from "../../../model/DropdownOptionsConstant";
 import { ImageHandler } from "../../ImageHandler";
 import { GameWallet } from "./GameWallet";
 
+import { apiClient } from "../../../model/ApiClient";
+import { PopOutType, ApiPath } from "../../../model/WebConstant";
+import { popOutHandler } from "../../../model/PopOutHandler";
+import { dataSource } from "../../../model/DataSource";
+import customStyle from "../../../styles/module/AccountModal.module.scss";
+
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
+  customData: GenericObjectType;
 }
 
 interface State {
@@ -62,16 +62,26 @@ class TransferWalletPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
+    const { toggle, scale, onHide } = this.props;
     const { toWalletIndex, fromWalletIndex } = this.state;
-    const wallets = DropdownOptions.map(
-      (option, index): JSX.Element => {
-        if (index > 0) {
-          return (
-            <GameWallet src={option.src} label={option.label} balance={0} />
-          );
-        } else {
+
+    const { wallets } = dataSource.playerModel;
+    const walletKey = Object.keys(wallets);
+    const gameWallets = walletKey.map(
+      (key: string, index: number): JSX.Element => {
+        if (index === 0) {
           return null;
+        } else {
+          const option = DropdownOptions[key];
+          const balance = wallets[key];
+          return (
+            <GameWallet
+              src={option.src}
+              label={option.label}
+              balance={balance}
+              index={index}
+            />
+          );
         }
       }
     );
@@ -79,13 +89,13 @@ class TransferWalletPopOut extends React.Component<Props, State> {
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="户内转帐" hidePopOut={hidePopOut} />
+          <PopOutTitle label="户内转帐" onHide={onHide} />
           <div
             id="transfer-wallet-container"
             className="column-container center"
@@ -136,7 +146,7 @@ class TransferWalletPopOut extends React.Component<Props, State> {
                 submit
               />
             </form>
-            <div id="game-wallets-container">{wallets}</div>
+            <div id="game-wallets-container">{gameWallets}</div>
           </div>
         </div>
       </Modal>
@@ -152,9 +162,8 @@ class TransferWalletPopOut extends React.Component<Props, State> {
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
       } else {
-        const { showPopOut } = this.props;
         const { invoice } = result;
-        showPopOut && showPopOut(PopOutType.WITHDRAW_SUCCESS, { invoice });
+        popOutHandler.showPopOut(PopOutType.WITHDRAW_SUCCESS, { invoice });
       }
     };
 

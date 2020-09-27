@@ -7,9 +7,9 @@ import customStyle from "../../styles/module/CardMobileModal.module.scss";
 
 interface Props {
   toggle: boolean;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
+  customData: GenericObjectType;
 }
 
 interface State {
@@ -46,17 +46,12 @@ class MobileCardPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, hidePopOut, customPopOutData } = this.props;
+    const { toggle, onHide, customData } = this.props;
     const { mobileCardRotation } = this.state;
-    const { index } = customPopOutData;
+    const { index } = customData;
 
     return (
-      <Modal
-        isOpen={toggle}
-        toggle={hidePopOut}
-        centered
-        cssModule={customStyle}
-      >
+      <Modal isOpen={toggle} toggle={onHide} centered cssModule={customStyle}>
         <div id={`card-0${index}`}>
           <div className="flip-card-mobile" key={`flip-card-${index}`}>
             <div

@@ -1,10 +1,10 @@
 import React from "react";
+import { popOutHandler } from "../../../model/PopOutHandler";
 
 import { PopOutType } from "../../../model/WebConstant";
 
 interface Props {
   index: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
 }
 
 class EmptyBankAccount extends React.Component<Props> {
@@ -33,8 +33,7 @@ class EmptyBankAccount extends React.Component<Props> {
   }
 
   private _onAddAccount(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.WITHDRAW_ACCOUNT_ADD);
+    popOutHandler.showPopOut(PopOutType.WITHDRAW_ACCOUNT_ADD);
   }
 }
 

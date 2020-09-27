@@ -6,7 +6,7 @@ import customStyle from "../../../styles/module/TutorialModal.module.scss";
 interface Props {
   toggle: boolean;
   scale: number;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
 }
 
 interface State {
@@ -28,14 +28,14 @@ class TutorialPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { scale, toggle, hidePopOut } = this.props;
+    const { scale, toggle, onHide } = this.props;
     const { tutorialIndex } = this.state;
     const tutorialImg = tutorialIndex === 0 ? "pay_detail" : "wechat_detail";
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
@@ -52,7 +52,7 @@ class TutorialPopOut extends React.Component<Props, State> {
           <div className="tutorial-image">
             <img src={`tutorial/${tutorialImg}.png`}></img>
           </div>
-          <div className="tutorial-close-button" onClick={hidePopOut}>
+          <div className="tutorial-close-button" onClick={onHide}>
             <div>返回</div>
           </div>
         </div>

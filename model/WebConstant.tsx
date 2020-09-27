@@ -9,6 +9,8 @@ export enum ApiPath {
   GET_BANK_ACCOUNT = "getBankAccount",
   ADD_BANK_ACCOUNT = "addDepositAccount",
   WITHDRAW = "withdraw",
+  REQUEST_VERIFICATION_CODE = "verificationCode",
+  CLAIM_DAILY_REWARD = "dailyRewardClaimed",
 }
 
 export enum PopOutType {
@@ -32,7 +34,6 @@ export enum PopOutType {
   LOGIN_MOBILE = 22,
 
   NEWS = 98,
-  NOTICE = 99,
 }
 
 export enum NoticeType {
@@ -45,6 +46,11 @@ export enum DepositType {
   ALIPAY = 0,
   BANK = 1,
   WECHAT = 2,
+}
+
+export enum AudioList {
+  KISS = "kiss",
+  MONEY = "money",
 }
 
 export const NoticePopOutConfig = {

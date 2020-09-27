@@ -11,7 +11,7 @@ import customStyle from "../../styles/module/AccountModal.module.scss";
 interface Props {
   toggle: boolean;
   scale: number;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
 
@@ -48,18 +48,18 @@ class ProfilePopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
+    const { toggle, scale, onHide } = this.props;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="会员中心" hidePopOut={hidePopOut} />
+          <PopOutTitle label="会员中心" onHide={onHide} />
           <div
             id="profile-selection-menu-container"
             className="row-container center"
@@ -94,15 +94,14 @@ class ProfilePopOut extends React.Component<Props, State> {
   }
 
   private _renderProfileContent(): JSX.Element {
-    const { scale } = this.props;
     const { selectedIndex } = this.state;
     switch (selectedIndex) {
       case 0:
         return <ProfileUser />;
       case 1:
-        return <ProfileChangePassword scale={scale} />;
+        return <ProfileChangePassword />;
       case 2:
-        return <ProfileSetPinNumber scale={scale} />;
+        return <ProfileSetPinNumber />;
       default:
         return null;
     }

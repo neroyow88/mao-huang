@@ -3,30 +3,22 @@ import { Modal } from "reactstrap";
 
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
-import { NoticePopOut } from "./NoticePopOut";
 import { PopOutTitle } from "./PopOutTitle";
 import { apiClient } from "../../model/ApiClient";
-import {
-  PopOutType,
-  NoticePopOutConfig,
-  ApiPath,
-} from "../../model/WebConstant";
+import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
+import { ErrorType } from "../../model/data/Error";
+import { popOutHandler } from "../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
 
-interface State {
-  subToggle: boolean;
-}
-
-class ForgotPasswordPopOut extends React.Component<Props, State> {
+class ForgotPasswordPopOut extends React.Component<Props> {
   private _usernameRef: RefObject<HTMLInputElement>;
   private _passwordRef: RefObject<HTMLInputElement>;
   private _phoneNumberRef: RefObject<HTMLInputElement>;
@@ -35,17 +27,13 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      subToggle: false,
-    };
-
     this._usernameRef = React.createRef();
     this._passwordRef = React.createRef();
     this._phoneNumberRef = React.createRef();
     this._verificationCodeRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hideNotice = this._hideNotice.bind(this);
+    this._getVerificationCode = this._getVerificationCode.bind(this);
   }
 
   public componentDidMount(): void {
@@ -61,19 +49,18 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
-    const { subToggle } = this.state;
+    const { toggle, scale, onHide } = this.props;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="忘记密码" hidePopOut={hidePopOut} />
+          <PopOutTitle label="忘记密码" onHide={onHide} />
           <div
             id="forgot-password-form-container"
             className="pop-out-form-container"
@@ -105,9 +92,7 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
               <FormButton
                 label="获取短信验证码"
                 backgroundColor="#83D300"
-                onClick={(): void => {
-                  console.log("Verification code send");
-                }}
+                onClick={this._getVerificationCode}
               />
               <FormInputBox
                 id="verificationcode"
@@ -122,12 +107,6 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
             </form>
           </div>
         </div>
-        <NoticePopOut
-          toggle={subToggle}
-          scale={scale}
-          hidePopOut={this._hideNotice}
-          customPopOutData={NoticePopOutConfig.VERIFICATION_CODE_INCORRECT}
-        />
       </Modal>
     );
   }
@@ -135,34 +114,46 @@ class ForgotPasswordPopOut extends React.Component<Props, State> {
   private _onFormSubmitted(e): void {
     e.preventDefault();
     const username = this._usernameRef.current.value;
-    const password = this._passwordRef.current.value;
-    const phoneNumber = this._phoneNumberRef.current.value;
+    const newPassword = this._passwordRef.current.value;
     const verificationCode = this._verificationCodeRef.current.value;
 
-    const { showPopOut } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        this.setState({ subToggle: true });
+        if (err === ErrorType.INVALID_USER) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        }
       } else {
-        showPopOut(
-          PopOutType.NOTICE,
-          NoticePopOutConfig.CHANGE_PASSWORD_SUCCESS
-        );
+        popOutHandler.showNotice(NoticePopOutConfig.CHANGE_PASSWORD_SUCCESS);
       }
     };
 
     apiClient.callApi(
       ApiPath.FORGOT_PASSWORD,
-      { username, password, phoneNumber, verificationCode },
+      { username, newPassword, verificationCode },
       onResultReturn
     );
   }
 
-  //#region Utils
-  private _hideNotice(): void {
-    this.setState({ subToggle: false });
+  private _getVerificationCode(): void {
+    const phoneNumber = this._phoneNumberRef.current.value;
+    const onResultReturn = (result: GenericObjectType, err: string): void => {
+      if (err && !result) {
+        if (err === ErrorType.INVALID_PHONE_NUMBER) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        }
+      }
+    };
+
+    apiClient.callApi(
+      ApiPath.REQUEST_VERIFICATION_CODE,
+      { phoneNumber },
+      onResultReturn
+    );
   }
-  //#endregion
 }
 
 export { ForgotPasswordPopOut };

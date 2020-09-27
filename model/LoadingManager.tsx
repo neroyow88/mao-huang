@@ -8,17 +8,17 @@ class LoadingManager {
 
   public addNewTask(): void {
     this._taskCount++;
-    console.log("task added", this._taskCount);
+    // console.log("task added", this._taskCount);
   }
 
   public taskComplete(): void {
     this._taskCount--;
-    console.log("tasks complete", this._taskCount);
+    // console.log("tasks complete", this._taskCount);
     if (this._taskCount <= 0) {
       this._taskCount = 0;
       const callback = this._onAllTasksCompleteCallback;
       callback && callback();
-      console.log("loading complete");
+      // console.log("loading complete");
     }
   }
 }

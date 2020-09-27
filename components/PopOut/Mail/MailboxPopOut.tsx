@@ -4,17 +4,16 @@ import { Modal } from "reactstrap";
 import { PopOutTitle } from "../PopOutTitle";
 import { EmptyMail } from "./EmptyMail";
 import { Mails } from "./Mails";
-import { mailList } from "../../../model/MailListConstant";
 
+import { dataSource } from "../../../model/DataSource";
 import customStyle from "../../../styles/module/AccountModal.module.scss";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
+  customData: GenericObjectType;
 }
 
 class MailboxPopOut extends React.Component<Props> {
@@ -35,20 +34,20 @@ class MailboxPopOut extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
-    const content =
-      mailList.length > 0 ? <Mails mailList={mailList} /> : <EmptyMail />;
+    const { toggle, scale, onHide } = this.props;
+    const { mails } = dataSource.playerModel;
+    const content = mails.length > 0 ? <Mails /> : <EmptyMail />;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="留言信息" hidePopOut={hidePopOut} />
+          <PopOutTitle label="留言信息" onHide={onHide} />
           {content}
         </div>
       </Modal>

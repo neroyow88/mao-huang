@@ -5,7 +5,6 @@ import { PopOutTitle } from "../PopOutTitle";
 import { BankAccount } from "./BankAccount";
 import { FormInputBox } from "../FormInputBox";
 import { FormButton } from "../FormButton";
-import { NoticePopOut } from "../NoticePopOut";
 
 import { dataSource } from "../../../model/DataSource";
 import { apiClient } from "../../../model/ApiClient";
@@ -16,21 +15,17 @@ import {
 } from "../../../model/WebConstant";
 
 import customStyle from "../../../styles/module/AccountModal.module.scss";
+import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
+  customData: GenericObjectType;
 }
 
-interface State {
-  subToggle: boolean;
-}
-
-class WithdrawDetailPopOut extends React.Component<Props, State> {
+class WithdrawDetailPopOut extends React.Component<Props> {
   private _detail: IWithdrawDetails;
   private _amountRef: RefObject<HTMLInputElement>;
   private _pinNumberRef: RefObject<HTMLInputElement>;
@@ -38,18 +33,15 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const { index } = props.customPopOutData;
-    const { withdrawDetails } = dataSource.playerModel;
-    this._detail = withdrawDetails[index];
-    this.state = {
-      subToggle: false,
-    };
+    const { index } = props.customData;
+    const { bankAccounts } = dataSource.playerModel;
+    this._detail = bankAccounts[index];
 
     this._amountRef = React.createRef();
     this._pinNumberRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._showPopOut = this._showPopOut.bind(this);
+    this._backToPrevious = this._backToPrevious.bind(this);
   }
 
   public componentDidMount(): void {
@@ -65,21 +57,20 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, customPopOutData } = this.props;
-    const { index } = customPopOutData;
-    const { subToggle } = this.state;
+    const { toggle, scale, customData } = this.props;
+    const { index } = customData;
     const detail = this._detail;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={this._showPopOut}
+        toggle={this._backToPrevious}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="快速提款" hidePopOut={this._showPopOut} />
+          <PopOutTitle label="快速提款" onHide={this._backToPrevious} />
           <div
             id="withdraw-detail-container"
             className="pop-out-form-container column-container center"
@@ -110,7 +101,7 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
                 <FormButton
                   label="返回上页"
                   backgroundGradient="linear-gradient(180deg, #FF6363 0%, #D20000 100%)"
-                  onClick={this._showPopOut}
+                  onClick={this._backToPrevious}
                 />
                 <FormButton
                   label="确认提款"
@@ -121,12 +112,6 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
             </form>
           </div>
         </div>
-        <NoticePopOut
-          toggle={subToggle}
-          scale={scale}
-          hidePopOut={this._hideNotice}
-          customPopOutData={NoticePopOutConfig.PIN_INCORRECT}
-        />
       </Modal>
     );
   }
@@ -139,13 +124,10 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
 
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        this.setState({
-          subToggle: true,
-        });
+        popOutHandler.showNotice(NoticePopOutConfig.PIN_INCORRECT);
       } else {
-        const { showPopOut } = this.props;
         const { invoice } = result;
-        showPopOut && showPopOut(PopOutType.WITHDRAW_SUCCESS, { invoice });
+        popOutHandler.showPopOut(PopOutType.WITHDRAW_SUCCESS, { invoice });
       }
     };
 
@@ -157,13 +139,8 @@ class WithdrawDetailPopOut extends React.Component<Props, State> {
     apiClient.callApi(ApiPath.WITHDRAW, params, onResultReturn);
   }
 
-  private _showPopOut(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.WITHDRAW_SELECTION);
-  }
-
-  private _hideNotice(): void {
-    this.setState({ subToggle: false });
+  private _backToPrevious(): void {
+    popOutHandler.showPopOut(PopOutType.WITHDRAW_SELECTION);
   }
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { popOutHandler } from "../../../model/PopOutHandler";
 
 import { PopOutType } from "../../../model/WebConstant";
 import { ImageHandler } from "../../ImageHandler";
@@ -6,7 +7,6 @@ import { ImageHandler } from "../../ImageHandler";
 interface Props {
   index: number;
   detail: IWithdrawDetails;
-  showPopOut?: (any: number, data?: GenericObjectType) => void;
   locked?: boolean;
 }
 
@@ -30,7 +30,7 @@ class BankAccount extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const { index, detail, locked } = this.props;
-    const { bankName, cardType, ownerName, cardNumber } = detail;
+    const { bankName, cardType, username, cardNumber } = detail;
     const maskCardNumber = cardNumber.substr(12, 4);
 
     return (
@@ -50,7 +50,7 @@ class BankAccount extends React.Component<Props, State> {
           <div className="bank-label">{cardType}</div>
         </div>
         <div className="owner-detail-container column-container center">
-          <div className="withdraw-label">{`卡户名 : ${ownerName}`}</div>
+          <div className="withdraw-label">{`卡户名 : ${username}`}</div>
           <div className="bank-number-label row-container">
             <span>****</span>
             <span>****</span>
@@ -73,10 +73,10 @@ class BankAccount extends React.Component<Props, State> {
   }
 
   private _onSelectAccount(index: number): void {
-    const { locked, showPopOut } = this.props;
+    const { locked } = this.props;
     const { hoverRemoveBtn } = this.state;
     if (!hoverRemoveBtn && !locked) {
-      showPopOut && showPopOut(PopOutType.WITHDRAW_DETAIL, { index });
+      popOutHandler.showPopOut(PopOutType.WITHDRAW_DETAIL, { index });
     }
   }
 

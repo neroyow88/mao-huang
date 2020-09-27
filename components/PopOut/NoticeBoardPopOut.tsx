@@ -9,7 +9,7 @@ import customStyle from "../../styles/module/AccountModal.module.scss";
 interface Props {
   toggle: boolean;
   scale: number;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
 
@@ -31,7 +31,7 @@ class NoticeBoardPopOut extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
+    const { toggle, scale, onHide } = this.props;
     const components = NewsModel.map(
       (model: GenericObjectType, index: number): JSX.Element => {
         const bgColor = index % 2 === 0 ? "dark-background" : "";
@@ -54,13 +54,13 @@ class NoticeBoardPopOut extends React.Component<Props> {
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="公告栏" hidePopOut={hidePopOut} />
+          <PopOutTitle label="公告栏" onHide={onHide} />
           <div id="notice-board-container" className="column-container center">
             {components}
           </div>

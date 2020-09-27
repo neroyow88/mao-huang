@@ -12,8 +12,7 @@ import customStyle from "../../../styles/module/AccountModal.module.scss";
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
 
@@ -35,23 +34,21 @@ class WithdrawAccountSelectionPopOut extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, showPopOut, hidePopOut } = this.props;
-    const { withdrawDetails } = dataSource.playerModel;
+    const { toggle, scale, onHide } = this.props;
+    const { bankAccounts } = dataSource.playerModel;
     const components = [];
 
     for (let i = 0; i < 3; i++) {
-      const detail = withdrawDetails[i];
+      const detail = bankAccounts[i];
       if (detail) {
-        components.push(
-          <BankAccount index={i} detail={detail} showPopOut={showPopOut} />
-        );
+        components.push(<BankAccount index={i} detail={detail} />);
       } else {
-        components.push(<EmptyBankAccount index={i} showPopOut={showPopOut} />);
+        components.push(<EmptyBankAccount index={i} />);
       }
     }
 
     const title =
-      withdrawDetails.length > 0 ? (
+      bankAccounts.length > 0 ? (
         <div id="withdraw-label">请选择您的银行卡后再进行提款,谢谢。</div>
       ) : (
         <div id="withdraw-label">
@@ -62,13 +59,13 @@ class WithdrawAccountSelectionPopOut extends React.Component<Props> {
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="快速提款" hidePopOut={hidePopOut} />
+          <PopOutTitle label="快速提款" onHide={onHide} />
           <div id="withdraw-container" className="column-container center">
             {title}
             <div id="withdraw-bank-container">{components}</div>

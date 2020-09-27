@@ -1,25 +1,17 @@
 import React from "react";
-import { ImageHandler } from "./ImageHandler";
-import { dataSource } from "../model/DataSource";
-
-const rewardToggles = [true, false, false];
+import { ImageHandler } from "../ImageHandler";
+import { dataSource } from "../../model/DataSource";
+import { EventRewardButton } from "./EventRewardButton";
 
 interface Props {}
 
-interface State {
-  reward: number;
-}
+interface State {}
 
 class EventBar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      reward: 0,
-    };
-
     this._renderButtonItem = this._renderButtonItem.bind(this);
-    this._onRewardClaim = this._onRewardClaim.bind(this);
   }
 
   public render(): JSX.Element {
@@ -45,33 +37,15 @@ class EventBar extends React.Component<Props, State> {
         </div>
       );
     } else {
-      const { reward } = this.state;
-
-      for (let i = 0; i < rewardToggles.length; i++) {
-        if (i === reward) {
-          rewardToggles[i] = true;
-        } else {
-          rewardToggles[i] = false;
-        }
-      }
-
       return (
         <div id="event-bar-container-browser">
-          <ImageHandler src="event_bar/520_slot_bar.png" />
-          <div
-            id="number-image-container"
-            className="row-container"
-            onClick={this._onRewardClaim}
-          >
-            <img
-              src={`event_bar/5_${rewardToggles[0] ? "light" : "dark"}.png`}
-            />
-            <img
-              src={`event_bar/2_${rewardToggles[1] ? "light" : "dark"}.png`}
-            />
-            <img
-              src={`event_bar/0_${rewardToggles[2] ? "light" : "dark"}.png`}
-            />
+          <div id="background-image-container">
+            <ImageHandler src="event_bar/520_slot_bar.png" />
+          </div>
+          <div id="number-image-container" className="row-container">
+            <EventRewardButton value={5} />
+            <EventRewardButton value={2} />
+            <EventRewardButton value={0} />
           </div>
           <div id="title-container" className="row-container center">
             <img src="event_bar/title_01.png"></img>
@@ -109,12 +83,6 @@ class EventBar extends React.Component<Props, State> {
         </div>
       </div>
     );
-  }
-
-  private _onRewardClaim(): void {
-    const { reward } = this.state;
-    const newReward = reward + 1 > 3 ? 0 : reward + 1;
-    this.setState({ reward: newReward });
   }
 }
 

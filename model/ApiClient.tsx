@@ -1,3 +1,14 @@
+import {
+  changePasswordAPI,
+  claimDailyReward,
+  forgotPasswordAPI,
+  forgotUsernameAPI,
+  getVerificationCodeAPI,
+  loginAPI,
+  logoutAPI,
+  registerAPI,
+  setPinAPI,
+} from "./data/LocalDatabase";
 import { ApiPath } from "./WebConstant";
 
 class APIClient {
@@ -6,7 +17,11 @@ class APIClient {
     params: GenericObjectType,
     callback: APIReturnFunction
   ): void {
-    this._callApi(path, params, callback);
+    const onAPIReturn = (dt, err): void => {
+      console.log(`API path <${path}> return:`, dt, err);
+      callback(dt, err);
+    };
+    this._callApi(path, params, onAPIReturn);
   }
 
   ///#region temp
@@ -17,25 +32,25 @@ class APIClient {
   ): void {
     switch (path) {
       case ApiPath.REGISTER:
-        this._register(dt, cb);
+        registerAPI(dt, cb);
         break;
       case ApiPath.LOGIN:
-        this._login(dt, cb);
+        loginAPI(dt, cb);
         break;
       case ApiPath.LOGOUT:
-        this._logout(cb);
+        logoutAPI(cb);
         break;
       case ApiPath.FORGOT_USERNAME:
-        this._forgotUsername(dt, cb);
+        forgotUsernameAPI(dt, cb);
         break;
       case ApiPath.FORGOT_PASSWORD:
-        this._forgotPassword(dt, cb);
+        forgotPasswordAPI(dt, cb);
         break;
       case ApiPath.CHANGE_PASSWORD:
-        this._changePassword(dt, cb);
+        changePasswordAPI(dt, cb);
         break;
       case ApiPath.SET_PIN:
-        this._setPin(dt, cb);
+        setPinAPI(dt, cb);
         break;
       case ApiPath.GET_BANK_ACCOUNT:
         this._addBankAccount(dt, cb);
@@ -43,86 +58,12 @@ class APIClient {
       case ApiPath.WITHDRAW:
         this._withdraw(dt, cb);
         break;
-    }
-  }
-
-  private _register(dt: GenericObjectType, cb: APIReturnFunction): void {
-    const { username, verificationCode } = dt;
-    if (verificationCode === "000000") {
-      cb && cb(undefined, "verification");
-    } else if (username === "nero") {
-      cb && cb(undefined, "username");
-    } else {
-      cb && cb({ success: true }, undefined);
-    }
-  }
-
-  private _login(dt: GenericObjectType, cb: APIReturnFunction): void {
-    const { username } = dt;
-    if (username) {
-      const result = {
-        isLogin: true,
-        username: username,
-        balance: 100000,
-        withdrawDetails: [
-          {
-            bankName: "工商银行",
-            cardType: "储蓄卡",
-            ownerName: "金城五",
-            cardNumber: "1234567824689999",
-          },
-        ],
-      };
-      cb && cb(result, undefined);
-    } else {
-      cb && cb(undefined, "login failed");
-    }
-  }
-
-  private _logout(cb: APIReturnFunction): void {
-    const result = {
-      isLogin: false,
-      username: "",
-      balance: 0,
-    };
-    cb && cb(result, undefined);
-  }
-
-  private _forgotUsername(dt: GenericObjectType, cb: APIReturnFunction): void {
-    const { verificationCode } = dt;
-    if (verificationCode === "000000") {
-      cb && cb(undefined, "verification");
-    } else {
-      cb && cb({ success: true }, undefined);
-    }
-  }
-
-  private _forgotPassword(dt: GenericObjectType, cb: APIReturnFunction): void {
-    const { verificationCode } = dt;
-    if (verificationCode === "000000") {
-      cb && cb(undefined, "verification");
-    } else {
-      cb && cb({ success: true }, undefined);
-    }
-  }
-
-  private _changePassword(dt: GenericObjectType, cb: APIReturnFunction): void {
-    const { newPassword, verifiedNewPassword } = dt;
-    if (newPassword !== verifiedNewPassword) {
-      cb && cb(undefined, "password");
-    } else {
-      cb && cb({ success: true }, undefined);
-    }
-  }
-
-  private _setPin(dt: GenericObjectType, cb: APIReturnFunction): void {
-    const { verificationCode, pin, verifiedPin } = dt;
-    if (pin !== verifiedPin) {
-      cb && cb(undefined, "pin");
-    } else if (verificationCode === "000000") {
-      cb && cb(undefined, "verification");
-    } else {
-      cb && cb({ success: true }, undefined);
+      case ApiPath.REQUEST_VERIFICATION_CODE:
+        getVerificationCodeAPI(dt, cb);
+        break;
+      case ApiPath.CLAIM_DAILY_REWARD:
+        claimDailyReward(dt, cb);
+        break;
     }
   }
 
@@ -153,14 +94,6 @@ class APIClient {
     }
   }
   //#endregion
-
-  // private _logResult(
-  //   path: string,
-  //   result: GenericObjectType,
-  //   err: string
-  // ): void {
-  //   console.log(`API return [${path}]: ${result}, ${err}`);
-  // }
 }
 
 const apiClient = new APIClient();

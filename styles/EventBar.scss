@@ -42,9 +42,11 @@
 #event-bar-container-browser {
   height: 600px;
 
-  .image-handler {
-    left: calc(50% - 565px);
-    z-index: -1;
+  #background-image-container {
+    .image-handler {
+      left: calc(50% - 565px);
+      z-index: -1;
+    }
   }
 
   #number-image-container {
@@ -53,8 +55,43 @@
     margin-left: 790px;
     justify-content: space-between;
 
-    :hover {
+    .reward-button {
+      position: relative;
+      width: 97px;
+      height: 130px;
       cursor: pointer;
+
+      .image-handler {
+        left: 0;
+        top: 0;
+      }
+
+      #reward-anim {
+        position: absolute;
+        font-size: 100px;
+        color: #ffb300;
+        opacity: 1;
+        top: 0px;
+        left: -25px;
+        animation-name: reward-anim;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes reward-anim {
+        0% {
+          opacity: 1;
+          top: 0px;
+        }
+        70% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          top: -160px;
+        }
+      }
     }
   }
 }

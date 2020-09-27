@@ -13,21 +13,16 @@ import {
   PopOutType,
 } from "../../model/WebConstant";
 import { dataSource } from "../../model/DataSource";
-import { NoticePopOut } from "./NoticePopOut";
+import { popOutHandler } from "../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
 
-interface State {
-  subToggle: boolean;
-}
-
-class LoginPopOut extends React.Component<Props, State> {
+class LoginPopOut extends React.Component<Props> {
   private _usernameRef: RefObject<HTMLInputElement>;
   private _passwordRef: RefObject<HTMLInputElement>;
   private _verificationCodeRef: RefObject<HTMLInputElement>;
@@ -35,16 +30,11 @@ class LoginPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      subToggle: false,
-    };
-
     this._usernameRef = React.createRef();
     this._passwordRef = React.createRef();
     this._verificationCodeRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hideNotice = this._hideNotice.bind(this);
     this._onRegisterClicked = this._onRegisterClicked.bind(this);
     this._onForgotPasswordClicked = this._onForgotPasswordClicked.bind(this);
     this._onForgotUsernameClicked = this._onForgotUsernameClicked.bind(this);
@@ -63,19 +53,18 @@ class LoginPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, hidePopOut, scale } = this.props;
-    const { subToggle } = this.state;
+    const { toggle, onHide, scale } = this.props;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="登入" hidePopOut={hidePopOut} />
+          <PopOutTitle label="登入" onHide={onHide} />
           <div id="login-form-container" className="pop-out-form-container">
             <form
               autoComplete="off"
@@ -132,12 +121,6 @@ class LoginPopOut extends React.Component<Props, State> {
             </div>
           </div>
         </div>
-        <NoticePopOut
-          toggle={subToggle}
-          scale={scale}
-          hidePopOut={this._hideNotice}
-          customPopOutData={NoticePopOutConfig.VERIFICATION_CODE_INCORRECT}
-        />
       </Modal>
     );
   }
@@ -148,36 +131,31 @@ class LoginPopOut extends React.Component<Props, State> {
     const password = this._passwordRef.current.value;
     // const verificationCode = this._verificationCodeRef.current.value;
 
-    const { hidePopOut } = this.props;
+    const { onHide } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        this.setState({ subToggle: true });
+        popOutHandler.showNotice(
+          NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+        );
       } else {
         dataSource.updatePlayerModel(result);
-        hidePopOut && hidePopOut();
+        onHide && onHide();
       }
     };
 
     apiClient.callApi(ApiPath.LOGIN, { username, password }, onResultReturn);
   }
 
-  private _hideNotice(): void {
-    this.setState({ subToggle: false });
-  }
-
   private _onRegisterClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.REGISTER);
+    popOutHandler.showPopOut(PopOutType.REGISTER);
   }
 
   private _onForgotPasswordClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.FORGOT_PASSWORD);
+    popOutHandler.showPopOut(PopOutType.FORGOT_PASSWORD);
   }
 
   private _onForgotUsernameClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.FORGOT_USERNAME);
+    popOutHandler.showPopOut(PopOutType.FORGOT_USERNAME);
   }
 }
 

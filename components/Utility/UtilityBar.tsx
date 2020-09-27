@@ -6,10 +6,9 @@ import { UtilityItem } from "./UtilityItem";
 
 import { PopOutType } from "../../model/WebConstant";
 import { dataSource } from "../../model/DataSource";
+import { popOutHandler } from "../../model/PopOutHandler";
 
-interface Props {
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-}
+interface Props {}
 
 interface State {
   toggleBalance: boolean;
@@ -29,7 +28,8 @@ class UtilityBar extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { balance } = dataSource.playerModel;
+    const { playerModel } = dataSource;
+    const balance = playerModel ? playerModel.wallets.maohuang : 0;
 
     return (
       <div id="utility-bar-container">
@@ -48,7 +48,10 @@ class UtilityBar extends React.Component<Props, State> {
           <UtilityItem
             label="游戏充值"
             onClick={(): void => {
-              this._onPopOutClicked(PopOutType.DEPOSIT_WALLET);
+              this._onPopOutClicked(PopOutType.DEPOSIT_WALLET, {
+                selectedIndex: 0,
+                selectedTransaction: 0,
+              });
             }}
           />
           <UtilityItem
@@ -83,13 +86,15 @@ class UtilityBar extends React.Component<Props, State> {
     element && element.scrollIntoView();
   }
 
-  private _onPopOutClicked(type: PopOutType): void {
-    const { showPopOut } = this.props;
-    const { isLogin } = dataSource.playerModel;
-    if (isLogin) {
-      showPopOut && showPopOut(type);
+  private _onPopOutClicked(
+    type: PopOutType,
+    customData?: GenericObjectType
+  ): void {
+    const { playerModel } = dataSource;
+    if (playerModel) {
+      popOutHandler.showPopOut(type, customData);
     } else {
-      showPopOut && showPopOut(PopOutType.LOGIN);
+      popOutHandler.showPopOut(PopOutType.LOGIN);
     }
   }
 

@@ -6,12 +6,12 @@ class DataSource {
   private _systemModel: SystemModel;
 
   public constructor() {
-    this._playerModel = new PlayerModel({ isLogin: false });
+    this._playerModel = undefined;
     this._systemModel = new SystemModel({ isMobile: false });
   }
 
   public updatePlayerModel(dt: GenericObjectType): void {
-    this._playerModel = new PlayerModel(dt);
+    this._playerModel = dt ? new PlayerModel(dt) : undefined;
   }
 
   public updateSystemModel(dt: GenericObjectType): void {

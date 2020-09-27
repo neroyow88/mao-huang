@@ -7,7 +7,7 @@ interface IDropdownOption {
 }
 
 interface Props {
-  options: IDropdownOption[];
+  options: { [keys: string]: IDropdownOption };
   selectedIndex: number;
   onSelected: (index: number) => void;
 }
@@ -33,12 +33,11 @@ class CustomDropdownOption extends React.Component<Props, State> {
     const { options, selectedIndex } = this.props;
     const { toggle, hoverIndex } = this.state;
 
-    const children = options.map(
-      (option: IDropdownOption, index: number): JSX.Element => {
-        const { src, label } = option;
-
+    const optionKeys = Object.keys(options);
+    const children = optionKeys.map(
+      (key: string, index: number): JSX.Element => {
+        const { src, label } = options[key];
         const isHover = hoverIndex === index;
-
         const style: CSSProperties = {
           backgroundImage: `url(${src})`,
           backgroundPosition: "5% 50%",

@@ -2,10 +2,9 @@ import React from "react";
 import { ImageHandler } from "./ImageHandler";
 import { PopOutType } from "../model/WebConstant";
 import { dataSource } from "../model/DataSource";
+import { popOutHandler } from "../model/PopOutHandler";
 
-interface Props {
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-}
+interface Props {}
 
 interface State {}
 
@@ -19,16 +18,15 @@ class CardList extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { showPopOut } = this.props;
     const { isMobile } = dataSource.systemModel;
 
     if (isMobile) {
       return (
         <div id="cards-container-mobile">
           <div id="card-item-container" className="row-container center">
-            {this._roundCard(1, "爱情猫", showPopOut)}
-            {this._roundCard(2, "招财猫", showPopOut)}
-            {this._roundCard(3, "波斯猫", showPopOut)}
+            {this._roundCard(1, "爱情猫")}
+            {this._roundCard(2, "招财猫")}
+            {this._roundCard(3, "波斯猫")}
           </div>
         </div>
       );
@@ -48,13 +46,9 @@ class CardList extends React.Component<Props, State> {
     }
   }
 
-  private _roundCard(
-    index: number,
-    label: string,
-    showPopOut: (any: number, data?: GenericObjectType) => void
-  ): JSX.Element {
+  private _roundCard(index: number, label: string): JSX.Element {
     const onClickCallback = (): void => {
-      showPopOut(PopOutType.CARD_MOBILE, { index });
+      popOutHandler.showPopOut(PopOutType.CARD_MOBILE, { index });
     };
 
     return (

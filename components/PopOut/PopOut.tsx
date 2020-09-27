@@ -8,7 +8,6 @@ import { RegisterPopOut } from "./RegisterPopOut";
 import { ProfilePopOut } from "./ProfilePopOut";
 import { NoticeBoardPopOut } from "./NoticeBoardPopOut";
 import { MobileCardPopOut } from "./MobileCardPopOut";
-import { NoticePopOut } from "./NoticePopOut";
 
 import { DepositWalletPopOut } from "./Deposit/DepositWalletPopOut";
 import { DepositInstructionPopOut } from "./Deposit/DepositInstructionPopOut";
@@ -18,14 +17,11 @@ import { WithdrawDetailPopOut } from "./Withdraw/WithdrawDetailPopOut";
 import { WithdrawSuccessPopOut } from "./Withdraw/WithdrawSuccessPopOut";
 import { TransferWalletPopOut } from "./Transfer/TransferWalletPopOut";
 import { MailboxPopOut } from "./Mail/MailboxPopOut";
+import { popOutHandler } from "../../model/PopOutHandler";
 
 interface Props {
-  type: PopOutType;
-  toggle: boolean;
   scale: number;
-  customPopOutData: GenericObjectType;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  config: GenericObjectType;
 }
 
 interface State {
@@ -40,19 +36,21 @@ class PopOut extends React.Component<Props, State> {
       isTransitioning: false,
     };
 
-    this._hidePopOut = this._hidePopOut.bind(this);
+    this._onHide = this._onHide.bind(this);
     this._transitionComplete = this._transitionComplete.bind(this);
   }
 
   public componentDidUpdate(prevProps: Props): void {
-    const { type, toggle } = this.props;
-    if (prevProps.type !== type && toggle) {
+    const { type, toggle } = this.props.config;
+    if (prevProps.config.type !== type && toggle) {
       this.setState({ isTransitioning: true });
     }
   }
 
   public render(): JSX.Element {
-    const { type, toggle, scale, customPopOutData, showPopOut } = this.props;
+    const { config, scale } = this.props;
+    const { type, toggle, customData } = config;
+
     let component;
     switch (type) {
       case PopOutType.REGISTER:
@@ -60,8 +58,7 @@ class PopOut extends React.Component<Props, State> {
           <RegisterPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -71,8 +68,7 @@ class PopOut extends React.Component<Props, State> {
           <LoginPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -82,7 +78,7 @@ class PopOut extends React.Component<Props, State> {
           <ProfilePopOut
             toggle={toggle}
             scale={scale}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -92,8 +88,7 @@ class PopOut extends React.Component<Props, State> {
           <ForgotUsernamePopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -103,8 +98,7 @@ class PopOut extends React.Component<Props, State> {
           <ForgotPasswordPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -115,10 +109,9 @@ class PopOut extends React.Component<Props, State> {
           <DepositWalletPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
+            customData={customData}
           />
         );
         break;
@@ -127,10 +120,9 @@ class PopOut extends React.Component<Props, State> {
           <DepositInstructionPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
+            customData={customData}
           />
         );
         break;
@@ -140,8 +132,7 @@ class PopOut extends React.Component<Props, State> {
           <WithdrawAccountSelectionPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -151,7 +142,6 @@ class PopOut extends React.Component<Props, State> {
           <BindBankAccountPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -161,10 +151,9 @@ class PopOut extends React.Component<Props, State> {
           <WithdrawDetailPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
+            customData={customData}
           />
         );
         break;
@@ -173,9 +162,9 @@ class PopOut extends React.Component<Props, State> {
           <WithdrawSuccessPopOut
             toggle={toggle}
             scale={scale}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
+            customData={customData}
           />
         );
         break;
@@ -184,10 +173,9 @@ class PopOut extends React.Component<Props, State> {
           <TransferWalletPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
+            customData={customData}
           />
         );
         break;
@@ -196,10 +184,9 @@ class PopOut extends React.Component<Props, State> {
           <MailboxPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
+            customData={customData}
           />
         );
         break;
@@ -208,9 +195,9 @@ class PopOut extends React.Component<Props, State> {
         component = (
           <MobileCardPopOut
             toggle={toggle}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
+            customData={customData}
           />
         );
 
@@ -220,8 +207,7 @@ class PopOut extends React.Component<Props, State> {
           <LoginPopOut
             toggle={toggle}
             scale={scale}
-            showPopOut={showPopOut}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
           />
         );
@@ -232,19 +218,8 @@ class PopOut extends React.Component<Props, State> {
           <NoticeBoardPopOut
             toggle={toggle}
             scale={scale}
-            hidePopOut={this._hidePopOut}
+            onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-          />
-        );
-        break;
-      case PopOutType.NOTICE:
-        component = (
-          <NoticePopOut
-            toggle={toggle}
-            scale={scale}
-            hidePopOut={this._hidePopOut}
-            transitionComplete={this._transitionComplete}
-            customPopOutData={customPopOutData}
           />
         );
         break;
@@ -257,11 +232,10 @@ class PopOut extends React.Component<Props, State> {
   }
 
   //#region Utils
-  private _hidePopOut(): void {
+  private _onHide(): void {
     const { isTransitioning } = this.state;
     if (!isTransitioning) {
-      const { hidePopOut } = this.props;
-      hidePopOut && hidePopOut();
+      popOutHandler.hidePopOut();
     }
   }
 

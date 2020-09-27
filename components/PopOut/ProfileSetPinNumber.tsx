@@ -2,46 +2,33 @@ import React, { RefObject } from "react";
 
 import { FormButton } from "./FormButton";
 import { FormInputBox } from "./FormInputBox";
-import { NoticePopOut } from "./NoticePopOut";
 import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 import { apiClient } from "../../model/ApiClient";
+import { popOutHandler } from "../../model/PopOutHandler";
+import { dataSource } from "../../model/DataSource";
+import { ErrorType } from "../../model/data/Error";
 
-interface Props {
-  scale: number;
-}
+interface Props {}
 
-interface State {
-  subToggle: boolean;
-  errorNotice: INoticePopOutConfig;
-}
-
-class ProfileSetPinNumber extends React.Component<Props, State> {
+class ProfileSetPinNumber extends React.Component<Props> {
+  private _pinRef: RefObject<HTMLInputElement>;
+  private _verifiedPinRef: RefObject<HTMLInputElement>;
   private _phoneNumberRef: RefObject<HTMLInputElement>;
   private _verificationCodeRef: RefObject<HTMLInputElement>;
-  private _pin: RefObject<HTMLInputElement>;
-  private _verifiedPin: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      subToggle: false,
-      errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
-    };
-
     this._phoneNumberRef = React.createRef();
     this._verificationCodeRef = React.createRef();
-    this._pin = React.createRef();
-    this._verifiedPin = React.createRef();
+    this._pinRef = React.createRef();
+    this._verifiedPinRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hideNotice = this._hideNotice.bind(this);
+    this._getVerificationCode = this._getVerificationCode.bind(this);
   }
 
   public render(): JSX.Element {
-    const { scale } = this.props;
-    const { subToggle, errorNotice } = this.state;
-
     return (
       <div id="set-pin-container" className="pop-out-form-container">
         <form autoComplete="off" onSubmit={this._onFormSubmitted}>
@@ -52,7 +39,7 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
             leftImage={"pop_out/password_logo.png"}
             min={6}
             max={12}
-            inputRef={this._pin}
+            inputRef={this._pinRef}
           />
           <FormInputBox
             id="verifiedpin"
@@ -61,7 +48,7 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
             leftImage={"pop_out/password_logo.png"}
             min={6}
             max={12}
-            inputRef={this._verifiedPin}
+            inputRef={this._verifiedPinRef}
           />
           <FormInputBox
             id="phonenumber"
@@ -71,9 +58,7 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
           <FormButton
             label="获取短信验证码"
             backgroundColor="#83D300"
-            onClick={(): void => {
-              console.log("Verification code send");
-            }}
+            onClick={this._getVerificationCode}
           />
           <FormInputBox
             id="verificationcode"
@@ -86,57 +71,64 @@ class ProfileSetPinNumber extends React.Component<Props, State> {
             submit
           />
         </form>
-        <NoticePopOut
-          toggle={subToggle}
-          scale={scale}
-          hidePopOut={this._hideNotice}
-          customPopOutData={errorNotice}
-        />
       </div>
     );
   }
 
   private _onFormSubmitted(e): void {
     e.preventDefault();
-    const phoneNumber = this._phoneNumberRef.current.value;
     const verificationCode = this._verificationCodeRef.current.value;
-    const pin = this._pin.current.value;
-    const verifiedPin = this._verifiedPin.current.value;
+    const pin = this._pinRef.current.value;
+    const verifiedPin = this._verifiedPinRef.current.value;
 
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        if (err === "pin") {
-          this.setState({
-            subToggle: true,
-            errorNotice: NoticePopOutConfig.PIN_NOT_VERIFIED,
-          });
-        } else if (err === "verification") {
-          this.setState({
-            subToggle: true,
-            errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
-          });
+        if (err === ErrorType.INVALID_USER) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        } else if (err === ErrorType.INVALID_VERIFICATION_CODE) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        } else if (err === ErrorType.PASSWORD_NOT_VERIFIED) {
+          popOutHandler.showNotice(NoticePopOutConfig.PIN_NOT_VERIFIED);
         }
       } else {
-        this.setState({
-          subToggle: true,
-          errorNotice: NoticePopOutConfig.SET_PIN_SUCCESS,
-        });
+        this._pinRef.current.value = "";
+        this._verifiedPinRef.current.value = "";
+        this._phoneNumberRef.current.value = "";
+        this._verificationCodeRef.current.value = "";
+        popOutHandler.showNotice(NoticePopOutConfig.SET_PIN_SUCCESS);
       }
     };
 
+    const { username } = dataSource.playerModel;
     apiClient.callApi(
       ApiPath.SET_PIN,
-      { phoneNumber, verificationCode, pin, verifiedPin },
+      { username, pin, verifiedPin, verificationCode },
       onResultReturn
     );
   }
 
-  //#region Utils
-  private _hideNotice(): void {
-    this.setState({ subToggle: false });
-  }
+  private _getVerificationCode(): void {
+    const phoneNumber = this._phoneNumberRef.current.value;
+    const onResultReturn = (result: GenericObjectType, err: string): void => {
+      if (err && !result) {
+        if (err === ErrorType.INVALID_PHONE_NUMBER) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        }
+      }
+    };
 
-  //#endregion
+    apiClient.callApi(
+      ApiPath.REQUEST_VERIFICATION_CODE,
+      { phoneNumber },
+      onResultReturn
+    );
+  }
 }
 
 export { ProfileSetPinNumber };

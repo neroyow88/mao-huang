@@ -5,13 +5,12 @@ import { dataSource } from "../model/DataSource";
 import { FormInputBox } from "./PopOut/FormInputBox";
 import { FormButton } from "./PopOut/FormButton";
 import { apiClient } from "../model/ApiClient";
+import { ErrorType } from "../model/data/Error";
+import { popOutHandler } from "../model/PopOutHandler";
 
-interface Props {
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-}
+interface Props {}
 
 class LoginBar extends React.Component<Props> {
-  private _loginCount: number = 0;
   private _usernameRef: RefObject<HTMLInputElement>;
   private _passwordRef: RefObject<HTMLInputElement>;
 
@@ -58,9 +57,10 @@ class LoginBar extends React.Component<Props> {
   }
 
   private _renderLoginBarBrowser(): JSX.Element {
-    const { isLogin, username } = dataSource.playerModel;
+    const { playerModel } = dataSource;
 
-    if (isLogin) {
+    if (playerModel) {
+      const { username } = playerModel;
       return (
         <div id="login-bar-container-browser">
           <div id="login-bar" className="row-container">
@@ -145,57 +145,54 @@ class LoginBar extends React.Component<Props> {
   }
 
   private _onRegisterClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.REGISTER);
+    popOutHandler.showPopOut(PopOutType.REGISTER);
   }
 
   private _onForgotUsernameClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.FORGOT_USERNAME);
+    popOutHandler.showPopOut(PopOutType.FORGOT_USERNAME);
   }
 
   private _onForgotPasswordClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.FORGOT_PASSWORD);
+    popOutHandler.showPopOut(PopOutType.FORGOT_PASSWORD);
   }
 
   private _onLogin(): void {
-    const { showPopOut } = this.props;
     const { isMobile } = dataSource.systemModel;
 
     if (isMobile) {
-      showPopOut && showPopOut(PopOutType.LOGIN);
+      popOutHandler.showPopOut(PopOutType.LOGIN);
     } else {
       const username = this._usernameRef.current.value;
       const password = this._passwordRef.current.value;
       const onResultReturn = (result: GenericObjectType, err: string): void => {
         if (err && !result) {
-          this._loginCount++;
-          if (this._loginCount >= 3) {
-            showPopOut && showPopOut(PopOutType.LOGIN);
+          if (err === ErrorType.INVALID_USER) {
+          } else if (err === ErrorType.INVALID_PASSWORD) {
           }
         } else {
           dataSource.updatePlayerModel(result);
         }
       };
 
-      apiClient.callApi(ApiPath.LOGIN, { username, password }, onResultReturn);
+      apiClient.callApi(
+        ApiPath.LOGIN,
+        { username, password, verificationCode: -1 },
+        onResultReturn
+      );
     }
   }
 
   private _onProfileClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.PROFILE);
+    popOutHandler.showPopOut(PopOutType.PROFILE);
   }
 
   private _onLogout(): void {
-    const { showPopOut } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
         console.error("Logout failed: ", err);
       } else {
-        dataSource.updatePlayerModel(result);
-        showPopOut(PopOutType.NOTICE, NoticePopOutConfig.LOGOUT_SUCCESS);
+        dataSource.updatePlayerModel(undefined);
+        popOutHandler.showNotice(NoticePopOutConfig.LOGOUT_SUCCESS);
       }
     };
     apiClient.callApi(ApiPath.LOGOUT, undefined, onResultReturn);

@@ -2,20 +2,15 @@ import React, { RefObject } from "react";
 
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
-import { NoticePopOut } from "./NoticePopOut";
 import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 import { apiClient } from "../../model/ApiClient";
+import { popOutHandler } from "../../model/PopOutHandler";
+import { dataSource } from "../../model/DataSource";
+import { ErrorType } from "../../model/data/Error";
 
-interface Props {
-  scale: number;
-}
+interface Props {}
 
-interface State {
-  subToggle: boolean;
-  errorNotice: INoticePopOutConfig;
-}
-
-class ProfileChangePassword extends React.Component<Props, State> {
+class ProfileChangePassword extends React.Component<Props> {
   private _oldPasswordRef: RefObject<HTMLInputElement>;
   private _newPasswordRef: RefObject<HTMLInputElement>;
   private _verifiedNewPasswordRef: RefObject<HTMLInputElement>;
@@ -23,23 +18,14 @@ class ProfileChangePassword extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      subToggle: false,
-      errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
-    };
-
     this._oldPasswordRef = React.createRef();
     this._newPasswordRef = React.createRef();
     this._verifiedNewPasswordRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hideNotice = this._hideNotice.bind(this);
   }
 
   public render(): JSX.Element {
-    const { scale } = this.props;
-    const { subToggle, errorNotice } = this.state;
-
     return (
       <div id="change-password-container" className="pop-out-form-container">
         <form autoComplete="off" onSubmit={this._onFormSubmitted}>
@@ -76,12 +62,6 @@ class ProfileChangePassword extends React.Component<Props, State> {
             submit
           />
         </form>
-        <NoticePopOut
-          toggle={subToggle}
-          scale={scale}
-          hidePopOut={this._hideNotice}
-          customPopOutData={errorNotice}
-        />
       </div>
     );
   }
@@ -94,31 +74,28 @@ class ProfileChangePassword extends React.Component<Props, State> {
 
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        this.setState({
-          subToggle: true,
-          errorNotice: NoticePopOutConfig.PIN_NOT_VERIFIED,
-        });
+        if (err === ErrorType.INVALID_USER) {
+          popOutHandler.showNotice(NoticePopOutConfig.PIN_NOT_VERIFIED);
+        } else if (err === ErrorType.INVALID_PASSWORD) {
+          popOutHandler.showNotice(NoticePopOutConfig.PIN_NOT_VERIFIED);
+        } else if (err === ErrorType.PASSWORD_NOT_VERIFIED) {
+          popOutHandler.showNotice(NoticePopOutConfig.PIN_NOT_VERIFIED);
+        }
       } else {
-        console.log(result, err);
-        this.setState({
-          subToggle: true,
-          errorNotice: NoticePopOutConfig.CHANGE_PASSWORD_SUCCESS,
-        });
+        this._oldPasswordRef.current.value = "";
+        this._newPasswordRef.current.value = "";
+        this._verifiedNewPasswordRef.current.value = "";
+        popOutHandler.showNotice(NoticePopOutConfig.CHANGE_PASSWORD_SUCCESS);
       }
     };
 
+    const { username } = dataSource.playerModel;
     apiClient.callApi(
       ApiPath.CHANGE_PASSWORD,
-      { oldPassword, newPassword, verifiedNewPassword },
+      { username, oldPassword, newPassword, verifiedNewPassword },
       onResultReturn
     );
   }
-
-  //#region Utils
-  private _hideNotice(): void {
-    this.setState({ subToggle: false });
-  }
-  //#endregion
 }
 
 export { ProfileChangePassword };

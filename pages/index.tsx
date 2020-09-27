@@ -8,7 +8,7 @@ import { GameListBar } from "../components/GameListBar";
 import { Slider } from "../components/Slider";
 import { NoticeBoard } from "../components/NoticeBoard";
 import { CardList } from "../components/Card";
-import { EventBar } from "../components/EventBar";
+import { EventBar } from "../components/EventBar/EventBar";
 import { CustomerService } from "../components/CustomerService";
 import { SponsorBar } from "../components/SponsorBar";
 import { PopOut } from "../components/PopOut/PopOut";
@@ -17,6 +17,9 @@ import { loadingManager } from "../model/LoadingManager";
 import { LoadingView } from "../components/LoadingView";
 import { NavigationBar } from "../components/NavigationBar";
 import { dataSource } from "../model/DataSource";
+import { NoticePopOut } from "../components/PopOut/NoticePopOut";
+import { popOutHandler } from "../model/PopOutHandler";
+import { AudioComp } from "../components/AudioComp";
 
 interface Props {}
 
@@ -28,7 +31,11 @@ interface State {
   popOutConfig: {
     toggle: boolean;
     type: PopOutType;
-    customPopOutData?: GenericObjectType;
+    customData?: GenericObjectType;
+  };
+  noticePopOutConfig: {
+    toggle: boolean;
+    customData: GenericObjectType;
   };
 }
 
@@ -44,17 +51,31 @@ export default class Home extends React.Component<Props, State> {
       popOutConfig: {
         toggle: false,
         type: PopOutType.NONE,
-        customPopOutData: Object.create(null),
+        customData: Object.create(null),
+      },
+      noticePopOutConfig: {
+        toggle: false,
+        customData: Object.create(null),
       },
     };
 
     this._renderMobileView = this._renderMobileView.bind(this);
     this._renderBrowserView = this._renderBrowserView.bind(this);
-    this._showPopOut = this._showPopOut.bind(this);
-    this._hidePopOut = this._hidePopOut.bind(this);
 
     this._onResize = this._onResize.bind(this);
     this._onAllTasksCompleted = this._onAllTasksCompleted.bind(this);
+
+    this._showPopOut = this._showPopOut.bind(this);
+    this._hidePopOut = this._hidePopOut.bind(this);
+    this._showNotice = this._showNotice.bind(this);
+    this._hideNotice = this._hideNotice.bind(this);
+
+    popOutHandler.init({
+      showPopOut: this._showPopOut,
+      hidePopOut: this._hidePopOut,
+      showNotice: this._showNotice,
+      hideNotice: this._hideNotice,
+    });
   }
 
   public componentDidMount(): void {
@@ -93,52 +114,38 @@ export default class Home extends React.Component<Props, State> {
 
   private _renderMobileView(): JSX.Element {
     const { scale, popOutConfig } = this.state;
-    const { type, toggle, customPopOutData } = popOutConfig;
 
     return (
       <div id="map-mobile" style={{ transform: `scale(${scale})` }}>
-        <LoginBar showPopOut={this._showPopOut} />
+        <LoginBar />
         <Slider />
         <NoticeBoard />
-        <CardList showPopOut={this._showPopOut} />
+        <CardList />
         <EventBar />
         <GameListBar />
         <CustomerService />
-        <PopOut
-          type={type}
-          toggle={toggle}
-          scale={scale}
-          customPopOutData={customPopOutData}
-          showPopOut={this._showPopOut}
-          hidePopOut={this._hidePopOut}
-        />
+        <PopOut scale={scale} config={popOutConfig} />
       </div>
     );
   }
 
   private _renderBrowserView(): JSX.Element {
-    const { isLoading, scale, popOutConfig } = this.state;
-    const { type, toggle, customPopOutData } = popOutConfig;
+    const { isLoading, scale, popOutConfig, noticePopOutConfig } = this.state;
 
     return (
       <div id="map-browser" style={{ transform: `scale(${scale})` }}>
-        <LoginBar showPopOut={this._showPopOut} />
-        <UtilityBar showPopOut={this._showPopOut} />
+        <LoginBar />
+        <UtilityBar />
         <GameListBar isLoaded={!isLoading} />
         <Slider />
-        <NoticeBoard showPopOut={this._showPopOut} />
-        <CardList showPopOut={this._showPopOut} />
+        <NoticeBoard />
+        <CardList />
         <EventBar />
         <CustomerService />
         <SponsorBar />
-        <PopOut
-          type={type}
-          toggle={toggle}
-          scale={scale}
-          customPopOutData={customPopOutData}
-          showPopOut={this._showPopOut}
-          hidePopOut={this._hidePopOut}
-        />
+        <PopOut scale={scale} config={popOutConfig} />
+        <NoticePopOut scale={scale} config={noticePopOutConfig} />
+        <AudioComp />
       </div>
     );
   }
@@ -148,7 +155,7 @@ export default class Home extends React.Component<Props, State> {
       popOutConfig: {
         toggle: true,
         type,
-        customPopOutData: customData,
+        customData,
       },
     });
   }
@@ -158,7 +165,25 @@ export default class Home extends React.Component<Props, State> {
       popOutConfig: {
         toggle: false,
         type: PopOutType.NONE,
-        customPopOutData: Object.create(null),
+        customData: Object.create(null),
+      },
+    });
+  }
+
+  private _showNotice(customData: GenericObjectType): void {
+    this.setState({
+      noticePopOutConfig: {
+        toggle: true,
+        customData,
+      },
+    });
+  }
+
+  private _hideNotice(): void {
+    this.setState({
+      noticePopOutConfig: {
+        toggle: false,
+        customData: Object.create(null),
       },
     });
   }

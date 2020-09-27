@@ -10,8 +10,9 @@ interface INoticePopOutConfig {
 }
 
 interface IWithdrawDetails {
+  bankType: number;
   bankName: string;
-  cardType: string;
-  ownerName: string;
+  username: string;
   cardNumber: string;
+  cardType: string;
 }

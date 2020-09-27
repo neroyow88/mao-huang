@@ -5,45 +5,52 @@ import { ImageHandler } from "../ImageHandler";
 import { NoticeType } from "../../model/WebConstant";
 
 import customStyle from "../../styles/module/NoticeModal.module.scss";
+import { popOutHandler } from "../../model/PopOutHandler";
 
 interface Props {
-  toggle: boolean;
   scale: number;
-  hidePopOut: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
-  transitionComplete?: NoParamReturnNulFunction;
+  config: GenericObjectType;
 }
 
-class NoticePopOut extends React.Component<Props> {
+interface State {
+  isTransitioning: boolean;
+}
+
+class NoticePopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
+    this.state = {
+      isTransitioning: false,
+    };
+
     this._getNoticeType = this._getNoticeType.bind(this);
+    this._onHide = this._onHide.bind(this);
+    this._transitionComplete = this._transitionComplete.bind(this);
   }
 
   public componentDidMount(): void {
-    const { toggle, transitionComplete } = this.props;
-    if (transitionComplete) {
-      if (toggle) {
-        const interval = setInterval((): void => {
-          transitionComplete();
-          clearInterval(interval);
-        }, 1000);
-      } else {
-        transitionComplete();
-      }
+    const { toggle } = this.props.config;
+    if (toggle) {
+      const interval = setInterval((): void => {
+        this._transitionComplete();
+        clearInterval(interval);
+      }, 1000);
+    } else {
+      this._transitionComplete();
     }
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut, customPopOutData } = this.props;
-    const { noticeType, description, button } = customPopOutData;
+    const { config, scale } = this.props;
+    const { toggle, customData } = config;
+    const { noticeType, description, button } = customData;
     const src = this._getNoticeType(noticeType);
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={this._onHide}
         centered
         cssModule={customStyle}
       >
@@ -53,7 +60,7 @@ class NoticePopOut extends React.Component<Props> {
         >
           <div id="notice-title-container" className="row-container center">
             <div id="notice-title">提示</div>
-            <div id="cross" onClick={hidePopOut}>
+            <div id="cross" onClick={this._onHide}>
               <ImageHandler src="pop_out/close.png" scale={0.5} />
             </div>
           </div>
@@ -62,7 +69,7 @@ class NoticePopOut extends React.Component<Props> {
           </div>
           <div id="notice-description">{description}</div>
           <div id="notice-button-container">
-            <div id="notice-button" onClick={hidePopOut}>
+            <div id="notice-button" onClick={this._onHide}>
               <div id="notice-button-label">{button}</div>
             </div>
           </div>
@@ -82,6 +89,17 @@ class NoticePopOut extends React.Component<Props> {
       default:
         return "";
     }
+  }
+
+  private _onHide(): void {
+    const { isTransitioning } = this.state;
+    if (!isTransitioning) {
+      popOutHandler.hideNotice();
+    }
+  }
+
+  private _transitionComplete(): void {
+    this.setState({ isTransitioning: false });
   }
 }
 

@@ -3,31 +3,22 @@ import { Modal } from "reactstrap";
 
 import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
-import { NoticePopOut } from "./NoticePopOut";
 import { PopOutTitle } from "./PopOutTitle";
 import { apiClient } from "../../model/ApiClient";
-import {
-  PopOutType,
-  NoticePopOutConfig,
-  ApiPath,
-} from "../../model/WebConstant";
+import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 
 import customStyle from "../../styles/module/AccountModal.module.scss";
+import { ErrorType } from "../../model/data/Error";
+import { popOutHandler } from "../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
 }
 
-interface State {
-  subToggle: boolean;
-  errorNotice: INoticePopOutConfig;
-}
-
-class RegisterPopOut extends React.Component<Props, State> {
+class RegisterPopOut extends React.Component<Props> {
   private _usernameRef: RefObject<HTMLInputElement>;
   private _passwordRef: RefObject<HTMLInputElement>;
   private _phoneNumberRef: RefObject<HTMLInputElement>;
@@ -36,18 +27,12 @@ class RegisterPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      subToggle: false,
-      errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
-    };
-
     this._usernameRef = React.createRef();
     this._passwordRef = React.createRef();
     this._phoneNumberRef = React.createRef();
     this._verificationCodeRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
-    this._hideNotice = this._hideNotice.bind(this);
   }
 
   public componentDidMount(): void {
@@ -63,19 +48,18 @@ class RegisterPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
-    const { subToggle, errorNotice } = this.state;
+    const { toggle, scale, onHide } = this.props;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="注册会员" hidePopOut={hidePopOut} />
+          <PopOutTitle label="注册会员" onHide={onHide} />
           <div id="register-form-container" className="pop-out-form-container">
             <form autoComplete="off" onSubmit={this._onFormSubmitted}>
               <FormInputBox
@@ -126,12 +110,6 @@ class RegisterPopOut extends React.Component<Props, State> {
             </div>
           </div>
         </div>
-        <NoticePopOut
-          toggle={subToggle}
-          scale={scale}
-          hidePopOut={this._hideNotice}
-          customPopOutData={errorNotice}
-        />
       </Modal>
     );
   }
@@ -143,22 +121,17 @@ class RegisterPopOut extends React.Component<Props, State> {
     const phoneNumber = this._phoneNumberRef.current.value;
     const verificationCode = this._verificationCodeRef.current.value;
 
-    const { showPopOut } = this.props;
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
-        if (err === "verification") {
-          this.setState({
-            subToggle: true,
-            errorNotice: NoticePopOutConfig.VERIFICATION_CODE_INCORRECT,
-          });
-        } else if (err === "username") {
-          this.setState({
-            subToggle: true,
-            errorNotice: NoticePopOutConfig.USERNAME_ALREADY_EXIST,
-          });
+        if (err === ErrorType.INVALID_VERIFICATION_CODE) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        } else if (err === ErrorType.USER_ALREADY_EXIST) {
+          popOutHandler.showNotice(NoticePopOutConfig.USERNAME_ALREADY_EXIST);
         }
       } else {
-        showPopOut(PopOutType.NOTICE, NoticePopOutConfig.REGISTER_SUCCESS);
+        popOutHandler.showNotice(NoticePopOutConfig.REGISTER_SUCCESS);
       }
     };
 
@@ -168,13 +141,6 @@ class RegisterPopOut extends React.Component<Props, State> {
       onResultReturn
     );
   }
-
-  //#region Utils
-  private _hideNotice(): void {
-    this.setState({ subToggle: false });
-  }
-
-  //#endregion
 }
 
 export { RegisterPopOut };

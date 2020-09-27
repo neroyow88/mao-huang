@@ -3,7 +3,7 @@ import { ImageHandler } from "../ImageHandler";
 
 interface Props {
   label: string;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
 }
 
 class PopOutTitle extends React.Component<Props> {
@@ -12,7 +12,7 @@ class PopOutTitle extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { label, hidePopOut } = this.props;
+    const { label, onHide } = this.props;
 
     return (
       <div id="pop-out-title-container">
@@ -21,7 +21,7 @@ class PopOutTitle extends React.Component<Props> {
         <ImageHandler
           src="pop_out/close_button.png"
           scale={0.44}
-          onClick={hidePopOut}
+          onClick={onHide}
         />
       </div>
     );

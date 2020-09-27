@@ -1,16 +1,10 @@
 import React from "react";
+
 import { ImageHandler } from "../../ImageHandler";
+import { dataSource } from "../../../model/DataSource";
+import { MailModel } from "../../../model/PlayerModel";
 
-interface IMailBox {
-  title: string;
-  content: string;
-  sender: string;
-  isRead: boolean;
-}
-
-interface Props {
-  mailList: IMailBox[];
-}
+interface Props {}
 
 interface State {
   selectedIndex: number;
@@ -29,10 +23,10 @@ class Mails extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { mailList } = this.props;
+    const { mails } = dataSource.playerModel;
     const { selectedIndex } = this.state;
 
-    const titleList = mailList.map((mail: IMailBox, index: number) => {
+    const titleList = mails.map((mail: MailModel, index: number) => {
       const readStyle = mail.isRead ? "mail-read" : "mail-unread";
       const selected =
         selectedIndex === index ? <div id="selected-circle"></div> : null;
@@ -40,6 +34,7 @@ class Mails extends React.Component<Props, State> {
       return (
         <div
           className={`mail-title ${readStyle}`}
+          key={`mail-title-${index}`}
           onClick={() => {
             this._onMailSelected(index);
           }}
@@ -59,15 +54,11 @@ class Mails extends React.Component<Props, State> {
           <div id="message-container">
             <ImageHandler src={"mail/mailbox.png"} scale={0.2} />
             <div id="message-content" className="column-container">
+              <div className="mailbox-label">{mails[selectedIndex].title}</div>
               <div className="mailbox-label">
-                {mailList[selectedIndex].title}
+                {mails[selectedIndex].content}
               </div>
-              <div className="mailbox-label">
-                {mailList[selectedIndex].content}
-              </div>
-              <div className="sender-label">
-                {mailList[selectedIndex].sender}
-              </div>
+              <div className="sender-label">{mails[selectedIndex].sender}</div>
             </div>
           </div>
           <div

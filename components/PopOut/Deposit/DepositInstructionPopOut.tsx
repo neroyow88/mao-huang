@@ -8,14 +8,14 @@ import { PopOutTitle } from "../PopOutTitle";
 import { DepositType, PopOutType } from "../../../model/WebConstant";
 
 import customStyle from "../../../styles/module/AccountModal.module.scss";
+import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
+  customData: GenericObjectType;
 }
 
 interface State {
@@ -48,18 +48,18 @@ class DepositInstructionPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
+    const { toggle, scale, onHide } = this.props;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="游戏充值" hidePopOut={hidePopOut} />
+          <PopOutTitle label="游戏充值" onHide={onHide} />
           {this._renderContent()}
         </div>
       </Modal>
@@ -67,8 +67,8 @@ class DepositInstructionPopOut extends React.Component<Props, State> {
   }
 
   private _renderContent(): JSX.Element {
-    const { customPopOutData } = this.props;
-    const { selectedIndex, balance } = customPopOutData;
+    const { customData } = this.props;
+    const { selectedIndex, balance } = customData;
     switch (selectedIndex) {
       case DepositType.ALIPAY:
         return (
@@ -100,18 +100,17 @@ class DepositInstructionPopOut extends React.Component<Props, State> {
   }
 
   private _onBack(): void {
-    const { showPopOut, customPopOutData } = this.props;
-    const { selectedIndex, selectedTransaction } = customPopOutData;
-    showPopOut &&
-      showPopOut(PopOutType.DEPOSIT_WALLET, {
-        selectedIndex,
-        selectedTransaction,
-      });
+    const { customData } = this.props;
+    const { selectedIndex, selectedTransaction } = customData;
+    popOutHandler.showPopOut(PopOutType.DEPOSIT_WALLET, {
+      selectedIndex,
+      selectedTransaction,
+    });
   }
 
   private _onConfirm(): void {
-    const { hidePopOut } = this.props;
-    hidePopOut && hidePopOut();
+    const { onHide } = this.props;
+    onHide && onHide();
   }
 }
 

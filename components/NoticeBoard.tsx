@@ -2,10 +2,9 @@ import React from "react";
 import { ImageHandler } from "./ImageHandler";
 import { dataSource } from "../model/DataSource";
 import { PopOutType } from "../model/WebConstant";
+import { popOutHandler } from "../model/PopOutHandler";
 
-interface Props {
-  showPopOut?: (any: number, data?: GenericObjectType) => void;
-}
+interface Props {}
 
 class NoticeBoard extends React.Component<Props> {
   constructor(props: Props) {
@@ -63,8 +62,7 @@ class NoticeBoard extends React.Component<Props> {
   }
 
   private _onNewsClicked(): void {
-    const { showPopOut } = this.props;
-    showPopOut && showPopOut(PopOutType.NEWS);
+    popOutHandler.showPopOut(PopOutType.NEWS);
   }
 }
 

@@ -9,9 +9,9 @@ import { ImageHandler } from "../../ImageHandler";
 interface Props {
   toggle: boolean;
   scale: number;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
+  customData: GenericObjectType;
 }
 
 class WithdrawSuccessPopOut extends React.Component<Props> {
@@ -32,19 +32,19 @@ class WithdrawSuccessPopOut extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut, customPopOutData } = this.props;
-    const { invoice } = customPopOutData;
+    const { toggle, scale, onHide, customData } = this.props;
+    const { invoice } = customData;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="快速提款" hidePopOut={hidePopOut} />
+          <PopOutTitle label="快速提款" onHide={onHide} />
           <div
             id="withdraw-success-container"
             className="column-container center"

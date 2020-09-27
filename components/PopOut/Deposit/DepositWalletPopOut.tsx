@@ -9,14 +9,14 @@ import { DepositType, PopOutType } from "../../../model/WebConstant";
 
 import customStyle from "../../../styles/module/AccountModal.module.scss";
 import { PopOutTitle } from "../PopOutTitle";
+import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;
   scale: number;
-  showPopOut: (any: number, data?: GenericObjectType) => void;
-  hidePopOut: NoParamReturnNulFunction;
+  onHide: NoParamReturnNulFunction;
   transitionComplete: NoParamReturnNulFunction;
-  customPopOutData: GenericObjectType;
+  customData: GenericObjectType;
 }
 
 interface State {
@@ -30,7 +30,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const { selectedIndex, selectedTransaction } = props.customPopOutData;
+    const { selectedIndex, selectedTransaction } = props.customData;
     this.state = {
       tutorialToggle: false,
       selectedIndex: selectedIndex,
@@ -63,19 +63,19 @@ class DepositWalletPopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, hidePopOut } = this.props;
+    const { toggle, scale, onHide } = this.props;
     const { selectedIndex } = this.state;
 
     return (
       <Modal
         isOpen={toggle}
-        toggle={hidePopOut}
+        toggle={onHide}
         centered
         size="xl"
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="游戏充值" hidePopOut={hidePopOut} />
+          <PopOutTitle label="游戏充值" onHide={onHide} />
           <div
             id="deposit-option-menu-container"
             className="row-container center"
@@ -172,7 +172,7 @@ class DepositWalletPopOut extends React.Component<Props, State> {
           <TutorialPopOut
             toggle={tutorialToggle}
             scale={scale}
-            hidePopOut={this._toggleTutorial}
+            onHide={this._toggleTutorial}
           />
         </div>
       );
@@ -232,14 +232,12 @@ class DepositWalletPopOut extends React.Component<Props, State> {
     e.preventDefault();
     const balance = this._balanceRef.current.value;
 
-    const { showPopOut } = this.props;
     const { selectedIndex, selectedTransaction } = this.state;
-    showPopOut &&
-      showPopOut(PopOutType.DEPOSIT_INSTRUCTION, {
-        selectedIndex,
-        selectedTransaction,
-        balance,
-      });
+    popOutHandler.showPopOut(PopOutType.DEPOSIT_INSTRUCTION, {
+      selectedIndex,
+      selectedTransaction,
+      balance,
+    });
   }
 }
 
