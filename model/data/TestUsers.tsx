@@ -20,7 +20,7 @@ export const testAccounts = [
     password: "123456",
     phoneNumber: "0123456789",
     profile: {
-      username: "nero",
+      username: "abcd",
       phoneNumber: "0123456789",
       pinNumber: "123456",
       dailyReward: 5,
