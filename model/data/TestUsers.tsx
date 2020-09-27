@@ -16,7 +16,7 @@ export const defaultProfile = {
 
 export const testAccounts = [
   {
-    username: "nero",
+    username: "abcd",
     password: "123456",
     phoneNumber: "0123456789",
     profile: {
