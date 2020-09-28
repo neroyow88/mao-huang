@@ -7,7 +7,7 @@ import { PopOutTitle } from "./PopOutTitle";
 import { apiClient } from "../../model/ApiClient";
 import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 
-import customStyle from "../../styles/module/AccountModal.module.scss";
+import customStyle from "../../styles/module/Modal.module.scss";
 import { ErrorType } from "../../model/data/Error";
 import { popOutHandler } from "../../model/PopOutHandler";
 
@@ -33,6 +33,7 @@ class RegisterPopOut extends React.Component<Props> {
     this._verificationCodeRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
+    this._getVerificationCode = this._getVerificationCode.bind(this);
   }
 
   public componentDidMount(): void {
@@ -88,9 +89,7 @@ class RegisterPopOut extends React.Component<Props> {
               <FormButton
                 label="获取短信验证码"
                 backgroundColor="#83D300"
-                onClick={(): void => {
-                  console.log("Verification code send");
-                }}
+                onClick={this._getVerificationCode}
               />
               <FormInputBox
                 id="verificationcode"
@@ -138,6 +137,25 @@ class RegisterPopOut extends React.Component<Props> {
     apiClient.callApi(
       ApiPath.REGISTER,
       { username, password, phoneNumber, verificationCode },
+      onResultReturn
+    );
+  }
+
+  private _getVerificationCode(): void {
+    const phoneNumber = this._phoneNumberRef.current.value;
+    const onResultReturn = (result: GenericObjectType, err: string): void => {
+      if (err && !result) {
+        if (err === ErrorType.INVALID_PHONE_NUMBER) {
+          popOutHandler.showNotice(
+            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+          );
+        }
+      }
+    };
+
+    apiClient.callApi(
+      ApiPath.REQUEST_VERIFICATION_CODE,
+      { phoneNumber },
       onResultReturn
     );
   }

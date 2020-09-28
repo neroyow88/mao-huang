@@ -13,7 +13,7 @@ import { apiClient } from "../../../model/ApiClient";
 import { PopOutType, ApiPath } from "../../../model/WebConstant";
 import { popOutHandler } from "../../../model/PopOutHandler";
 import { dataSource } from "../../../model/DataSource";
-import customStyle from "../../../styles/module/AccountModal.module.scss";
+import customStyle from "../../../styles/module/Modal.module.scss";
 
 interface Props {
   toggle: boolean;

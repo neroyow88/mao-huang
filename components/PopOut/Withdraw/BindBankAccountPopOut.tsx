@@ -12,7 +12,7 @@ import {
 } from "../../../model/WebConstant";
 import { apiClient } from "../../../model/ApiClient";
 
-import customStyle from "../../../styles/module/AccountModal.module.scss";
+import customStyle from "../../../styles/module/Modal.module.scss";
 import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {

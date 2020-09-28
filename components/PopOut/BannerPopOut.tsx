@@ -1,12 +1,10 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { PopOutTitle } from "../PopOutTitle";
-import { EmptyMail } from "./EmptyMail";
-import { Mails } from "./Mails";
+import { PopOutTitle } from "./PopOutTitle";
 
-import { dataSource } from "../../../model/DataSource";
-import customStyle from "../../../styles/module/Modal.module.scss";
+import customStyle from "../../styles/module/Modal.module.scss";
+import { ImageHandler } from "../ImageHandler";
 
 interface Props {
   toggle: boolean;
@@ -16,7 +14,7 @@ interface Props {
   customData: GenericObjectType;
 }
 
-class MailboxPopOut extends React.Component<Props> {
+class BannerPopOut extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -34,10 +32,8 @@ class MailboxPopOut extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { toggle, scale, onHide } = this.props;
-    const { mails } = dataSource.playerModel;
-    const content = mails.length > 0 ? <Mails /> : <EmptyMail />;
-
+    const { toggle, scale, onHide, customData } = this.props;
+    const { src } = customData;
     return (
       <Modal
         isOpen={toggle}
@@ -47,12 +43,14 @@ class MailboxPopOut extends React.Component<Props> {
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="留言信息" onHide={onHide} />
-          {content}
+          <PopOutTitle label="猫皇520" onHide={onHide} />
+          <div id="banner-pop-out-container">
+            <ImageHandler src={src} />
+          </div>
         </div>
       </Modal>
     );
   }
 }
 
-export { MailboxPopOut };
+export { BannerPopOut };

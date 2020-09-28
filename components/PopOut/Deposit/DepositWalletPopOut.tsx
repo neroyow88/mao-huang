@@ -7,7 +7,7 @@ import { TutorialPopOut } from "./TutorialPopOut";
 import { transactionModel } from "../../../model/TopUpConstant";
 import { DepositType, PopOutType } from "../../../model/WebConstant";
 
-import customStyle from "../../../styles/module/AccountModal.module.scss";
+import customStyle from "../../../styles/module/Modal.module.scss";
 import { PopOutTitle } from "../PopOutTitle";
 import { popOutHandler } from "../../../model/PopOutHandler";
 

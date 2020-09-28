@@ -2,3 +2,12 @@
   position: fixed;
   overflow-y: scroll;
 }
+
+.modal-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+  background: none;
+  border: none;
+}

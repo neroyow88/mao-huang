@@ -5,7 +5,6 @@ import { FormInputBox } from "./FormInputBox";
 import { FormButton } from "./FormButton";
 import { PopOutTitle } from "./PopOutTitle";
 
-import customStyle from "../../styles/module/AccountModal.module.scss";
 import { apiClient } from "../../model/ApiClient";
 import {
   ApiPath,
@@ -14,6 +13,8 @@ import {
 } from "../../model/WebConstant";
 import { dataSource } from "../../model/DataSource";
 import { popOutHandler } from "../../model/PopOutHandler";
+
+import customStyle from "../../styles/module/Modal.module.scss";
 
 interface Props {
   toggle: boolean;

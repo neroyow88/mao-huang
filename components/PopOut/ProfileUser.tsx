@@ -10,7 +10,7 @@ class ProfileUser extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { username } = dataSource.playerModel;
+    const { username, phoneNumber } = dataSource.playerModel;
     return (
       <div id="profile-container" className="column-container center">
         <div className="profile-content row-container center">
@@ -26,7 +26,7 @@ class ProfileUser extends React.Component<Props> {
             <div className="profile-label">会员手机</div>
           </div>
           <div className="profile-box">
-            <div className="profile-label">12345678999</div>
+            <div className="profile-label">{phoneNumber}</div>
           </div>
         </div>
       </div>

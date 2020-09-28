@@ -72,11 +72,20 @@
         color: #ffb300;
         opacity: 1;
         top: 0px;
-        left: -25px;
         animation-name: reward-anim;
         animation-duration: 0.5s;
         animation-timing-function: ease-out;
         animation-fill-mode: forwards;
+
+        #heart-image {
+          position: relative;
+          width: 86px;
+        }
+
+        #reward-number {
+          position: relative;
+          left: -30px;
+        }
       }
 
       @keyframes reward-anim {

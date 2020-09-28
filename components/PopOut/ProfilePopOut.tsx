@@ -6,7 +6,7 @@ import { ProfileChangePassword } from "./ProfileChangePassword";
 import { ProfileSetPinNumber } from "./ProfileSetPinNumber";
 import { PopOutTitle } from "./PopOutTitle";
 
-import customStyle from "../../styles/module/AccountModal.module.scss";
+import customStyle from "../../styles/module/Modal.module.scss";
 
 interface Props {
   toggle: boolean;

@@ -23,7 +23,7 @@ export const testAccounts = [
       username: "abcd",
       phoneNumber: "0123456789",
       pinNumber: "123456",
-      dailyReward: 5,
+      dailyReward: 0,
       banks: [
         {
           bankType: 0,

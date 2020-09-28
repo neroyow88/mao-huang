@@ -7,7 +7,7 @@ import { PopOutTitle } from "./PopOutTitle";
 import { apiClient } from "../../model/ApiClient";
 import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 
-import customStyle from "../../styles/module/AccountModal.module.scss";
+import customStyle from "../../styles/module/Modal.module.scss";
 import { ErrorType } from "../../model/data/Error";
 import { popOutHandler } from "../../model/PopOutHandler";
 

@@ -102,9 +102,30 @@
   }
 }
 
-.tutorial-container {
+@media (max-height: 750px) {
+  #tutorial-pop-out-container {
+    bottom: 35px;
+  }
+}
+
+#tutorial-pop-out-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  width: 1000px;
+  height: 750px;
+  background-image: linear-gradient(
+    180deg,
+    #7a4e12 0%,
+    #1f212e 9%,
+    #1e202f 100%
+  );
+  border: 3px solid #ffd678;
+  border-radius: 38px;
+  user-select: none;
 
   .tutorial-option-menu {
     height: 125px;

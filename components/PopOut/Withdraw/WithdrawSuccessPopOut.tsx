@@ -3,7 +3,7 @@ import { Modal } from "reactstrap";
 
 import { PopOutTitle } from "../PopOutTitle";
 
-import customStyle from "../../../styles/module/AccountModal.module.scss";
+import customStyle from "../../../styles/module/Modal.module.scss";
 import { ImageHandler } from "../../ImageHandler";
 
 interface Props {

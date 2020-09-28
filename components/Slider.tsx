@@ -12,6 +12,8 @@ import { dataSource } from "../model/DataSource";
 import customBrowserStyle from "../styles/module/Carousel.module.scss";
 import customMobileStyle from "../styles/module/CarouselMobile.module.scss";
 import customModalStyle from "../styles/module/BannerModal.module.scss";
+import { popOutHandler } from "../model/PopOutHandler";
+import { PopOutType } from "../model/WebConstant";
 
 const items = [
   {
@@ -33,8 +35,6 @@ interface Props {}
 interface State {
   activeIndex: number;
   animating: boolean;
-  toggle: boolean;
-  popOutIndex: number;
 }
 
 class Slider extends React.Component<Props, State> {
@@ -44,8 +44,6 @@ class Slider extends React.Component<Props, State> {
     this.state = {
       activeIndex: 0,
       animating: false,
-      toggle: false,
-      popOutIndex: 0,
     };
 
     this._renderIndicator = this._renderIndicator.bind(this);
@@ -56,11 +54,10 @@ class Slider extends React.Component<Props, State> {
     this._goToIndex = this._goToIndex.bind(this);
 
     this._onBannerClicked = this._onBannerClicked.bind(this);
-    this._hidePopOut = this._hidePopOut.bind(this);
   }
 
   public render(): JSX.Element {
-    const { activeIndex, toggle, popOutIndex } = this.state;
+    const { activeIndex } = this.state;
     const { isMobile } = dataSource.systemModel;
     const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
 
@@ -86,16 +83,6 @@ class Slider extends React.Component<Props, State> {
             cssModule={customStyle}
           />
         </Carousel>
-        <Modal
-          isOpen={toggle}
-          toggle={this._hidePopOut}
-          centered
-          cssModule={customModalStyle}
-        >
-          <div id="banner-image-container">
-            <ImageHandler src={items[popOutIndex].popOut} />
-          </div>
-        </Modal>
       </div>
     );
   }
@@ -163,11 +150,7 @@ class Slider extends React.Component<Props, State> {
   }
 
   private _onBannerClicked(index: number): void {
-    this.setState({ popOutIndex: index, toggle: true });
-  }
-
-  private _hidePopOut(): void {
-    this.setState({ toggle: false });
+    popOutHandler.showPopOut(PopOutType.BANNER, { src: items[index].popOut });
   }
 }
 

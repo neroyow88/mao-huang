@@ -7,7 +7,7 @@ import { BankAccount } from "./BankAccount";
 
 import { dataSource } from "../../../model/DataSource";
 
-import customStyle from "../../../styles/module/AccountModal.module.scss";
+import customStyle from "../../../styles/module/Modal.module.scss";
 
 interface Props {
   toggle: boolean;

@@ -18,6 +18,7 @@ import { WithdrawSuccessPopOut } from "./Withdraw/WithdrawSuccessPopOut";
 import { TransferWalletPopOut } from "./Transfer/TransferWalletPopOut";
 import { MailboxPopOut } from "./Mail/MailboxPopOut";
 import { popOutHandler } from "../../model/PopOutHandler";
+import { BannerPopOut } from "./BannerPopOut";
 
 interface Props {
   scale: number;
@@ -100,6 +101,17 @@ class PopOut extends React.Component<Props, State> {
             scale={scale}
             onHide={this._onHide}
             transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.BANNER:
+        component = (
+          <BannerPopOut
+            toggle={toggle}
+            scale={scale}
+            onHide={this._onHide}
+            transitionComplete={this._transitionComplete}
+            customData={customData}
           />
         );
         break;

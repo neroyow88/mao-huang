@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import customStyle from "../../../styles/module/TutorialModal.module.scss";
+import customStyle from "../../../styles/module/Modal.module.scss";
 
 interface Props {
   toggle: boolean;
@@ -41,8 +41,7 @@ class TutorialPopOut extends React.Component<Props, State> {
         cssModule={customStyle}
       >
         <div
-          id="pop-out-container"
-          className="tutorial-container"
+          id="tutorial-pop-out-container"
           style={{ transform: `scale(${scale})` }}
         >
           <div className="tutorial-option-menu row-container center">

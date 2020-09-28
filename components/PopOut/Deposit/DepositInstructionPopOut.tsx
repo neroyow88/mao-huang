@@ -7,7 +7,7 @@ import { AlipayDeposit } from "./AlipayDeposit";
 import { PopOutTitle } from "../PopOutTitle";
 import { DepositType, PopOutType } from "../../../model/WebConstant";
 
-import customStyle from "../../../styles/module/AccountModal.module.scss";
+import customStyle from "../../../styles/module/Modal.module.scss";
 import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {

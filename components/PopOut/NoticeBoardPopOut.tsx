@@ -4,7 +4,7 @@ import { Modal } from "reactstrap";
 import { NewsModel } from "../../model/NewsModel";
 import { PopOutTitle } from "./PopOutTitle";
 
-import customStyle from "../../styles/module/AccountModal.module.scss";
+import customStyle from "../../styles/module/Modal.module.scss";
 
 interface Props {
   toggle: boolean;
