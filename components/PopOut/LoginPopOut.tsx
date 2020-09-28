@@ -1,9 +1,9 @@
 import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
-import { FormInputBox } from "./FormInputBox";
-import { FormButton } from "./FormButton";
-import { PopOutTitle } from "./PopOutTitle";
+import { FormInputBox } from "../Utility/FormInputBox";
+import { FormButton } from "../Utility/FormButton";
+import { PopOutTitle } from "../Utility/PopOutTitle";
 
 import { apiClient } from "../../model/ApiClient";
 import {

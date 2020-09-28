@@ -1,8 +1,9 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
+import { PopOutTitle } from "../Utility/PopOutTitle";
+
 import { NewsModel } from "../../model/NewsModel";
-import { PopOutTitle } from "./PopOutTitle";
 
 import customStyle from "../../styles/module/Modal.module.scss";
 

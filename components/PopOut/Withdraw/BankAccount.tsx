@@ -1,8 +1,8 @@
 import React from "react";
-import { popOutHandler } from "../../../model/PopOutHandler";
+import { ImageHandler } from "../../ImageHandler";
 
 import { PopOutType } from "../../../model/WebConstant";
-import { ImageHandler } from "../../ImageHandler";
+import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {
   index: number;

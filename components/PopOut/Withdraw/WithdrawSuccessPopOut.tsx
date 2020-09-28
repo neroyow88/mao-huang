@@ -1,10 +1,10 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { PopOutTitle } from "../PopOutTitle";
+import { PopOutTitle } from "../../Utility/PopOutTitle";
+import { ImageHandler } from "../../ImageHandler";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
-import { ImageHandler } from "../../ImageHandler";
 
 interface Props {
   toggle: boolean;

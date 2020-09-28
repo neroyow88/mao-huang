@@ -1,18 +1,19 @@
 import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
-import { PopOutTitle } from "../PopOutTitle";
-import { FormInputBox } from "../FormInputBox";
-import { FormButton } from "../FormButton";
-import { CustomDropdownOption } from "./CustomDropdownOption";
-import { DropdownOptions } from "../../../model/DropdownOptionsConstant";
+import { PopOutTitle } from "../../Utility/PopOutTitle";
+import { FormInputBox } from "../../Utility/FormInputBox";
+import { FormButton } from "../../Utility/FormButton";
 import { ImageHandler } from "../../ImageHandler";
 import { GameWallet } from "./GameWallet";
+import { CustomDropdownOption } from "./CustomDropdownOption";
 
+import { DropdownOptions } from "../../../model/DropdownOptionsConstant";
 import { apiClient } from "../../../model/ApiClient";
 import { PopOutType, ApiPath } from "../../../model/WebConstant";
 import { popOutHandler } from "../../../model/PopOutHandler";
 import { dataSource } from "../../../model/DataSource";
+
 import customStyle from "../../../styles/module/Modal.module.scss";
 
 interface Props {

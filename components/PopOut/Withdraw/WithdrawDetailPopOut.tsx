@@ -1,11 +1,12 @@
 import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
-import { PopOutTitle } from "../PopOutTitle";
+import { PopOutTitle } from "../../Utility/PopOutTitle";
 import { BankAccount } from "./BankAccount";
-import { FormInputBox } from "../FormInputBox";
-import { FormButton } from "../FormButton";
+import { FormInputBox } from "../../Utility/FormInputBox";
+import { FormButton } from "../../Utility/FormButton";
 
+import { popOutHandler } from "../../../model/PopOutHandler";
 import { dataSource } from "../../../model/DataSource";
 import { apiClient } from "../../../model/ApiClient";
 import {
@@ -15,7 +16,6 @@ import {
 } from "../../../model/WebConstant";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
-import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;

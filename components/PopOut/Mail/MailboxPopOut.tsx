@@ -1,11 +1,12 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { PopOutTitle } from "../PopOutTitle";
+import { PopOutTitle } from "../../Utility/PopOutTitle";
 import { EmptyMail } from "./EmptyMail";
 import { Mails } from "./Mails";
 
 import { dataSource } from "../../../model/DataSource";
+
 import customStyle from "../../../styles/module/Modal.module.scss";
 
 interface Props {

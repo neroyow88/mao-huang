@@ -4,16 +4,15 @@ import {
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
-  Modal,
 } from "reactstrap";
+
 import { ImageHandler } from "./ImageHandler";
 import { dataSource } from "../model/DataSource";
+import { popOutHandler } from "../model/PopOutHandler";
+import { PopOutType } from "../model/WebConstant";
 
 import customBrowserStyle from "../styles/module/Carousel.module.scss";
 import customMobileStyle from "../styles/module/CarouselMobile.module.scss";
-import customModalStyle from "../styles/module/BannerModal.module.scss";
-import { popOutHandler } from "../model/PopOutHandler";
-import { PopOutType } from "../model/WebConstant";
 
 const items = [
   {

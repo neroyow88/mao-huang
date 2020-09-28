@@ -1,14 +1,15 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
+import { PopOutTitle } from "../../Utility/PopOutTitle";
 import { BankDeposit } from "./BankDeposit";
 import { WeChatDeposit } from "./WeChatDeposit";
 import { AlipayDeposit } from "./AlipayDeposit";
-import { PopOutTitle } from "../PopOutTitle";
+
 import { DepositType, PopOutType } from "../../../model/WebConstant";
+import { popOutHandler } from "../../../model/PopOutHandler";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
-import { popOutHandler } from "../../../model/PopOutHandler";
 
 interface Props {
   toggle: boolean;

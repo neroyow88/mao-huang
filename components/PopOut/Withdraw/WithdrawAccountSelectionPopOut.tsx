@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { PopOutTitle } from "../PopOutTitle";
+import { PopOutTitle } from "../../Utility/PopOutTitle";
 import { EmptyBankAccount } from "./EmptyBankAccount";
 import { BankAccount } from "./BankAccount";
 

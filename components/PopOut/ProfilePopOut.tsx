@@ -4,7 +4,7 @@ import { Modal } from "reactstrap";
 import { ProfileUser } from "./ProfileUser";
 import { ProfileChangePassword } from "./ProfileChangePassword";
 import { ProfileSetPinNumber } from "./ProfileSetPinNumber";
-import { PopOutTitle } from "./PopOutTitle";
+import { PopOutTitle } from "../Utility/PopOutTitle";
 
 import customStyle from "../../styles/module/Modal.module.scss";
 

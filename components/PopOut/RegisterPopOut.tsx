@@ -1,15 +1,16 @@
 import React, { RefObject } from "react";
 import { Modal } from "reactstrap";
 
-import { FormInputBox } from "./FormInputBox";
-import { FormButton } from "./FormButton";
-import { PopOutTitle } from "./PopOutTitle";
+import { FormInputBox } from "../Utility/FormInputBox";
+import { FormButton } from "../Utility/FormButton";
+import { PopOutTitle } from "../Utility/PopOutTitle";
+
 import { apiClient } from "../../model/ApiClient";
 import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
-
-import customStyle from "../../styles/module/Modal.module.scss";
 import { ErrorType } from "../../model/data/Error";
 import { popOutHandler } from "../../model/PopOutHandler";
+
+import customStyle from "../../styles/module/Modal.module.scss";
 
 interface Props {
   toggle: boolean;

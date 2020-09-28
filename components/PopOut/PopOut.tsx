@@ -1,6 +1,5 @@
 import React from "react";
 
-import { PopOutType } from "../../model/WebConstant";
 import { ForgotUsernamePopOut } from "./ForgotUsernamePopOut";
 import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
 import { LoginPopOut } from "./LoginPopOut";
@@ -8,6 +7,7 @@ import { RegisterPopOut } from "./RegisterPopOut";
 import { ProfilePopOut } from "./ProfilePopOut";
 import { NoticeBoardPopOut } from "./NoticeBoardPopOut";
 import { MobileCardPopOut } from "./MobileCardPopOut";
+import { BannerPopOut } from "./BannerPopOut";
 
 import { DepositWalletPopOut } from "./Deposit/DepositWalletPopOut";
 import { DepositInstructionPopOut } from "./Deposit/DepositInstructionPopOut";
@@ -17,8 +17,9 @@ import { WithdrawDetailPopOut } from "./Withdraw/WithdrawDetailPopOut";
 import { WithdrawSuccessPopOut } from "./Withdraw/WithdrawSuccessPopOut";
 import { TransferWalletPopOut } from "./Transfer/TransferWalletPopOut";
 import { MailboxPopOut } from "./Mail/MailboxPopOut";
+
 import { popOutHandler } from "../../model/PopOutHandler";
-import { BannerPopOut } from "./BannerPopOut";
+import { PopOutType } from "../../model/WebConstant";
 
 interface Props {
   scale: number;

@@ -1,7 +1,7 @@
 import React, { RefObject } from "react";
 
-import { FormInputBox } from "../FormInputBox";
-import { FormButton } from "../FormButton";
+import { FormInputBox } from "../../Utility/FormInputBox";
+import { FormButton } from "../../Utility/FormButton";
 import { ImageHandler } from "../../ImageHandler";
 
 interface Props {

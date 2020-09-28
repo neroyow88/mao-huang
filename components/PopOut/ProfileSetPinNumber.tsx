@@ -1,7 +1,8 @@
 import React, { RefObject } from "react";
 
-import { FormButton } from "./FormButton";
-import { FormInputBox } from "./FormInputBox";
+import { FormButton } from "../Utility/FormButton";
+import { FormInputBox } from "../Utility/FormInputBox";
+
 import { NoticePopOutConfig, ApiPath } from "../../model/WebConstant";
 import { apiClient } from "../../model/ApiClient";
 import { popOutHandler } from "../../model/PopOutHandler";

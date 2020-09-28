@@ -1,7 +1,8 @@
 import React from "react";
+
 import { ImageHandler } from "./ImageHandler";
+
 import { dataSource } from "../model/DataSource";
-// import { Carousel, CarouselIndicators, CarouselItem } from "reactstrap";
 
 const iconType = {
   SERVICE: 1,

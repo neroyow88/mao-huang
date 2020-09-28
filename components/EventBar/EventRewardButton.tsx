@@ -1,9 +1,11 @@
 import React from "react";
+
+import { ImageHandler } from "../ImageHandler";
+
 import { apiClient } from "../../model/ApiClient";
 import { audioHandler } from "../../model/AudioHandler";
 import { dataSource } from "../../model/DataSource";
 import { ApiPath, AudioList } from "../../model/WebConstant";
-import { ImageHandler } from "../ImageHandler";
 
 interface Props {
   value: number;

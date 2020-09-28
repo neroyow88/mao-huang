@@ -1,13 +1,12 @@
 import React from "react";
 import { ImageHandler } from "../ImageHandler";
-import { dataSource } from "../../model/DataSource";
 import { EventRewardButton } from "./EventRewardButton";
+
+import { dataSource } from "../../model/DataSource";
 
 interface Props {}
 
-interface State {}
-
-class EventBar extends React.Component<Props, State> {
+class EventBar extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 

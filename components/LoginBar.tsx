@@ -1,12 +1,14 @@
 import React, { RefObject } from "react";
+
 import { ImageHandler } from "./ImageHandler";
-import { PopOutType, NoticePopOutConfig, ApiPath } from "../model/WebConstant";
+import { FormInputBox } from "./Utility/FormInputBox";
+import { FormButton } from "./Utility/FormButton";
+
 import { dataSource } from "../model/DataSource";
-import { FormInputBox } from "./PopOut/FormInputBox";
-import { FormButton } from "./PopOut/FormButton";
 import { apiClient } from "../model/ApiClient";
 import { ErrorType } from "../model/data/Error";
 import { popOutHandler } from "../model/PopOutHandler";
+import { PopOutType, NoticePopOutConfig, ApiPath } from "../model/WebConstant";
 
 interface Props {}
 
