@@ -2,24 +2,27 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 
 // Components
-import { LoginBar } from "../components/LoginBar";
-import { UtilityBar } from "../components/Utility/UtilityBar";
-import { GameListBar } from "../components/GameListBar";
-import { Slider } from "../components/Slider";
-import { NoticeBoard } from "../components/NoticeBoard";
-import { CardList } from "../components/Card";
-import { EventBar } from "../components/EventBar/EventBar";
-import { CustomerService } from "../components/CustomerService";
-import { SponsorBar } from "../components/SponsorBar";
-import { PopOut } from "../components/PopOut/PopOut";
-import { PopOutType } from "../model/WebConstant";
-import { loadingManager } from "../model/LoadingManager";
-import { LoadingView } from "../components/LoadingView";
-import { NavigationBar } from "../components/NavigationBar";
-import { dataSource } from "../model/DataSource";
-import { NoticePopOut } from "../components/PopOut/NoticePopOut";
-import { popOutHandler } from "../model/PopOutHandler";
-import { AudioComp } from "../components/AudioComp";
+import { LoginBar } from "../components/loginBar/LoginBar";
+import { GameListBar } from "../components/gameListBar/GameListBar";
+import { UtilityBar } from "../components/utilityBar/UtilityBar";
+import { Slider } from "../components/slider/Slider";
+import { NoticeBoard } from "../components/noticeBoard/NoticeBoard";
+import { CardList } from "../components/card/Card";
+import { EventBar } from "../components/eventBara/EventBar";
+import { About } from "../components/about/About";
+import { Footer } from "../components/footer/Footer";
+import { NavigationBar } from "../components/navigationBar/NavigationBar";
+import { PopOut } from "../components/popOuta/PopOut";
+import { NoticePopOut } from "../components/popOuta/NoticePopOut";
+
+import { AudioComp } from "../components/global/AudioComp";
+import { LoadingView } from "../components/global/LoadingView";
+
+import { ApiPath, PopOutType } from "../scripts/WebConstant";
+import { loadingManager } from "../scripts/LoadingManager";
+import { dataSource } from "../scripts/dataSource/DataSource";
+import { popOutHandler } from "../scripts/PopOutHandler";
+import { apiClient } from "../scripts/ApiClient";
 
 interface Props {}
 
@@ -76,6 +79,13 @@ export default class Home extends React.Component<Props, State> {
       showNotice: this._showNotice,
       hideNotice: this._hideNotice,
     });
+
+    const onResultReturn = (result, err) => {
+      if (result && !err) {
+        dataSource.updateServerModel(result);
+      }
+    };
+    apiClient.callApi(ApiPath.REQUEST_BANNER, onResultReturn);
   }
 
   public componentDidMount(): void {
@@ -123,7 +133,7 @@ export default class Home extends React.Component<Props, State> {
         <CardList />
         <EventBar />
         <GameListBar />
-        <CustomerService />
+        <About />
         <PopOut scale={scale} config={popOutConfig} />
       </div>
     );
@@ -141,8 +151,8 @@ export default class Home extends React.Component<Props, State> {
         <NoticeBoard />
         <CardList />
         <EventBar />
-        <CustomerService />
-        <SponsorBar />
+        <About />
+        <Footer />
         <PopOut scale={scale} config={popOutConfig} />
         <NoticePopOut scale={scale} config={noticePopOutConfig} />
         <AudioComp />
