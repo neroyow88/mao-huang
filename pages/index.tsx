@@ -8,12 +8,12 @@ import { UtilityBar } from "../components/utilityBar/UtilityBar";
 import { Slider } from "../components/slider/Slider";
 import { NoticeBoard } from "../components/noticeBoard/NoticeBoard";
 import { CardList } from "../components/card/Card";
-import { EventBar } from "../components/eventBara/EventBar";
+import { EventBar } from "../components/eventBar/EventBar";
 import { About } from "../components/about/About";
 import { Footer } from "../components/footer/Footer";
 import { NavigationBar } from "../components/navigationBar/NavigationBar";
-import { PopOut } from "../components/popOuta/PopOut";
-import { NoticePopOut } from "../components/popOuta/NoticePopOut";
+import { PopOut } from "../components/popOut/PopOut";
+import { NoticePopOut } from "../components/popOut/NoticePopOut";
 
 import { AudioComp } from "../components/global/AudioComp";
 import { LoadingView } from "../components/global/LoadingView";
