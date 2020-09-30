@@ -7,11 +7,13 @@ import { UtilityItem } from "./UtilityItem";
 import { PopOutType } from "../../scripts/WebConstant";
 import { dataSource } from "../../scripts/dataSource/DataSource";
 import { popOutHandler } from "../../scripts/PopOutHandler";
+import { WalletDropdown } from "./WalletDropdown";
+import { convertToTwoDecimal } from "../../scripts/Utils";
 
 interface Props {}
 
 interface State {
-  toggleBalance: boolean;
+  toggleWallet: boolean;
 }
 
 class UtilityBar extends React.Component<Props, State> {
@@ -19,17 +21,21 @@ class UtilityBar extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      toggleBalance: false,
+      toggleWallet: false,
     };
 
     this._scrollToEventElement = this._scrollToEventElement.bind(this);
     this._onPopOutClicked = this._onPopOutClicked.bind(this);
-    this._onBalanceHovered = this._onBalanceHovered.bind(this);
+    this._onWalletToggle = this._onWalletToggle.bind(this);
   }
 
   public render(): JSX.Element {
+    const { toggleWallet } = this.state;
     const { playerModel } = dataSource;
     const balance = playerModel ? playerModel.wallets.maohuang : 0;
+    const walletDropdown = playerModel ? (
+      <WalletDropdown toggle={toggleWallet} model={playerModel.wallets} />
+    ) : null;
 
     return (
       <div id="utility-bar-container">
@@ -73,9 +79,11 @@ class UtilityBar extends React.Component<Props, State> {
             }}
           />
           <UtilityItem
-            label={`猫皇余额 : ${balance}`}
-            onHover={this._onBalanceHovered}
-          />
+            label={`猫皇余额 : ${convertToTwoDecimal(balance)}`}
+            onClick={this._onWalletToggle}
+          >
+            {walletDropdown}
+          </UtilityItem>
         </div>
       </div>
     );
@@ -98,8 +106,13 @@ class UtilityBar extends React.Component<Props, State> {
     }
   }
 
-  private _onBalanceHovered(toggle: boolean): void {
-    this.setState({ toggleBalance: toggle });
+  private _onWalletToggle(): void {
+    const { playerModel } = dataSource;
+    if (playerModel) {
+      this.setState({ toggleWallet: !this.state.toggleWallet });
+    } else {
+      popOutHandler.showPopOut(PopOutType.LOGIN);
+    }
   }
 }
 

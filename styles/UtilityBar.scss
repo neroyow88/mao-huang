@@ -6,15 +6,15 @@
   user-select: none;
 
   #utility-items-container {
-    width: 70%;
+    width: 1200px;
     height: 100%;
-    margin-left: 15%;
+    margin-left: 360px;
+    justify-content: space-between;
 
     #logo-container {
       position: relative;
       width: 210px;
       height: 75px;
-      margin: auto;
 
       a {
         width: 100%;
@@ -25,20 +25,180 @@
     }
 
     .utility-item-container {
-      margin: auto;
-      cursor: pointer;
+      position: relative;
+      margin-top: 55px;
+      height: 25px;
 
-      .utility-label {
-        color: #fcb715;
-        margin-top: 55px;
-        font-size: 18px;
+      .utility-item-button {
+        cursor: pointer;
+
+        .utility-label {
+          color: #fcb715;
+          font-size: 18px;
+        }
+
+        .utility-image {
+          width: 57px;
+          height: 25px;
+          position: relative;
+        }
       }
 
-      .utility-image {
-        width: 57px;
-        height: 25px;
-        position: relative;
-        margin-top: 55px;
+      #wallet-container {
+        position: absolute;
+        width: 260px;
+        height: 620px;
+        top: 105%;
+        background-color: #1e202f;
+        box-shadow: 2px 5px 20px #00000080;
+        z-index: 98;
+
+        #wallet-title-container {
+          margin-top: 11px;
+          margin-left: 7px;
+
+          #wallet-title {
+            font-size: 18px;
+          }
+
+          #toggle-container {
+            position: relative;
+            width: 50px;
+            height: 20px;
+            margin-left: 5px;
+            cursor: pointer;
+
+            #toggle-on {
+              position: absolute;
+              width: 50px;
+              height: 20px;
+              border-radius: 10px;
+              background-color: #01a201;
+            }
+
+            #toggle-label {
+              position: absolute;
+              width: 36px;
+              height: 18px;
+              top: 2px;
+              font-size: 10px;
+              text-align: center;
+            }
+
+            #toggle-button {
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              border-radius: 15px;
+              background-color: white;
+              transition: transform 0.3s;
+            }
+          }
+        }
+
+        #wallet-title-description {
+          margin-top: 3px;
+          margin-left: 7px;
+          font-size: 10px;
+        }
+
+        #wallet-total-balance-container {
+          margin-top: 23px;
+
+          #refresh-button {
+            width: 46px;
+            height: 20px;
+            border-radius: 10px;
+            background-color: #fcb715;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            cursor: pointer;
+
+            span {
+              color: black;
+              font-size: 12px;
+            }
+          }
+        }
+
+        #separator {
+          width: 100%;
+          height: 2px;
+          margin-top: 7px;
+          background-color: #fcb715;
+        }
+
+        #wallet-list-scroll-view {
+          position: relative;
+          height: 450px;
+          overflow: hidden;
+          margin-top: 2px;
+
+          #scroll-bar-back {
+            position: absolute;
+            width: 5px;
+            height: 100%;
+            top: 0;
+            left: calc(100% - 5px);
+            background-color: black;
+            border-radius: 5px;
+
+            #scroll-bar {
+              position: absolute;
+              width: 100%;
+              background-color: #fcb715;
+              border-radius: 5px;
+            }
+          }
+        }
+
+        .wallet-item-container {
+          height: 25px;
+          padding-left: 7px;
+          padding-right: 15px;
+          justify-content: space-between;
+
+          .wallet-label {
+            font-size: 14px;
+          }
+        }
+
+        #wallet-buttons-container {
+          width: 100%;
+          margin-top: 10px;
+          padding-left: 25px;
+          padding-right: 25px;
+          justify-content: space-between;
+
+          .retrieve-button,
+          .history-button {
+            width: 100px;
+            height: 40px;
+            border-radius: 2px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+
+          .retrieve-button {
+            background-image: linear-gradient(180deg, #02aa02 0%, #007b00 100%);
+            span {
+              color: white;
+            }
+          }
+
+          .history-button {
+            background-image: linear-gradient(180deg, #ffd630 0%, #ffb300 100%);
+
+            span {
+              color: black;
+            }
+          }
+        }
       }
     }
   }

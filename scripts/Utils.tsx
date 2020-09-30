@@ -26,3 +26,7 @@ export function copyToClipboard(elem: HTMLElement): boolean {
 
   return succeed;
 }
+
+export function convertToTwoDecimal(value: number, currency?: string): string {
+  return currency ? `${currency}${value.toFixed(2)}` : value.toFixed(2);
+}

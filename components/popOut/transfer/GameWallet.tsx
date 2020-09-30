@@ -1,4 +1,5 @@
 import React from "react";
+import { convertToTwoDecimal } from "../../../scripts/Utils";
 import { ImageHandler } from "../../share/ImageHandler";
 
 interface Props {
@@ -33,7 +34,7 @@ class GameWallet extends React.Component<Props> {
         <div
           className="wallet-label"
           key={`wallet-balance-${index}`}
-        >{`余額: ${balance}`}</div>
+        >{`余額: ${convertToTwoDecimal(balance)}`}</div>
       </div>
     );
   }
