@@ -1,6 +1,7 @@
 import {
   changePasswordAPI,
   claimDailyReward,
+  claimMonthlyReward,
   forgotPasswordAPI,
   forgotUsernameAPI,
   getVerificationCodeAPI,
@@ -64,6 +65,9 @@ class APIClient {
         break;
       case ApiPath.CLAIM_DAILY_REWARD:
         claimDailyReward(dt, cb);
+        break;
+      case ApiPath.CLAIM_MONTHLY_REWARD:
+        claimMonthlyReward(dt, cb);
         break;
       case ApiPath.REQUEST_BANNER:
         requestBanners(cb);

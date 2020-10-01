@@ -20,6 +20,7 @@ import { MailboxPopOut } from "./mail/MailboxPopOut";
 
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
+import { CardPopOut } from "./CardPopOut";
 
 interface Props {
   scale: number;
@@ -203,6 +204,27 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
+      case PopOutType.NEWS:
+        component = (
+          <NoticeBoardPopOut
+            toggle={toggle}
+            scale={scale}
+            onHide={this._onHide}
+            transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.CARD:
+        component = (
+          <CardPopOut
+            toggle={toggle}
+            scale={scale}
+            onHide={this._onHide}
+            transitionComplete={this._transitionComplete}
+            customData={customData}
+          />
+        );
+        break;
 
       case PopOutType.CARD_MOBILE:
         component = (
@@ -226,16 +248,6 @@ class PopOut extends React.Component<Props, State> {
         );
         break;
 
-      case PopOutType.NEWS:
-        component = (
-          <NoticeBoardPopOut
-            toggle={toggle}
-            scale={scale}
-            onHide={this._onHide}
-            transitionComplete={this._transitionComplete}
-          />
-        );
-        break;
       default:
         component = null;
         break;

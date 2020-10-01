@@ -191,9 +191,23 @@ export function claimDailyReward(
 ): void {
   const { username, value } = params;
   const acc = getAccount(username);
-  console.log(acc.profile.dailyReward, value);
   acc.profile.dailyReward = -1;
   acc.profile.wallets.maohuang += value;
+  callback(acc.profile, undefined);
+}
+
+export function claimMonthlyReward(
+  params: GenericObjectType,
+  callback: APIReturnFunction
+): void {
+  const { username, index } = params;
+  const acc = getAccount(username);
+
+  const monthlyReward = acc.profile.monthlyReward[index];
+  monthlyReward.isRedeem = true;
+  monthlyReward.accumulate++;
+  acc.profile.wallets.maohuang += monthlyReward.reward;
+
   callback(acc.profile, undefined);
 }
 

@@ -1,0 +1,73 @@
+#card-pop-out-container {
+  width: 100%;
+
+  #round-card-image-container {
+    position: relative;
+    width: 108px;
+    height: 108px;
+    margin-top: 72px;
+  }
+
+  #coins-container {
+    margin-top: 40px;
+    width: 614px;
+    justify-content: space-between;
+
+    .coin-container {
+      width: 42px;
+      height: 42px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .coin-background {
+        width: 37px;
+        height: 37px;
+        border: 1px dashed #a8a8a8;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          color: white;
+          font-size: 20px;
+          font-weight: bold;
+        }
+      }
+
+      .coin-image {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    }
+  }
+
+  #coin-description-label {
+    color: white;
+    margin-top: 23px;
+    font-size: 16px;
+
+    span {
+      color: #fcb715;
+    }
+  }
+
+  #coin-button-container {
+    width: 140px;
+    height: 40px;
+    margin-top: 125px;
+    border-radius: 2px;
+    background-image: linear-gradient(180deg, #ffd630 0%, #ffb300 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    span {
+      color: black;
+    }
+  }
+}

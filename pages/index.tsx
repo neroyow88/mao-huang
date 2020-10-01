@@ -7,14 +7,14 @@ import { GameListBar } from "../components/gameListBar/GameListBar";
 import { UtilityBar } from "../components/utilityBar/UtilityBar";
 import { Slider } from "../components/slider/Slider";
 import { NoticeBoard } from "../components/noticeBoard/NoticeBoard";
-import { CardList } from "../components/card/Card";
+import { Cards } from "../components/card/Cards";
 import { EventBar } from "../components/eventBar/EventBar";
 import { About } from "../components/about/About";
 import { Footer } from "../components/footer/Footer";
 import { NavigationBar } from "../components/navigationBar/NavigationBar";
+
 import { PopOut } from "../components/popOut/PopOut";
 import { NoticePopOut } from "../components/popOut/NoticePopOut";
-
 import { AudioComp } from "../components/global/AudioComp";
 import { LoadingView } from "../components/global/LoadingView";
 
@@ -130,7 +130,7 @@ export default class Home extends React.Component<Props, State> {
         <LoginBar />
         <Slider />
         <NoticeBoard />
-        <CardList />
+        <Cards />
         <EventBar />
         <GameListBar />
         <About />
@@ -149,7 +149,7 @@ export default class Home extends React.Component<Props, State> {
         <GameListBar isLoaded={!isLoading} />
         <Slider />
         <NoticeBoard />
-        <CardList />
+        <Cards />
         <EventBar />
         <About />
         <Footer />

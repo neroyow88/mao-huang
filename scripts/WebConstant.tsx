@@ -8,6 +8,7 @@ export enum ApiPath {
   CHANGE_PASSWORD = "changePassword",
   CHANGE_PIN = "changePin",
   CLAIM_DAILY_REWARD = "claimDailyReward",
+  CLAIM_MONTHLY_REWARD = "claimMonthlyReward",
 
   GET_BANK_ACCOUNT = "getBankAccount",
   ADD_BANK_ACCOUNT = "addBankAccount",
@@ -34,11 +35,11 @@ export enum PopOutType {
   WITHDRAW_SUCCESS = 16,
   TRANSFER_WALLET = 17,
   MAILBOX = 18,
+  NEWS = 19,
+  CARD = 20,
 
-  CARD_MOBILE = 21,
-  LOGIN_MOBILE = 22,
-
-  NEWS = 98,
+  CARD_MOBILE = 101,
+  LOGIN_MOBILE = 102,
 }
 
 export enum NoticeType {

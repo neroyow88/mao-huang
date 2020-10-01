@@ -42,6 +42,20 @@ export const accountsData = [
       phoneNumber: "0123456789",
       pinNumber: "123456",
       dailyReward: 0,
+      monthlyReward: {
+        "2": {
+          accumulate: 6,
+          canClaim: true,
+          isRedeem: false,
+          reward: 68,
+        },
+        "3": {
+          accumulate: 4,
+          canClaim: false,
+          isRedeem: false,
+          reward: 680,
+        },
+      },
       banks: [
         {
           bankType: 0,
@@ -102,6 +116,20 @@ export const accountsData = [
       phoneNumber: "0123456789",
       pinNumber: "123456",
       dailyReward: 0,
+      monthlyReward: {
+        "2": {
+          accumulate: 6,
+          canClaim: true,
+          isRedeem: false,
+          reward: 68,
+        },
+        "3": {
+          accumulate: 4,
+          canClaim: false,
+          isRedeem: false,
+          reward: 680,
+        },
+      },
       banks: [
         {
           bankType: 0,

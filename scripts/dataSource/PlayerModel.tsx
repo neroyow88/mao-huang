@@ -9,6 +9,37 @@ export interface IWalletModel {
   n2live: number;
 }
 
+export class MonthlyRewardModel {
+  private _accumulate: number;
+  private _canClaim: boolean;
+  private _isRedeem: boolean;
+  private _reward: number;
+
+  public constructor(dt: GenericObjectType) {
+    const { accumulate, canClaim, isRedeem, reward } = dt;
+    this._accumulate = accumulate;
+    this._canClaim = canClaim;
+    this._isRedeem = isRedeem;
+    this._reward = reward;
+  }
+
+  public get accumulate(): number {
+    return this._accumulate;
+  }
+
+  public get canClaim(): boolean {
+    return this._canClaim;
+  }
+
+  public get isRedeem(): boolean {
+    return this._isRedeem;
+  }
+
+  public get reward(): number {
+    return this._reward;
+  }
+}
+
 export class BankAccountModel {
   private _bankType: number;
   private _bankName: string;
@@ -82,6 +113,7 @@ export default class PlayerModel {
   private _phoneNumber: string;
   private _pinNumber: string;
   private _dailyReward: number;
+  private _monthlyReward: { [keys: string]: MonthlyRewardModel };
   private _bankAccounts: BankAccountModel[];
   private _wallets: IWalletModel;
   private _mails: MailModel[];
@@ -96,6 +128,7 @@ export default class PlayerModel {
       phoneNumber,
       pinNumber,
       dailyReward,
+      monthlyReward,
       banks,
       wallets,
       mails,
@@ -104,6 +137,13 @@ export default class PlayerModel {
     this._phoneNumber = phoneNumber;
     this._pinNumber = pinNumber;
     this._dailyReward = dailyReward;
+
+    const keys = Object.keys(monthlyReward);
+    this._monthlyReward = Object.create(null);
+    keys.forEach((key: string): void => {
+      this._monthlyReward[key] = new MonthlyRewardModel(monthlyReward[key]);
+      console.log("monthlyReward: ", monthlyReward);
+    });
 
     this._bankAccounts = [];
     if (banks.length > 0) {
@@ -136,6 +176,10 @@ export default class PlayerModel {
 
   public get dailyReward(): number {
     return this._dailyReward;
+  }
+
+  public get monthlyReward(): { [keys: string]: MonthlyRewardModel } {
+    return this._monthlyReward;
   }
 
   public get bankAccounts(): BankAccountModel[] {
