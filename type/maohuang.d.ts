@@ -16,3 +16,10 @@ interface IWithdrawDetails {
   cardNumber: string;
   cardType: string;
 }
+
+interface IGameListItem {
+  title: string;
+  description: string;
+  prefix: string;
+  childs?: string[];
+}

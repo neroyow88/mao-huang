@@ -1,23 +1,31 @@
 import React from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { AboutButton } from "./AboutButton";
+import { AboutBrowser } from "./AboutBrowser";
+import { AboutCustomerService } from "./AboutCustomerService";
 
 import { dataSource } from "../../scripts/dataSource/DataSource";
+import { AboutType, BrowserState } from "../../scripts/WebConstant";
 
-const iconType = {
-  SERVICE: 1,
-  BROWSER: 2,
-};
+interface Props {
+  showAbout: (state: BrowserState) => void;
+}
 
-interface Props {}
+interface State {
+  selectedAbout: AboutType;
+}
 
-class About extends React.Component<Props> {
+class About extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
+    this.state = {
+      selectedAbout: AboutType.ABOUT_US,
+    };
+
     this._renderMobileView = this._renderMobileView.bind(this);
     this._renderBrowserView = this._renderBrowserView.bind(this);
-    this._renderIcon = this._renderIcon.bind(this);
+    this._onClickAbout = this._onClickAbout.bind(this);
   }
 
   public render(): JSX.Element {
@@ -32,112 +40,82 @@ class About extends React.Component<Props> {
   private _renderMobileView(): JSX.Element {
     return (
       <div id="customer-service-container-mobile">
-        {this._renderCustomerService("profile_1", "周文君")}
+        <AboutCustomerService
+          src={"mobile/customer_service/profile_1"}
+          label="周文君"
+          profileScale={0.7}
+          quationScale={0.5}
+        />
       </div>
     );
   }
 
   private _renderBrowserView(): JSX.Element {
     return (
-      <div
-        id="customer-service-container-browser"
-        className="row-container center"
-      >
-        <div id="left-service-container" className="column-container center">
-          <div className="icons-container row-container center">
-            {this._renderIcon(
-              "icon/icon_about.png",
-              "关于猫皇",
-              iconType.SERVICE
-            )}
-            {this._renderIcon(
-              "icon/icon_service.png",
-              "服务条款",
-              iconType.SERVICE
-            )}
-            {this._renderIcon(
-              "icon/icon_deposit.png",
-              "游戏充值",
-              iconType.SERVICE
-            )}
+      <div id="about-container-browser" className="row-container">
+        <div id="left-about-container" className="column-container center">
+          <div className="about-button-container row-container">
+            <AboutButton
+              src="about/icon_about.png"
+              label="关于猫皇"
+              index={AboutType.ABOUT_US}
+              onClick={this._onClickAbout}
+            />
+            <AboutButton
+              src="about/icon_service.png"
+              label="服务条款"
+              index={AboutType.SERVICE}
+              onClick={this._onClickAbout}
+            />
+            <AboutButton
+              src="about/icon_deposit.png"
+              label="游戏充值"
+              index={AboutType.DEPOSIT}
+              onClick={this._onClickAbout}
+            />
           </div>
-          <div className="icons-container row-container center">
-            {this._renderIcon(
-              "icon/icon_withdraw.png",
-              "快速提款",
-              iconType.SERVICE
-            )}
-            {this._renderIcon("icon/icon_qa.png", "常见问题", iconType.SERVICE)}
-            {this._renderIcon(
-              "icon/icon_privacy.png",
-              "私隐保障",
-              iconType.SERVICE
-            )}
+          <div className="about-button-container row-container">
+            <AboutButton
+              src="about/icon_withdraw.png"
+              label="快速提款"
+              index={AboutType.WITHDRAW}
+              onClick={this._onClickAbout}
+            />
+            <AboutButton
+              src="about/icon_qa.png"
+              label="常见问题"
+              index={AboutType.QUESTION_ANSWER}
+              onClick={this._onClickAbout}
+            />
+            <AboutButton
+              src="about/icon_privacy.png"
+              label="私隐保障"
+              index={AboutType.PRIVACY}
+              onClick={this._onClickAbout}
+            />
           </div>
           <div id="suggestion-label">建议使用的浏览器</div>
-          <div className="icons-container row-container center">
-            {this._renderIcon("browser/chrome.png", "谷歌", iconType.BROWSER)}
-            {this._renderIcon("browser/firefox.png", "火狐", iconType.BROWSER)}
-            {this._renderIcon("browser/zeus.png", "宙斯", iconType.BROWSER)}
-            {this._renderIcon("browser/quark.png", "夸克", iconType.BROWSER)}
+          <div className="about-browser-container row-container">
+            <AboutBrowser src="about/chrome.png" label="谷歌" />
+            <AboutBrowser src="about/firefox.png" label="火狐" />
+            <AboutBrowser src="about/zeus.png" label="宙斯" />
+            <AboutBrowser src="about/quark.png" label="夸克" />
           </div>
         </div>
-        <div id="right-service-container">
-          {this._renderCustomerService("profile_1", "周文君")}
-        </div>
-      </div>
-    );
-  }
-
-  private _renderCustomerService(src: string, name: string): JSX.Element {
-    const { isMobile } = dataSource.systemModel;
-    const url = isMobile ? "mobile/customer_service/" : "customer_service/";
-    const profileScale = isMobile ? 0.7 : 1;
-    const quationScale = isMobile ? 0.5 : 1;
-
-    return (
-      <div className="profile-container column-container center">
-        <ImageHandler src={`${url}${src}.png`} scale={profileScale} />
-        <div className="name-label">{name}</div>
-        <div className="title-label">客服中心</div>
-        <div className="description-label row-container center">
-          <ImageHandler
-            src={"customer_service/quation_left.png"}
-            scale={quationScale}
-          />
-          24小时的专业客服团队,提供及时贴心的服务
-          <ImageHandler
-            src={"customer_service/quation_right.png"}
-            scale={quationScale}
+        <div id="right-about-container">
+          <AboutCustomerService
+            src={"about/profile_1"}
+            label="周文君"
+            profileScale={1}
+            quationScale={1}
           />
         </div>
       </div>
     );
   }
 
-  private _renderIcon(img: string, label: string, type: number): JSX.Element {
-    let iconContainerStyle;
-    let iconImageContainerStyle;
-
-    switch (type) {
-      case iconType.SERVICE:
-        iconContainerStyle = "icon-container-service";
-        iconImageContainerStyle = "icon-image-container-service";
-        break;
-      case iconType.BROWSER:
-        iconContainerStyle = "icon-container-browser";
-        iconImageContainerStyle = "icon-image-container-browser";
-        break;
-    }
-
-    return (
-      <div className={`row-container center ${iconContainerStyle}`}>
-        <div className={`row-container center ${iconImageContainerStyle}`}>
-          <img src={img}></img>
-        </div>
-        <div>{label}</div>
-      </div>
-    );
+  private _onClickAbout(index: AboutType): void {
+    this.setState({ selectedAbout: index });
   }
 }
 

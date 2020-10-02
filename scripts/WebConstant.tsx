@@ -42,6 +42,11 @@ export enum PopOutType {
   LOGIN_MOBILE = 102,
 }
 
+export enum BrowserState {
+  HOME = 0,
+  ABOUT = 1,
+}
+
 export enum NoticeType {
   SUCCESS = 1,
   ERROR = 2,
@@ -57,6 +62,15 @@ export enum DepositType {
 export enum AudioList {
   KISS = "kiss",
   MONEY = "money",
+}
+
+export enum AboutType {
+  ABOUT_US = 0,
+  SERVICE = 1,
+  DEPOSIT = 2,
+  WITHDRAW = 3,
+  QUESTION_ANSWER = 4,
+  PRIVACY = 5,
 }
 
 export const NoticePopOutConfig = {

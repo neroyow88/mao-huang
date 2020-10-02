@@ -68,14 +68,13 @@
   user-select: none;
 
   #game-list-toggle-container {
-    margin-left: 15%;
-    width: 70%;
+    width: 1200px;
     height: 100%;
+    margin-left: 380px;
+    justify-content: space-between;
 
     .dropdown-toggle-container {
       color: white;
-      width: 120px;
-      margin: auto;
       cursor: pointer;
 
       .arrow-down {

@@ -37,7 +37,7 @@ class EventRewardButton extends React.Component<Props, State> {
       <div id="reward-anim">
         {value === 0 ? (
           <div id="heart-image">
-            <ImageHandler src={"event_bar/heart.png"} scale={0.2} />
+            <ImageHandler src={"event_bar/heart.png"} scale={0.6} />
           </div>
         ) : (
           <div id="reward-number">{`+${value}`}</div>
@@ -82,7 +82,7 @@ class EventRewardButton extends React.Component<Props, State> {
             } else {
               audioHandler.playAudio(AudioList.MONEY);
             }
-            dataSource.updatePlayerModel(result);
+            // dataSource.updatePlayerModel(result);
           }
         };
 

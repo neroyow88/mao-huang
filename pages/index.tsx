@@ -2,27 +2,15 @@ import React from "react";
 import { isMobile } from "react-device-detect";
 
 // Components
-import { LoginBar } from "../components/loginBar/LoginBar";
-import { GameListBar } from "../components/gameListBar/GameListBar";
-import { UtilityBar } from "../components/utilityBar/UtilityBar";
-import { Slider } from "../components/slider/Slider";
-import { NoticeBoard } from "../components/noticeBoard/NoticeBoard";
-import { Cards } from "../components/card/Cards";
-import { EventBar } from "../components/eventBar/EventBar";
-import { About } from "../components/about/About";
-import { Footer } from "../components/footer/Footer";
-import { NavigationBar } from "../components/navigationBar/NavigationBar";
+import { HomeBrowserView } from "../components/HomeBrowserView";
+import { HomeMobileView } from "../components/HomeMobileView";
 
-import { PopOut } from "../components/popOut/PopOut";
-import { NoticePopOut } from "../components/popOut/NoticePopOut";
-import { AudioComp } from "../components/global/AudioComp";
-import { LoadingView } from "../components/global/LoadingView";
-
-import { ApiPath, PopOutType } from "../scripts/WebConstant";
+import { ApiPath } from "../scripts/WebConstant";
 import { loadingManager } from "../scripts/LoadingManager";
 import { dataSource } from "../scripts/dataSource/DataSource";
-import { popOutHandler } from "../scripts/PopOutHandler";
 import { apiClient } from "../scripts/ApiClient";
+import { LoadingView } from "../components/global/LoadingView";
+import { NavigationBar } from "../components/navigationBar/NavigationBar";
 
 interface Props {}
 
@@ -31,15 +19,6 @@ interface State {
   isLoading: boolean;
   scale: number;
   height: number;
-  popOutConfig: {
-    toggle: boolean;
-    type: PopOutType;
-    customData?: GenericObjectType;
-  };
-  noticePopOutConfig: {
-    toggle: boolean;
-    customData: GenericObjectType;
-  };
 }
 
 export default class Home extends React.Component<Props, State> {
@@ -51,34 +30,10 @@ export default class Home extends React.Component<Props, State> {
       isLoading: true,
       scale: 1,
       height: 0,
-      popOutConfig: {
-        toggle: false,
-        type: PopOutType.NONE,
-        customData: Object.create(null),
-      },
-      noticePopOutConfig: {
-        toggle: false,
-        customData: Object.create(null),
-      },
     };
-
-    this._renderMobileView = this._renderMobileView.bind(this);
-    this._renderBrowserView = this._renderBrowserView.bind(this);
 
     this._onResize = this._onResize.bind(this);
     this._onAllTasksCompleted = this._onAllTasksCompleted.bind(this);
-
-    this._showPopOut = this._showPopOut.bind(this);
-    this._hidePopOut = this._hidePopOut.bind(this);
-    this._showNotice = this._showNotice.bind(this);
-    this._hideNotice = this._hideNotice.bind(this);
-
-    popOutHandler.init({
-      showPopOut: this._showPopOut,
-      hidePopOut: this._hidePopOut,
-      showNotice: this._showNotice,
-      hideNotice: this._hideNotice,
-    });
 
     const onResultReturn = (result, err) => {
       if (result && !err) {
@@ -103,99 +58,32 @@ export default class Home extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isStart, isLoading, height, scale } = this.state;
+    const { scale, height, isLoading, isStart } = this.state;
     const { isMobile } = dataSource.systemModel;
-
-    const content = isStart
-      ? isMobile
-        ? this._renderMobileView()
-        : this._renderBrowserView()
-      : null;
-    const navigationBar = isMobile ? <NavigationBar scale={scale} /> : null;
-
-    return (
-      <div id="main-container" style={{ height: height }}>
-        <LoadingView isLoading={isLoading} height={height} />
-        {content}
-        {navigationBar}
-      </div>
-    );
-  }
-
-  private _renderMobileView(): JSX.Element {
-    const { scale, popOutConfig } = this.state;
-
-    return (
-      <div id="map-mobile" style={{ transform: `scale(${scale})` }}>
-        <LoginBar />
-        <Slider />
-        <NoticeBoard />
-        <Cards />
-        <EventBar />
-        <GameListBar />
-        <About />
-        <PopOut scale={scale} config={popOutConfig} />
-      </div>
-    );
-  }
-
-  private _renderBrowserView(): JSX.Element {
-    const { isLoading, scale, popOutConfig, noticePopOutConfig } = this.state;
-
-    return (
-      <div id="map-browser" style={{ transform: `scale(${scale})` }}>
-        <LoginBar />
-        <UtilityBar />
-        <GameListBar isLoaded={!isLoading} />
-        <Slider />
-        <NoticeBoard />
-        <Cards />
-        <EventBar />
-        <About />
-        <Footer />
-        <PopOut scale={scale} config={popOutConfig} />
-        <NoticePopOut scale={scale} config={noticePopOutConfig} />
-        <AudioComp />
-      </div>
-    );
-  }
-
-  private _showPopOut(type: PopOutType, customData?: GenericObjectType): void {
-    this.setState({
-      popOutConfig: {
-        toggle: true,
-        type,
-        customData,
-      },
-    });
-  }
-
-  private _hidePopOut(): void {
-    this.setState({
-      popOutConfig: {
-        toggle: false,
-        type: PopOutType.NONE,
-        customData: Object.create(null),
-      },
-    });
-  }
-
-  private _showNotice(customData: GenericObjectType): void {
-    this.setState({
-      noticePopOutConfig: {
-        toggle: true,
-        customData,
-      },
-    });
-  }
-
-  private _hideNotice(): void {
-    this.setState({
-      noticePopOutConfig: {
-        toggle: false,
-        customData: Object.create(null),
-      },
-    });
+    if (isStart) {
+      if (isMobile) {
+        return (
+          <div id="main-container" style={{ height: height }}>
+            <LoadingView isLoading={isLoading} height={height} />
+            <HomeMobileView scale={scale} />
+            <NavigationBar scale={scale} />
+          </div>
+        );
+      } else {
+        return (
+          <div id="main-container" style={{ height: height }}>
+            <LoadingView isLoading={isLoading} height={height} />
+            <HomeBrowserView scale={scale} />
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div id="main-container" style={{ height: height }}>
+          <LoadingView isLoading={isLoading} height={height} />
+        </div>
+      );
+    }
   }
 
   private _onResize(): void {

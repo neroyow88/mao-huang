@@ -1,5 +1,5 @@
 @import "LoginBar.scss", "UtilityBar.scss", "NoticeBoard.scss", "Card.scss",
-  "EventBar.scss", "GameList.scss", "CustomerService.scss", "Footer.scss",
+  "EventBar.scss", "GameList.scss", "About.scss", "Footer.scss",
   "pop_out/PopOut.scss", "NavigationBar.scss", "Slider.scss";
 
 html {
@@ -20,6 +20,10 @@ html {
 
 #map-browser {
   width: 1920px;
+
+  #game-related-container {
+    transition: opacity 0.3s, scaleY 0.1s linear 0.3s;
+  }
 }
 
 #map-mobile {
