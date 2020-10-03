@@ -1,6 +1,6 @@
 import React from "react";
 
-import { gameListModel } from "../../scripts/GameListConstant";
+import { gameListModel } from "../../scripts/constant/GameListConstant";
 import { GameListDropdownMenu } from "./GameListDropdownMenu";
 import { GameListDropdownToggle } from "./GameListDropdownToggle";
 

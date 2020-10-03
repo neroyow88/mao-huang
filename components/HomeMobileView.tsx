@@ -10,7 +10,7 @@ import { EventBar } from "./eventBar/EventBar";
 import { About } from "./about/About";
 import { PopOut } from "./popOut/PopOut";
 
-import { BrowserState, PopOutType } from "../scripts/WebConstant";
+import { PopOutType } from "../scripts/WebConstant";
 import { popOutHandler } from "../scripts/PopOutHandler";
 
 interface Props {
@@ -27,7 +27,6 @@ interface State {
     toggle: boolean;
     customData: GenericObjectType;
   };
-  browserState: BrowserState;
 }
 
 class HomeMobileView extends React.Component<Props, State> {
@@ -44,14 +43,12 @@ class HomeMobileView extends React.Component<Props, State> {
         toggle: false,
         customData: Object.create(null),
       },
-      browserState: BrowserState.HOME,
     };
 
     this._showPopOut = this._showPopOut.bind(this);
     this._hidePopOut = this._hidePopOut.bind(this);
     this._showNotice = this._showNotice.bind(this);
     this._hideNotice = this._hideNotice.bind(this);
-    this._showAbout = this._showAbout.bind(this);
 
     popOutHandler.init({
       showPopOut: this._showPopOut,
@@ -73,7 +70,7 @@ class HomeMobileView extends React.Component<Props, State> {
         <Cards />
         <EventBar />
         <GameListBar />
-        <About showAbout={this._showAbout} />
+        <About />
         <PopOut scale={scale} config={popOutConfig} />
       </div>
     );
@@ -115,10 +112,6 @@ class HomeMobileView extends React.Component<Props, State> {
         customData: Object.create(null),
       },
     });
-  }
-
-  private _showAbout(state: BrowserState): void {
-    this.setState({ browserState: state });
   }
 }
 

@@ -5,6 +5,8 @@ import { WalletList } from "./WalletList";
 
 import { IWalletModel } from "../../scripts/dataSource/PlayerModel";
 import { convertToTwoDecimal } from "../../scripts/Utils";
+import { popOutHandler } from "../../scripts/PopOutHandler";
+import { PopOutType } from "../../scripts/WebConstant";
 
 interface Props {
   toggle: boolean;
@@ -83,7 +85,9 @@ class WalletDropdown extends React.Component<Props, State> {
   }
 
   private _onClickRetrieve(): void {}
-  private _onClickHistory(): void {}
+  private _onClickHistory(): void {
+    popOutHandler.showPopOut(PopOutType.HISTORY);
+  }
 }
 
 export { WalletDropdown };

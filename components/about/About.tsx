@@ -5,23 +5,15 @@ import { AboutBrowser } from "./AboutBrowser";
 import { AboutCustomerService } from "./AboutCustomerService";
 
 import { dataSource } from "../../scripts/dataSource/DataSource";
-import { AboutType, BrowserState } from "../../scripts/WebConstant";
+import { AboutType } from "../../scripts/WebConstant";
 
 interface Props {
-  showAbout: (state: BrowserState) => void;
+  showAbout?: (index: AboutType) => void;
 }
 
-interface State {
-  selectedAbout: AboutType;
-}
-
-class About extends React.Component<Props, State> {
+class About extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      selectedAbout: AboutType.ABOUT_US,
-    };
 
     this._renderMobileView = this._renderMobileView.bind(this);
     this._renderBrowserView = this._renderBrowserView.bind(this);
@@ -115,7 +107,8 @@ class About extends React.Component<Props, State> {
   }
 
   private _onClickAbout(index: AboutType): void {
-    this.setState({ selectedAbout: index });
+    const { showAbout } = this.props;
+    showAbout && showAbout(index);
   }
 }
 

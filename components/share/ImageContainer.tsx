@@ -8,7 +8,7 @@ interface Props {
   onClick?: NoParamReturnNulFunction;
 }
 
-class ImageHandler extends React.Component<Props> {
+class ImageContainer extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this._onLoaded = this._onLoaded.bind(this);
@@ -49,4 +49,4 @@ class ImageHandler extends React.Component<Props> {
   }
 }
 
-export { ImageHandler };
+export { ImageContainer };

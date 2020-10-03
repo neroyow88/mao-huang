@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 import { dataSource } from "../../scripts/dataSource/DataSource";
 import { PopOutType } from "../../scripts/WebConstant";
@@ -30,7 +30,7 @@ class NoticeBoard extends React.Component<Props> {
     return (
       <div id="notice-board-container-mobile" className="row-container center">
         <div id="left-board-container-mobile">
-          <ImageHandler src={"icon_volume.png"} />
+          <ImageContainer src={"icon_volume.png"} />
         </div>
         <div id="scroll-left-container">
           <div id="scroll-left-mobile">

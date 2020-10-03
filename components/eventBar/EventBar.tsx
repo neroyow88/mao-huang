@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 import { EventRewardButton } from "./EventRewardButton";
 
 import { dataSource } from "../../scripts/dataSource/DataSource";
@@ -23,18 +23,21 @@ class EventBar extends React.Component<Props> {
       return (
         <div id="event-bar-container-mobile">
           <div id="image-container-mobile">
-            <ImageHandler src={"mobile/event_bar/event_bg.png"} scale={0.33} />
-            <ImageHandler
+            <ImageContainer
+              src={"mobile/event_bar/event_bg.png"}
+              scale={0.33}
+            />
+            <ImageContainer
               src={"mobile/event_bar/event_title.png"}
               scale={0.33}
             />
-            <ImageHandler
+            <ImageContainer
               src={"mobile/event_bar/event_title_2.png"}
               scale={0.33}
             />
           </div>
           <div id="button-container">
-            <ImageHandler src={"mobile/event_bar/yellow_button.png"} />
+            <ImageContainer src={"mobile/event_bar/yellow_button.png"} />
             <div id="button-label">打卡领现金</div>
           </div>
         </div>
@@ -43,7 +46,7 @@ class EventBar extends React.Component<Props> {
       return (
         <div id="event-bar-container-browser">
           <div id="background-image-container">
-            <ImageHandler src="event_bar/520_slot_bar.png" />
+            <ImageContainer src="event_bar/520_slot_bar.png" />
           </div>
           <div id="number-image-container" className="row-container">
             <EventRewardButton value={5} />

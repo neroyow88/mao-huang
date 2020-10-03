@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 interface Props {
   src: string;
@@ -20,19 +20,22 @@ class AboutCustomerService extends React.Component<Props> {
     return (
       <div className="about-profile-container column-container center">
         <div className="about-image-container">
-          <ImageHandler src={`${src}.png`} scale={profileScale} />
+          <ImageContainer src={`${src}.png`} scale={profileScale} />
         </div>
         <div className="about-name-label">{label}</div>
         <div className="about-title-label">客服中心</div>
         <div className="about-description-container row-container center">
           <div className="about-quation-image-container">
-            <ImageHandler src={"about/quation_left.png"} scale={quationScale} />
+            <ImageContainer
+              src={"about/quation_left.png"}
+              scale={quationScale}
+            />
           </div>
           <div className="about-description-label">
             24小时的专业客服团队,提供及时贴心的服务
           </div>
           <div className="about-quation-image-container">
-            <ImageHandler
+            <ImageContainer
               src={"about/quation_right.png"}
               scale={quationScale}
             />

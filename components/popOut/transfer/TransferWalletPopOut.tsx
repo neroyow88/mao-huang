@@ -4,11 +4,11 @@ import { Modal } from "reactstrap";
 import { PopOutTitle } from "../../share/PopOutTitle";
 import { FormInputBox } from "../../share/FormInputBox";
 import { FormButton } from "../../share/FormButton";
-import { ImageHandler } from "../../share/ImageHandler";
+import { ImageContainer } from "../../share/ImageContainer";
 import { GameWallet } from "./GameWallet";
 import { CustomDropdownOption } from "./CustomDropdownOption";
 
-import { DropdownOptions } from "../../../scripts/DropdownOptionsConstant";
+import { DropdownOptions } from "../../../scripts/constant/DropdownOptionsConstant";
 import { apiClient } from "../../../scripts/ApiClient";
 import { PopOutType, ApiPath } from "../../../scripts/WebConstant";
 import { popOutHandler } from "../../../scripts/PopOutHandler";
@@ -128,7 +128,7 @@ class TransferWalletPopOut extends React.Component<Props, State> {
                 onSelected={this._toWalletSelected}
               />
               <div id="transfer-logo-container">
-                <ImageHandler src="wallet/transfer_logo.png" scale={0.25} />
+                <ImageContainer src="wallet/transfer_logo.png" scale={0.25} />
               </div>
               <CustomDropdownOption
                 options={DropdownOptions}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 interface Props {
   label: string;
@@ -21,7 +21,7 @@ class UtilityItem extends React.Component<Props> {
 
     const imageComponent = src ? (
       <div className="utility-image">
-        <ImageHandler src={src} />
+        <ImageContainer src={src} />
       </div>
     ) : null;
 

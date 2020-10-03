@@ -26,6 +26,8 @@ export enum PopOutType {
   FORGOT_USERNAME = 4,
   FORGOT_PASSWORD = 5,
   BANNER = 6,
+  NEWS = 7,
+  CARD = 8,
 
   DEPOSIT_WALLET = 11,
   DEPOSIT_INSTRUCTION = 12,
@@ -35,8 +37,7 @@ export enum PopOutType {
   WITHDRAW_SUCCESS = 16,
   TRANSFER_WALLET = 17,
   MAILBOX = 18,
-  NEWS = 19,
-  CARD = 20,
+  HISTORY = 19,
 
   CARD_MOBILE = 101,
   LOGIN_MOBILE = 102,
@@ -65,6 +66,7 @@ export enum AudioList {
 }
 
 export enum AboutType {
+  NONE = -1,
   ABOUT_US = 0,
   SERVICE = 1,
   DEPOSIT = 2,

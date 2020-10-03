@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "reactstrap";
 
 import { PopOutTitle } from "../../share/PopOutTitle";
-import { ImageHandler } from "../../share/ImageHandler";
+import { ImageContainer } from "../../share/ImageContainer";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
 
@@ -50,7 +50,7 @@ class WithdrawSuccessPopOut extends React.Component<Props> {
             className="column-container center"
           >
             <div id="success-image-container">
-              <ImageHandler src={"wallet/cash_icon.png"} scale={0.4} />
+              <ImageContainer src={"wallet/cash_icon.png"} scale={0.4} />
             </div>
             <div id="invoice-label-container">
               提款申请已提交,您的提款编号是 <span>{invoice}</span>

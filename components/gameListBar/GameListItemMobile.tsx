@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 interface Props {
   index: number;
@@ -21,7 +21,7 @@ class GameListItemMobile extends React.Component<Props, State> {
         className="game-list-item-container row-container center"
         key={`game-list-item-container-${index}`}
       >
-        <ImageHandler
+        <ImageContainer
           src={`mobile/game_list/${content.prefix}_logo.png`}
           scale={0.33}
         />

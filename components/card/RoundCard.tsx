@@ -2,7 +2,7 @@ import React from "react";
 
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 interface Props {
   index: number;
@@ -20,7 +20,7 @@ class RoundCard extends React.Component<Props> {
     const { index, label } = this.props;
     return (
       <div id={`card-0${index}`} onClick={this._onClick}>
-        <ImageHandler
+        <ImageContainer
           src={`mobile/card/poker_0${index}_round.png`}
           scale={0.5}
         />

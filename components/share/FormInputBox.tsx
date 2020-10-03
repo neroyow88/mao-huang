@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "./ImageHandler";
+import { ImageContainer } from "./ImageContainer";
 
 interface Props {
   id: string;
@@ -68,7 +68,7 @@ class FormInputBox extends React.Component<Props, State> {
     const passwordIcon =
       type === "password" ? (
         <div className="icon-container" onClick={this._showPasswordClicked}>
-          <ImageHandler src={"pop_out/password_eye.png"} scale={0.31} />
+          <ImageContainer src={"pop_out/password_eye.png"} scale={0.31} />
         </div>
       ) : null;
 

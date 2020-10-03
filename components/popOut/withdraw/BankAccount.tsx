@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageHandler } from "../../share/ImageHandler";
+import { ImageContainer } from "../../share/ImageContainer";
 
 import { PopOutType } from "../../../scripts/WebConstant";
 import { popOutHandler } from "../../../scripts/PopOutHandler";
@@ -43,7 +43,7 @@ class BankAccount extends React.Component<Props, State> {
         }}
       >
         <div className="bank-logo">
-          <ImageHandler src="wallet/bank.png" scale={0.4} />
+          <ImageContainer src="wallet/bank.png" scale={0.4} />
         </div>
         <div className="bank-detail-container column-container">
           <div className="bank-label">{bankName}</div>

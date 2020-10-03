@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 import customStyle from "../../styles/module/CardMobileModal.module.scss";
 
@@ -60,10 +60,10 @@ class MobileCardPopOut extends React.Component<Props, State> {
               style={{ transform: `rotateY(${mobileCardRotation}deg)` }}
             >
               <div className="flip-card-front" key={`flip-card-front-${index}`}>
-                <ImageHandler src={`mobile/card/poker_0${index}_front.png`} />
+                <ImageContainer src={`mobile/card/poker_0${index}_front.png`} />
               </div>
               <div className="flip-card-back" key={`flip-card-back-${index}`}>
-                <ImageHandler src={`mobile/card/poker_0${index}_back.png`} />
+                <ImageContainer src={`mobile/card/poker_0${index}_back.png`} />
                 {this._cardButtonComponent(index)}
               </div>
             </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "reactstrap";
 
 import { PopOutTitle } from "../share/PopOutTitle";
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 import customStyle from "../../styles/module/Modal.module.scss";
 
@@ -45,7 +45,7 @@ class BannerPopOut extends React.Component<Props> {
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
           <PopOutTitle label="猫皇520" onHide={onHide} />
           <div id="banner-pop-out-container">
-            <ImageHandler src={src} />
+            <ImageContainer src={src} />
           </div>
         </div>
       </Modal>

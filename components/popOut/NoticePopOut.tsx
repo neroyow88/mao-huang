@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 import { NoticeType } from "../../scripts/WebConstant";
 import { popOutHandler } from "../../scripts/PopOutHandler";
@@ -62,11 +62,11 @@ class NoticePopOut extends React.Component<Props, State> {
           <div id="notice-title-container" className="row-container center">
             <div id="notice-title">提示</div>
             <div id="cross" onClick={this._onHide}>
-              <ImageHandler src="pop_out/close.png" scale={0.5} />
+              <ImageContainer src="pop_out/close.png" scale={0.5} />
             </div>
           </div>
           <div id="notice-image-container">
-            <ImageHandler src={`pop_out/${src}`} scale={0.57} />
+            <ImageContainer src={`pop_out/${src}`} scale={0.57} />
           </div>
           <div id="notice-description">{description}</div>
           <div id="notice-button-container">

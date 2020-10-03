@@ -2,7 +2,7 @@ import React, { RefObject } from "react";
 
 import { FormInputBox } from "../../share/FormInputBox";
 import { FormButton } from "../../share/FormButton";
-import { ImageHandler } from "../../share/ImageHandler";
+import { ImageContainer } from "../../share/ImageContainer";
 
 interface Props {
   balance: number;
@@ -47,7 +47,7 @@ class AlipayDeposit extends React.Component<Props, State> {
         <form autoComplete="off" onSubmit={this._onConfirm}>
           <div id="qr-code-instruction">打开支付宝APP扫一扫,向我付款</div>
           <div id="qr-code-image">
-            <ImageHandler src={"wallet/alipay_qrcode.png"} scale={0.4} />
+            <ImageContainer src={"wallet/alipay_qrcode.png"} scale={0.4} />
           </div>
           <div id="deposit-balance-label">
             充值金额 <span>{balance}</span>元
@@ -61,13 +61,13 @@ class AlipayDeposit extends React.Component<Props, State> {
             <div id="deposit-sample-label-left" style={searchStyle}>
               支付宝app扫一扫
               <div id="sample-image-left">
-                <ImageHandler src="wallet/alipay_sample.jpg" scale={0.3} />
+                <ImageContainer src="wallet/alipay_sample.jpg" scale={0.3} />
               </div>
             </div>
             <div id="deposit-sample-label-right" style={searchStyle}>
               订单号样本
               <div id="sample-image-right">
-                <ImageHandler src="wallet/invoice_sample.jpg" scale={0.5} />
+                <ImageContainer src="wallet/invoice_sample.jpg" scale={0.5} />
               </div>
             </div>
           </div>

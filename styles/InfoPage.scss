@@ -1,0 +1,84 @@
+#info-page-container {
+  width: 100%;
+
+  #info-page-bar {
+    margin-top: 43px;
+    width: 1120px;
+    height: 70px;
+    justify-content: space-between;
+
+    .info-page-button {
+      cursor: pointer;
+
+      .button-image {
+        position: relative;
+        width: 100%;
+        height: 40px;
+      }
+
+      .info-page-button-label {
+        margin-top: 4px;
+        font-size: 18px;
+      }
+
+      #button-image-0 {
+        .image-handler {
+          left: calc(50% - 22.5px);
+          top: calc(50% - 20px);
+        }
+      }
+
+      #button-image-1 {
+        .image-handler {
+          left: calc(50% - 19px);
+          top: calc(50% - 16px);
+        }
+      }
+
+      #button-image-2 {
+        .image-handler {
+          left: calc(50% - 17.5px);
+          top: calc(50% - 17px);
+        }
+      }
+
+      #button-image-3 {
+        .image-handler {
+          left: calc(50% - 24.5px);
+          top: calc(50% - 19px);
+        }
+      }
+
+      #button-image-4 {
+        .image-handler {
+          left: calc(50% - 20px);
+          top: calc(50% - 18.5px);
+        }
+      }
+
+      #button-image-5 {
+        .image-handler {
+          left: calc(50% - 15px);
+          top: calc(50% - 18px);
+        }
+      }
+    }
+  }
+
+  #info-page-detail {
+    margin-top: 63px;
+    margin-bottom: 110px;
+    width: 750px;
+
+    .detail-title {
+      color: white;
+      font-size: 18px;
+      margin-top: 27px;
+    }
+
+    .detail-label {
+      color: #979797;
+      font-size: 18px;
+    }
+  }
+}

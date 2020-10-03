@@ -23,3 +23,13 @@ interface IGameListItem {
   prefix: string;
   childs?: string[];
 }
+
+interface IInfoPage {
+  header?: string;
+  contents: IInfoPageContent[];
+}
+
+interface IInfoPageContent {
+  title: string;
+  label: string;
+}

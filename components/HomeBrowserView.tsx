@@ -10,12 +10,13 @@ import { Cards } from "./card/Cards";
 import { EventBar } from "./eventBar/EventBar";
 import { About } from "./about/About";
 import { Footer } from "./footer/Footer";
+import { InfoPage } from "./info/InfoPage";
 
 import { PopOut } from "./popOut/PopOut";
 import { NoticePopOut } from "./popOut/NoticePopOut";
 import { AudioComp } from "./global/AudioComp";
 
-import { BrowserState, PopOutType } from "../scripts/WebConstant";
+import { AboutType, PopOutType } from "../scripts/WebConstant";
 import { popOutHandler } from "../scripts/PopOutHandler";
 
 interface Props {
@@ -33,7 +34,7 @@ interface State {
     toggle: boolean;
     customData: GenericObjectType;
   };
-  browserState: BrowserState;
+  aboutType: AboutType;
 }
 
 class HomeBrowserView extends React.Component<Props, State> {
@@ -51,13 +52,15 @@ class HomeBrowserView extends React.Component<Props, State> {
         toggle: false,
         customData: Object.create(null),
       },
-      browserState: BrowserState.HOME,
+      aboutType: AboutType.NONE,
     };
 
     this._showPopOut = this._showPopOut.bind(this);
     this._hidePopOut = this._hidePopOut.bind(this);
     this._showNotice = this._showNotice.bind(this);
     this._hideNotice = this._hideNotice.bind(this);
+
+    this._showHome = this._showHome.bind(this);
     this._showAbout = this._showAbout.bind(this);
 
     popOutHandler.init({
@@ -70,23 +73,28 @@ class HomeBrowserView extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const { scale } = this.props;
-    const { popOutConfig, noticePopOutConfig, browserState } = this.state;
-    const gameStyle = {
-      opacity: browserState === BrowserState.HOME ? 1 : 0,
-    };
-
-    return (
-      <div id="map-browser" style={{ transform: `scale(${scale})` }}>
-        <LoginBar />
-        <UtilityBar />
-        <GameListBar />
-        <div id="game-related-container" style={gameStyle}>
+    const { popOutConfig, noticePopOutConfig, aboutType } = this.state;
+    const page =
+      aboutType === AboutType.NONE ? (
+        <div id="page-container">
           <Slider />
           <NoticeBoard />
           <Cards />
           <EventBar />
+          <About showAbout={this._showAbout} />
         </div>
-        <About showAbout={this._showAbout} />
+      ) : (
+        <div id="page-container">
+          <InfoPage aboutType={aboutType} />
+        </div>
+      );
+
+    return (
+      <div id="map-browser" style={{ transform: `scale(${scale})` }}>
+        <LoginBar />
+        <UtilityBar showHome={this._showHome} />
+        <GameListBar />
+        {page}
         <Footer />
         <PopOut scale={scale} config={popOutConfig} />
         <NoticePopOut scale={scale} config={noticePopOutConfig} />
@@ -133,8 +141,14 @@ class HomeBrowserView extends React.Component<Props, State> {
     });
   }
 
-  private _showAbout(state: BrowserState): void {
-    this.setState({ browserState: state });
+  private _showHome(): void {
+    this.setState({ aboutType: AboutType.NONE });
+  }
+
+  private _showAbout(index: AboutType): void {
+    this.setState({ aboutType: index });
+    const element = document.getElementById("page-container");
+    element && element.scrollIntoView();
   }
 }
 

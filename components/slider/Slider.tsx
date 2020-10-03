@@ -6,7 +6,7 @@ import {
   CarouselIndicators,
 } from "reactstrap";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 import { dataSource } from "../../scripts/dataSource/DataSource";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
@@ -108,7 +108,7 @@ class Slider extends React.Component<Props, State> {
               this._onBannerClicked(index);
             }}
           >
-            <ImageHandler src={url} scale={scale} />
+            <ImageContainer src={url} scale={scale} />
           </div>
         </CarouselItem>
       );

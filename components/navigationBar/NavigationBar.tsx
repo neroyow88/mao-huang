@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 interface Props {
   scale: number;
@@ -72,7 +72,7 @@ class NavigationBar extends React.Component<Props, State> {
   ): JSX.Element {
     return (
       <div id={`${id}-container`}>
-        <ImageHandler src={`mobile/about_us/${id}.png`} scale={scale} />
+        <ImageContainer src={`mobile/about_us/${id}.png`} scale={scale} />
         <div className="about-label-container">{label}</div>
       </div>
     );
@@ -114,7 +114,7 @@ class NavigationBar extends React.Component<Props, State> {
           this._setCurrentIndex(index);
         }}
       >
-        <ImageHandler
+        <ImageContainer
           src={`mobile/navigation_bar/${buttonUrl}.png`}
           scale={scale}
         />

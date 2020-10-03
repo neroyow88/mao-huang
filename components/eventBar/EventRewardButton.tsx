@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 import { apiClient } from "../../scripts/ApiClient";
 import { audioHandler } from "../../scripts/AudioHandler";
@@ -37,7 +37,7 @@ class EventRewardButton extends React.Component<Props, State> {
       <div id="reward-anim">
         {value === 0 ? (
           <div id="heart-image">
-            <ImageHandler src={"event_bar/heart.png"} scale={0.6} />
+            <ImageContainer src={"event_bar/heart.png"} scale={0.6} />
           </div>
         ) : (
           <div id="reward-number">{`+${value}`}</div>
@@ -51,7 +51,7 @@ class EventRewardButton extends React.Component<Props, State> {
         key={`reward-button-${value}`}
         onClick={this._onClaimReward}
       >
-        <ImageHandler src={src} />
+        <ImageContainer src={src} />
         {rewardAnim}
       </div>
     );

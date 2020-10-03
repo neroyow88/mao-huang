@@ -1,6 +1,7 @@
 import React from "react";
+
 import { convertToTwoDecimal } from "../../../scripts/Utils";
-import { ImageHandler } from "../../share/ImageHandler";
+import { ImageContainer } from "../../share/ImageContainer";
 
 interface Props {
   src: string;
@@ -25,7 +26,7 @@ class GameWallet extends React.Component<Props> {
           className="wallet-logo-container"
           key={`wallet-logo-container-${index}`}
         >
-          <ImageHandler src={src} scale={0.4} />
+          <ImageContainer src={src} scale={0.4} />
         </div>
         <div
           className="wallet-label"

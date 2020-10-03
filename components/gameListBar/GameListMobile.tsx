@@ -1,7 +1,7 @@
 import React from "react";
 
 import { GameListItemMobile } from "./GameListItemMobile";
-import { gameListModel } from "../../scripts/GameListConstant";
+import { gameListModel } from "../../scripts/constant/GameListConstant";
 
 interface Props {}
 

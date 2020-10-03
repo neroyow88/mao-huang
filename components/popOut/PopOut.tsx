@@ -21,6 +21,7 @@ import { MailboxPopOut } from "./mail/MailboxPopOut";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
 import { CardPopOut } from "./CardPopOut";
+import { HistoryPopOut } from "./HistoryPopOut";
 
 interface Props {
   scale: number;
@@ -117,6 +118,27 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
+      case PopOutType.NEWS:
+        component = (
+          <NoticeBoardPopOut
+            toggle={toggle}
+            scale={scale}
+            onHide={this._onHide}
+            transitionComplete={this._transitionComplete}
+          />
+        );
+        break;
+      case PopOutType.CARD:
+        component = (
+          <CardPopOut
+            toggle={toggle}
+            scale={scale}
+            onHide={this._onHide}
+            transitionComplete={this._transitionComplete}
+            customData={customData}
+          />
+        );
+        break;
 
       case PopOutType.DEPOSIT_WALLET:
         component = (
@@ -140,7 +162,6 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
-
       case PopOutType.WITHDRAW_SELECTION:
         component = (
           <WithdrawAccountSelectionPopOut
@@ -204,24 +225,13 @@ class PopOut extends React.Component<Props, State> {
           />
         );
         break;
-      case PopOutType.NEWS:
+      case PopOutType.HISTORY:
         component = (
-          <NoticeBoardPopOut
+          <HistoryPopOut
             toggle={toggle}
             scale={scale}
             onHide={this._onHide}
             transitionComplete={this._transitionComplete}
-          />
-        );
-        break;
-      case PopOutType.CARD:
-        component = (
-          <CardPopOut
-            toggle={toggle}
-            scale={scale}
-            onHide={this._onHide}
-            transitionComplete={this._transitionComplete}
-            customData={customData}
           />
         );
         break;

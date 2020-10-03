@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../../share/ImageHandler";
+import { ImageContainer } from "../../share/ImageContainer";
 
 interface Props {}
 
@@ -13,7 +13,7 @@ class EmptyMail extends React.Component<Props> {
     return (
       <div id="empty-mail-container" className="column-container center">
         <div id="mailbox-image-container">
-          <ImageHandler src={"mail/mailbox.png"} scale={0.4} />
+          <ImageContainer src={"mail/mailbox.png"} scale={0.4} />
         </div>
         <div className="mailbox-label">您目前无收到信息</div>
       </div>

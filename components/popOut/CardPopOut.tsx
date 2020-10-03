@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "reactstrap";
 
 import { PopOutTitle } from "../share/PopOutTitle";
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 import customStyle from "../../styles/module/Modal.module.scss";
 import { dataSource } from "../../scripts/dataSource/DataSource";
@@ -60,7 +60,7 @@ class CardPopOut extends React.Component<Props> {
           <PopOutTitle label={title} onHide={onHide} />
           <div id="card-pop-out-container" className="column-container center">
             <div id="round-card-image-container" style={roundCardStyle}>
-              <ImageHandler
+              <ImageContainer
                 src={`card/poker_0${index}_round.png`}
                 scale={0.5}
               />
@@ -93,7 +93,7 @@ class CardPopOut extends React.Component<Props> {
       const redeemCoin =
         i <= accumulate ? (
           <div className="coin-image">
-            <ImageHandler src={"card/coin.png"} scale={0.25} />
+            <ImageContainer src={"card/coin.png"} scale={0.25} />
           </div>
         ) : null;
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageHandler } from "./ImageHandler";
+import { ImageContainer } from "./ImageContainer";
 
 interface Props {
   label: string;
@@ -16,9 +16,9 @@ class PopOutTitle extends React.Component<Props> {
 
     return (
       <div id="pop-out-title-container">
-        <ImageHandler src="pop_out/title_bg.png" scale={0.47} />
+        <ImageContainer src="pop_out/title_bg.png" scale={0.47} />
         <div id="pop-out-title">{label}</div>
-        <ImageHandler
+        <ImageContainer
           src="pop_out/close_button.png"
           scale={0.44}
           onClick={onHide}

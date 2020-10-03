@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 import { UtilityItem } from "./UtilityItem";
 
 import { PopOutType } from "../../scripts/WebConstant";
@@ -10,7 +10,9 @@ import { popOutHandler } from "../../scripts/PopOutHandler";
 import { WalletDropdown } from "./WalletDropdown";
 import { convertToTwoDecimal } from "../../scripts/Utils";
 
-interface Props {}
+interface Props {
+  showHome: NoParamReturnNulFunction;
+}
 
 interface State {
   toggleWallet: boolean;
@@ -41,7 +43,7 @@ class UtilityBar extends React.Component<Props, State> {
       <div id="utility-bar-container">
         <div id="utility-items-container" className="row-container center">
           <div id="logo-container">
-            <ImageHandler src={"logo.png"} />
+            <ImageContainer src={"logo.png"} />
             <Link href="/">
               <a>Home</a>
             </Link>
@@ -90,6 +92,9 @@ class UtilityBar extends React.Component<Props, State> {
   }
 
   private _scrollToEventElement(): void {
+    const { showHome } = this.props;
+    showHome && showHome();
+
     const element = document.getElementById("event-bar-container-browser");
     element && element.scrollIntoView();
   }

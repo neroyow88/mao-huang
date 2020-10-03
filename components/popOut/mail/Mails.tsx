@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageHandler } from "../../share/ImageHandler";
+import { ImageContainer } from "../../share/ImageContainer";
 
 import { dataSource } from "../../../scripts/dataSource/DataSource";
 import { MailModel } from "../../../scripts/dataSource/PlayerModel";
@@ -53,7 +53,7 @@ class Mails extends React.Component<Props, State> {
         </div>
         <div id="inbox-container" className="column-container">
           <div id="message-container">
-            <ImageHandler src={"mail/mailbox.png"} scale={0.2} />
+            <ImageContainer src={"mail/mailbox.png"} scale={0.2} />
             <div id="message-content" className="column-container">
               <div className="mailbox-label">{mails[selectedIndex].title}</div>
               <div className="mailbox-label">

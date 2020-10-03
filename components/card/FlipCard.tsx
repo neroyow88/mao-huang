@@ -3,7 +3,7 @@ import { dataSource } from "../../scripts/dataSource/DataSource";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 
 interface Props {
   index: number;
@@ -25,10 +25,10 @@ class FlipCard extends React.Component<Props> {
         <div className="flip-card-browser" key={`flip-card-${index}`}>
           <div className="flip-card-inner" key={`flip-card-inner-${index}`}>
             <div className="flip-card-front" key={`flip-card-front-${index}`}>
-              <ImageHandler src={`card/poker_0${index}_front.png`} />
+              <ImageContainer src={`card/poker_0${index}_front.png`} />
             </div>
             <div className="flip-card-back" key={`flip-card-back-${index}`}>
-              <ImageHandler src={`card/poker_0${index}_back.png`} />
+              <ImageContainer src={`card/poker_0${index}_back.png`} />
               {this._renderButton()}
             </div>
           </div>

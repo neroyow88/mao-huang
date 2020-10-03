@@ -1,6 +1,6 @@
 import React, { RefObject } from "react";
 
-import { ImageHandler } from "../share/ImageHandler";
+import { ImageContainer } from "../share/ImageContainer";
 import { FormInputBox } from "../share/FormInputBox";
 import { FormButton } from "../share/FormButton";
 
@@ -51,7 +51,7 @@ class LoginBar extends React.Component<Props> {
   private _renderLoginBarMobile(): JSX.Element {
     return (
       <div id="login-bar-container-mobile" className="row-container center">
-        <ImageHandler src={"mobile/logo.png"} scale={0.33} />
+        <ImageContainer src={"mobile/logo.png"} scale={0.33} />
         <div id="login-label" onClick={this._onLogin}>
           登入
         </div>
@@ -72,7 +72,7 @@ class LoginBar extends React.Component<Props> {
           <div id="login-bar" className="row-container">
             <div id="username-label">{`欢迎您 , ${username}`}</div>
             <div id="image-container">
-              <ImageHandler src={"member.png"} />
+              <ImageContainer src={"member.png"} />
             </div>
             <div
               id="profile-button"
