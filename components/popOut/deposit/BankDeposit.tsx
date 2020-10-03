@@ -64,12 +64,12 @@ class BankDeposit extends React.Component<Props> {
             "转账成功后，您的金额即时到账，并收到到账提示。"
           )}
           {this._descriptionBox(
-            "附言或备注的编码由系统随机生成，用作快速核对充值，"
+            "附言或备注的编码由系统随机生成，用作快速核对充值，",
+            true
           )}
           {this._descriptionBox("附言或备注如忘记填写，会延迟到账时间。", true)}
           {this._descriptionBox(
-            "转账金额必须与充值金额一致，否则无法成功到账。",
-            true
+            "转账金额必须与充值金额一致，否则无法成功到账。"
           )}
         </div>
         {this._renderButtons()}
