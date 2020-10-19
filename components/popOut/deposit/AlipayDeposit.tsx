@@ -3,9 +3,14 @@ import React, { RefObject } from "react";
 import { FormInputBox } from "../../share/FormInputBox";
 import { FormButton } from "../../share/FormButton";
 import { ImageContainer } from "../../share/ImageContainer";
+import { ApiPath } from "../../../scripts/WebConstant";
+import { callApi } from "../../../scripts/ApiClient";
 
 interface Props {
-  balance: number;
+  amount: string;
+  accountId: string;
+  depositId: string;
+  qrUrl: string;
   onBack: NoParamReturnNulFunction;
   onConfirm: NoParamReturnNulFunction;
 }
@@ -15,7 +20,7 @@ interface State {
 }
 
 class AlipayDeposit extends React.Component<Props, State> {
-  private _invoicRef: RefObject<HTMLInputElement>;
+  private _transactionIdRef: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
@@ -24,14 +29,14 @@ class AlipayDeposit extends React.Component<Props, State> {
       copiedId: -1,
     };
 
-    this._invoicRef = React.createRef();
+    this._transactionIdRef = React.createRef();
 
     this._onBack = this._onBack.bind(this);
     this._onConfirm = this._onConfirm.bind(this);
   }
 
   public render(): JSX.Element {
-    const { balance } = this.props;
+    const { amount, qrUrl } = this.props;
     const searchStyle = {
       backgroundImage: "url(wallet/search.png)",
       backgroundPosition: "100% 50%",
@@ -47,15 +52,15 @@ class AlipayDeposit extends React.Component<Props, State> {
         <form autoComplete="off" onSubmit={this._onConfirm}>
           <div id="qr-code-instruction">打开支付宝APP扫一扫,向我付款</div>
           <div id="qr-code-image">
-            <ImageContainer src={"wallet/alipay_qrcode.png"} scale={0.4} />
+            <ImageContainer src={qrUrl} />
           </div>
-          <div id="deposit-balance-label">
-            充值金额 <span>{balance}</span>元
+          <div id="deposit-amount-label">
+            充值金额 <span>{amount}</span>元
           </div>
           <FormInputBox
             id="invoice"
             placeholder="扫码支付成功后,请在此输入订单号后4位数字"
-            inputRef={this._invoicRef}
+            inputRef={this._transactionIdRef}
           />
           <div id="deposit-sample-container" className="row-container">
             <div id="deposit-sample-label-left" style={searchStyle}>
@@ -91,13 +96,53 @@ class AlipayDeposit extends React.Component<Props, State> {
   }
 
   private _onBack(): void {
-    const { onBack } = this.props;
-    onBack && onBack();
+    const { amount, accountId, depositId, onBack } = this.props;
+
+    const onResultReturn = (result, error): void => {
+      if (result && !error) {
+        onBack && onBack();
+      }
+    };
+    const params = new FormData();
+    params.append("account_id", accountId);
+    params.append("amount", amount);
+    params.append("deposit_id", depositId);
+    params.append("cancel_type", "4");
+
+    const config = {
+      path: ApiPath.DEPOSIT_CANCEL,
+      callback: onResultReturn,
+      params: params,
+    };
+
+    callApi(config);
   }
 
-  private _onConfirm(): void {
-    const { onConfirm } = this.props;
-    onConfirm && onConfirm();
+  private _onConfirm(e): void {
+    e.preventDefault();
+    const transactionId = this._transactionIdRef.current.value;
+    const { amount, accountId, depositId } = this.props;
+
+    const onResultReturn = (result, error): void => {
+      if (result && !error) {
+        const { onConfirm } = this.props;
+        //TODO: notice pop out
+        onConfirm && onConfirm();
+      }
+    };
+
+    const params = new FormData();
+    params.append("account_id", accountId);
+    params.append("amount", amount);
+    params.append("deposit_id", depositId);
+    params.append("transactionId", transactionId);
+
+    const config = {
+      path: ApiPath.DEPOSIT_CONFIRM,
+      callback: onResultReturn,
+      params: params,
+    };
+    callApi(config);
   }
 }
 

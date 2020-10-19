@@ -5,9 +5,9 @@ import { PopOutTitle } from "../../share/PopOutTitle";
 import { EmptyMail } from "./EmptyMail";
 import { Mails } from "./Mails";
 
-import { dataSource } from "../../../scripts/dataSource/DataSource";
-
 import customStyle from "../../../styles/module/Modal.module.scss";
+import { ApiPath } from "../../../scripts/WebConstant";
+import { callApi } from "../../../scripts/ApiClient";
 
 interface Props {
   toggle: boolean;
@@ -17,18 +17,25 @@ interface Props {
   customData: GenericObjectType;
 }
 
-class MailboxPopOut extends React.Component<Props> {
+interface State {
+  mails: IMail[];
+}
+
+class MailboxPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      mails: [],
+    };
+
+    this._getMessage = this._getMessage.bind(this);
   }
 
   public componentDidMount(): void {
     const { toggle, transitionComplete } = this.props;
     if (toggle) {
-      const interval = setInterval((): void => {
-        transitionComplete();
-        clearInterval(interval);
-      }, 500);
+      this._getMessage(transitionComplete);
     } else {
       transitionComplete();
     }
@@ -36,8 +43,13 @@ class MailboxPopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale, onHide } = this.props;
-    const { mails } = dataSource.playerModel;
-    const content = mails.length > 0 ? <Mails /> : <EmptyMail />;
+    const { mails } = this.state;
+    const content =
+      mails.length > 0 ? (
+        <Mails mails={mails} getMessageCallback={this._getMessage} />
+      ) : (
+        <EmptyMail />
+      );
 
     return (
       <Modal
@@ -53,6 +65,35 @@ class MailboxPopOut extends React.Component<Props> {
         </div>
       </Modal>
     );
+  }
+
+  private _getMessage(callback?: NoParamReturnNulFunction): void {
+    const onResultReturn = (result, error): void => {
+      if (result && !error) {
+        const mails = result.data.map(
+          (data: GenericObjectType): IMail => {
+            return {
+              id: data.id,
+              title: data.title,
+              message: data.message,
+              status: data.status,
+            };
+          }
+        );
+        this.setState({ mails: mails });
+        callback && callback();
+      }
+    };
+
+    const params = new FormData();
+    params.append("page", "3");
+
+    const config = {
+      path: ApiPath.GET_MESSAGE,
+      callback: onResultReturn,
+      params: params,
+    };
+    callApi(config);
   }
 }
 

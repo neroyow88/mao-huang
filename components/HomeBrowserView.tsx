@@ -18,9 +18,23 @@ import { AudioComp } from "./global/AudioComp";
 
 import { AboutType, PopOutType } from "../scripts/WebConstant";
 import { popOutHandler } from "../scripts/PopOutHandler";
+import { LoginStatusModel } from "../scripts/dataSource/LoginStatusModel";
+import { PlatformsModel } from "../scripts/dataSource/PlatformsModel";
+import { BannersModel } from "../scripts/dataSource/BannersModel";
+import { ContactModel } from "../scripts/dataSource/ContactModel";
+
+interface IDataSource {
+  isMobile: boolean;
+  loginStatus: LoginStatusModel;
+  platforms: PlatformsModel;
+  contact: ContactModel;
+  banners: BannersModel;
+}
 
 interface Props {
   scale: number;
+  loginCallback: (value: boolean, name?: string) => void;
+  dataSource: IDataSource;
 }
 
 interface State {
@@ -72,16 +86,19 @@ class HomeBrowserView extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { scale } = this.props;
+    const { scale, loginCallback, dataSource } = this.props;
     const { popOutConfig, noticePopOutConfig, aboutType } = this.state;
+    const { isMobile, loginStatus, platforms, contact, banners } = dataSource;
+    const { isLogin } = loginStatus;
+
     const page =
       aboutType === AboutType.NONE ? (
         <div id="page-container">
-          <Slider />
-          <NoticeBoard />
-          <Cards />
-          <EventBar />
-          <About showAbout={this._showAbout} />
+          <Slider isMobile={isMobile} model={banners} />
+          <NoticeBoard isMobile={isMobile} />
+          <Cards isMobile={isMobile} isLogin={isLogin} />
+          <EventBar isMobile={isMobile} isLogin={isLogin} />
+          <About isMobile={isMobile} showAbout={this._showAbout} />
         </div>
       ) : (
         <div id="page-container">
@@ -91,12 +108,24 @@ class HomeBrowserView extends React.Component<Props, State> {
 
     return (
       <div id="map-browser" style={{ transform: `scale(${scale})` }}>
-        <LoginBar />
-        <UtilityBar showHome={this._showHome} />
-        <GameListBar />
+        <LoginBar
+          isMobile={isMobile}
+          model={loginStatus}
+          loginCallback={loginCallback}
+        />
+        <UtilityBar
+          isLogin={isLogin}
+          showHome={this._showHome}
+          model={platforms}
+        />
+        <GameListBar isMobile={isMobile} model={platforms} />
         {page}
-        <Footer />
-        <PopOut scale={scale} config={popOutConfig} />
+        <Footer model={contact} />
+        <PopOut
+          scale={scale}
+          config={popOutConfig}
+          loginCallback={loginCallback}
+        />
         <NoticePopOut scale={scale} config={noticePopOutConfig} />
         <AudioComp />
       </div>

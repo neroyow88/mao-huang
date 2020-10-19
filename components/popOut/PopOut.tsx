@@ -4,10 +4,12 @@ import { ForgotUsernamePopOut } from "./ForgotUsernamePopOut";
 import { ForgotPasswordPopOut } from "./ForgotPasswordPopOut";
 import { LoginPopOut } from "./LoginPopOut";
 import { RegisterPopOut } from "./RegisterPopOut";
-import { ProfilePopOut } from "./ProfilePopOut";
+import { ProfilePopOut } from "./profile/ProfilePopOut";
 import { NoticeBoardPopOut } from "./NoticeBoardPopOut";
 import { MobileCardPopOut } from "./MobileCardPopOut";
 import { BannerPopOut } from "./BannerPopOut";
+import { CardPopOut } from "./CardPopOut";
+import { HistoryPopOut } from "./history/HistoryPopOut";
 
 import { DepositWalletPopOut } from "./deposit/DepositWalletPopOut";
 import { DepositInstructionPopOut } from "./deposit/DepositInstructionPopOut";
@@ -20,12 +22,11 @@ import { MailboxPopOut } from "./mail/MailboxPopOut";
 
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
-import { CardPopOut } from "./CardPopOut";
-import { HistoryPopOut } from "./HistoryPopOut";
 
 interface Props {
   scale: number;
   config: GenericObjectType;
+  loginCallback: (value: boolean) => void;
 }
 
 interface State {
@@ -52,7 +53,7 @@ class PopOut extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { config, scale } = this.props;
+    const { config, scale, loginCallback } = this.props;
     const { type, toggle, customData } = config;
 
     let component;
@@ -74,6 +75,7 @@ class PopOut extends React.Component<Props, State> {
             scale={scale}
             onHide={this._onHide}
             transitionComplete={this._transitionComplete}
+            loginCallback={loginCallback}
           />
         );
         break;
@@ -125,6 +127,7 @@ class PopOut extends React.Component<Props, State> {
             scale={scale}
             onHide={this._onHide}
             transitionComplete={this._transitionComplete}
+            customData={customData}
           />
         );
         break;
@@ -254,6 +257,7 @@ class PopOut extends React.Component<Props, State> {
             scale={scale}
             onHide={this._onHide}
             transitionComplete={this._transitionComplete}
+            loginCallback={loginCallback}
           />
         );
         break;

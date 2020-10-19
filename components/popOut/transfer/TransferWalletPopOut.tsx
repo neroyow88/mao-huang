@@ -8,13 +8,11 @@ import { ImageContainer } from "../../share/ImageContainer";
 import { GameWallet } from "./GameWallet";
 import { CustomDropdownOption } from "./CustomDropdownOption";
 
-import { DropdownOptions } from "../../../scripts/constant/DropdownOptionsConstant";
-import { apiClient } from "../../../scripts/ApiClient";
-import { PopOutType, ApiPath } from "../../../scripts/WebConstant";
-import { popOutHandler } from "../../../scripts/PopOutHandler";
-import { dataSource } from "../../../scripts/dataSource/DataSource";
+import { ApiPath, PlatformId, GameIdList } from "../../../scripts/WebConstant";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
+import { callApi } from "../../../scripts/ApiClient";
+import { convertToTwoDecimal } from "../../../scripts/Utils";
 
 interface Props {
   toggle: boolean;
@@ -25,38 +23,46 @@ interface Props {
 }
 
 interface State {
+  isLoading: boolean;
+  walletList: { [keys: string]: IWalletList };
   toWalletIndex: number;
+  toToggle: boolean;
   fromWalletIndex: number;
+  fromToggle: boolean;
 }
 
 class TransferWalletPopOut extends React.Component<Props, State> {
-  private _detail: IWithdrawDetails;
   private _amountRef: RefObject<HTMLInputElement>;
-  private _pinNumberRef: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
+      isLoading: true,
+      walletList: Object.create(null),
       toWalletIndex: -1,
+      toToggle: false,
       fromWalletIndex: -1,
+      fromToggle: false,
     };
 
     this._amountRef = React.createRef();
-    this._pinNumberRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
+    this._onAutoTransferClicked = this._onAutoTransferClicked.bind(this);
+    this._onReclaimClicked = this._onReclaimClicked.bind(this);
+
     this._toWalletSelected = this._toWalletSelected.bind(this);
+    this._toOptionToggle = this._toOptionToggle.bind(this);
     this._fromWalletSelected = this._fromWalletSelected.bind(this);
+    this._fromOptionToggle = this._fromOptionToggle.bind(this);
+    this._getBalance = this._getBalance.bind(this);
   }
 
   public componentDidMount(): void {
     const { toggle, transitionComplete } = this.props;
     if (toggle) {
-      const interval = setInterval((): void => {
-        transitionComplete();
-        clearInterval(interval);
-      }, 500);
+      this._getBalance(transitionComplete);
     } else {
       transitionComplete();
     }
@@ -64,28 +70,36 @@ class TransferWalletPopOut extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const { toggle, scale, onHide } = this.props;
-    const { toWalletIndex, fromWalletIndex } = this.state;
+    const {
+      toWalletIndex,
+      toToggle,
+      fromWalletIndex,
+      fromToggle,
+      walletList,
+    } = this.state;
 
-    const { wallets } = dataSource.playerModel;
-    const walletKey = Object.keys(wallets);
-    const gameWallets = walletKey.map(
-      (key: string, index: number): JSX.Element => {
-        if (index === 0) {
-          return null;
-        } else {
-          const option = DropdownOptions[key];
-          const balance = wallets[key];
-          return (
-            <GameWallet
-              src={option.src}
-              label={option.label}
-              balance={balance}
-              index={index}
-            />
-          );
-        }
+    const gameWallets = [];
+    GameIdList.forEach((id: PlatformId, index: number): void => {
+      const wallet = walletList[id];
+      if (id !== PlatformId.MAOHUANG && wallet) {
+        gameWallets.push(
+          <GameWallet
+            src={`wallet/${wallet.constant}_logo.png`}
+            label={wallet.title}
+            balance={wallet.balance}
+            index={index}
+          />
+        );
       }
-    );
+    });
+
+    const fromWallet = walletList[GameIdList[fromWalletIndex]];
+    const fromBalance = fromWallet
+      ? convertToTwoDecimal(fromWallet.balance)
+      : "  -";
+
+    const toWallet = walletList[GameIdList[toWalletIndex]];
+    const toBalance = toWallet ? convertToTwoDecimal(toWallet.balance) : "  -";
 
     return (
       <Modal
@@ -105,15 +119,20 @@ class TransferWalletPopOut extends React.Component<Props, State> {
               <div className="transfer-option-label">
                 因每个游戏平台均有独立的钱包，请游戏前将资金转至该游戏平台，或使用【自动户内转账】功能。
               </div>
-              <div id="auto-transfer-button">
+              <div
+                id="auto-transfer-button"
+                onClick={this._onAutoTransferClicked}
+              >
                 <span>自动户内转帐</span>
               </div>
-              <div id="reclaim-balance-button">
+              <div id="reclaim-balance-button" onClick={this._onReclaimClicked}>
                 <span>一键回收</span>
               </div>
             </div>
             <div id="transfer-label-container" className="row-container">
+              <div className="transfer-balance-label">{`余額：${fromBalance}`}</div>
               <div className="transfer-label">从</div>
+              <div className="transfer-balance-label">{`余額：${toBalance}`}</div>
               <div className="transfer-label">转至</div>
               <div className="transfer-label">金额</div>
             </div>
@@ -123,17 +142,21 @@ class TransferWalletPopOut extends React.Component<Props, State> {
               onSubmit={this._onFormSubmitted}
             >
               <CustomDropdownOption
-                options={DropdownOptions}
-                selectedIndex={toWalletIndex}
-                onSelected={this._toWalletSelected}
+                walletList={walletList}
+                toggle={fromToggle}
+                selectedIndex={fromWalletIndex}
+                onToggle={this._fromOptionToggle}
+                onSelected={this._fromWalletSelected}
               />
               <div id="transfer-logo-container">
                 <ImageContainer src="wallet/transfer_logo.png" scale={0.25} />
               </div>
               <CustomDropdownOption
-                options={DropdownOptions}
-                selectedIndex={fromWalletIndex}
-                onSelected={this._fromWalletSelected}
+                walletList={walletList}
+                toggle={toToggle}
+                selectedIndex={toWalletIndex}
+                onToggle={this._toOptionToggle}
+                onSelected={this._toWalletSelected}
               />
               <FormInputBox
                 id="amount"
@@ -156,32 +179,81 @@ class TransferWalletPopOut extends React.Component<Props, State> {
 
   private _onFormSubmitted(e): void {
     e.preventDefault();
-    const amount = this._amountRef.current.value;
-    const pinNumber = this._pinNumberRef.current.value;
-    const detail = this._detail;
 
-    const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err && !result) {
-      } else {
-        const { invoice } = result;
-        popOutHandler.showPopOut(PopOutType.WITHDRAW_SUCCESS, { invoice });
+    const { fromWalletIndex, toWalletIndex } = this.state;
+    const from = GameIdList[fromWalletIndex];
+    const to = GameIdList[toWalletIndex];
+    const amount = this._amountRef.current.value;
+
+    const onResultReturn = (result: GenericObjectType, error: string): void => {
+      if (result && !error) {
+        this._amountRef.current.value = "";
+        this.setState({ fromWalletIndex: -1, toWalletIndex: -1 });
+        this._getBalance();
       }
     };
 
-    const params = {
-      amount,
-      pinNumber,
-      detail,
+    const params = new FormData();
+    params.append("out", from);
+    params.append("in", to);
+    params.append("amount", amount);
+
+    const config = {
+      path: ApiPath.TRANSFER_BALANCE,
+      callback: onResultReturn,
+      params: params,
     };
-    apiClient.callApi(ApiPath.WITHDRAW, onResultReturn, params);
+    callApi(config);
   }
 
-  private _toWalletSelected(index: number): void {
-    this.setState({ toWalletIndex: index });
+  private _onAutoTransferClicked(): void {}
+
+  private _onReclaimClicked(): void {
+    const { isLoading } = this.state;
+
+    if (!isLoading) {
+      const onResultReturn = (result, error): void => {
+        if (result && !error) {
+          const { getBalance } = this.props.customData;
+          const cb = (walletList: { [keys: string]: IWalletList }): void => {
+            this.setState({ isLoading: false, walletList: walletList });
+          };
+          getBalance(cb);
+        }
+      };
+
+      const config = {
+        path: ApiPath.RESTORE_BALANCE,
+        callback: onResultReturn,
+      };
+      callApi(config);
+      this.setState({ isLoading: true });
+    }
   }
 
   private _fromWalletSelected(index: number): void {
-    this.setState({ fromWalletIndex: index });
+    this.setState({ fromWalletIndex: index, fromToggle: false });
+  }
+
+  private _fromOptionToggle(): void {
+    this.setState({ fromToggle: !this.state.fromToggle, toToggle: false });
+  }
+
+  private _toWalletSelected(index: number): void {
+    this.setState({ toWalletIndex: index, toToggle: false });
+  }
+
+  private _toOptionToggle(): void {
+    this.setState({ toToggle: !this.state.toToggle, fromToggle: false });
+  }
+
+  private _getBalance(callback?: NoParamReturnNulFunction): void {
+    const { getBalance } = this.props.customData;
+    const cb = (walletList: { [keys: string]: IWalletList }): void => {
+      this.setState({ isLoading: false, walletList: walletList });
+      callback && callback();
+    };
+    getBalance(cb);
   }
 }
 

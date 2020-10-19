@@ -17,11 +17,13 @@
 #mails-container {
   margin-top: 65px;
   margin-left: 65px;
+  align-items: flex-start;
 
   #mail-list-container {
     width: 300px;
     height: 370px;
     justify-content: flex-start;
+    font-size: 18px;
 
     .mail-title {
       position: relative;
@@ -34,9 +36,17 @@
         height: 10px;
         background-color: #fcb715;
         border-radius: 12px;
-        left: -15px;
-        top: 5px;
+        left: -20px;
+        top: 8px;
       }
+    }
+
+    .mail-unread {
+      color: white;
+    }
+
+    .mail-read {
+      color: gray;
     }
   }
 
@@ -53,19 +63,15 @@
       }
 
       #message-content {
-        margin-top: 24px;
+        height: calc(100% - 75px);
+        margin-top: 25px;
+        padding-bottom: 50px;
+        margin-left: 80px;
+        margin-right: 80px;
 
-        .sender-label,
         .mailbox-label {
           color: white;
           font-size: 16px;
-          margin-bottom: 18px;
-          margin-left: 83px;
-          margin-right: 83px;
-        }
-
-        .sender-label {
-          align-self: flex-end;
         }
       }
     }
@@ -81,12 +87,4 @@
       }
     }
   }
-}
-
-.mail-unread {
-  color: white;
-}
-
-.mail-read {
-  color: gray;
 }

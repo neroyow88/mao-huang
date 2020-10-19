@@ -2,8 +2,7 @@
   width: 100%;
   height: 360px;
   margin-top: 50px;
-  display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 
   .history-item-container {
     width: 700px;
@@ -11,7 +10,6 @@
     display: flex;
     align-items: center;
     color: white;
-    font-size: 16px;
 
     .history-item-content {
       width: 620px;
@@ -19,19 +17,19 @@
 
       .date {
         width: 150px;
-        margin-right: 100px;
+        margin-right: 70px;
       }
 
       .transaction {
-        width: 105px;
-        margin-right: 85px;
+        width: 150px;
+        margin-right: 65px;
         display: flex;
         justify-content: center;
       }
 
       .status {
-        width: 40px;
-        margin-right: 13px;
+        width: 50px;
+        margin-right: 8px;
         display: flex;
         justify-content: center;
       }
@@ -44,13 +42,22 @@
     }
   }
 
-  #history-header-container {
+  .history-header-font {
     color: black;
     background-color: #fcb715;
     font-weight: bold;
+    font-size: 18px;
+  }
+
+  .history-content-font {
+    font-size: 16px;
   }
 
   .dark-background {
     background-color: black;
   }
+}
+
+#history-page-container {
+  width: 100%;
 }

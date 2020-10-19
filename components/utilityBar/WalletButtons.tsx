@@ -28,7 +28,10 @@ class WalletButtons extends React.Component<Props, State> {
     );
   }
 
-  private _onClickRetrieve(): void {}
+  private _onClickRetrieve(): void {
+    const { onClickRetrieve } = this.props;
+    onClickRetrieve && onClickRetrieve();
+  }
 
   private _onClickHistory(): void {
     const { onClickHistory } = this.props;

@@ -4,8 +4,6 @@ import { ImageContainer } from "../share/ImageContainer";
 import { FormInputBox } from "../share/FormInputBox";
 import { FormButton } from "../share/FormButton";
 
-import { dataSource } from "../../scripts/dataSource/DataSource";
-import { apiClient } from "../../scripts/ApiClient";
 import { ErrorType } from "../../scripts/server/Error";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import {
@@ -13,18 +11,26 @@ import {
   NoticePopOutConfig,
   ApiPath,
 } from "../../scripts/WebConstant";
+import { callApi } from "../../scripts/ApiClient";
+import { LoginStatusModel } from "../../scripts/dataSource/LoginStatusModel";
 
-interface Props {}
+interface Props {
+  isMobile: boolean;
+  model: LoginStatusModel;
+  loginCallback: (value: boolean, name?: string) => void;
+}
 
 class LoginBar extends React.Component<Props> {
   private _usernameRef: RefObject<HTMLInputElement>;
   private _passwordRef: RefObject<HTMLInputElement>;
+  private _loginFailCount: number;
 
   constructor(props: Props) {
     super(props);
 
     this._usernameRef = React.createRef();
     this._passwordRef = React.createRef();
+    this._loginFailCount = 0;
 
     this._renderLoginBarMobile = this._renderLoginBarMobile.bind(this);
     this._renderLoginBarBrowser = this._renderLoginBarBrowser.bind(this);
@@ -40,7 +46,7 @@ class LoginBar extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = dataSource.systemModel;
+    const { isMobile } = this.props;
     if (isMobile) {
       return this._renderLoginBarMobile();
     } else {
@@ -63,14 +69,13 @@ class LoginBar extends React.Component<Props> {
   }
 
   private _renderLoginBarBrowser(): JSX.Element {
-    const { playerModel } = dataSource;
+    const { model } = this.props;
 
-    if (playerModel) {
-      const { username } = playerModel;
+    if (model.isLogin) {
       return (
         <div id="login-bar-container-browser">
           <div id="login-bar" className="row-container">
-            <div id="username-label">{`欢迎您 , ${username}`}</div>
+            <div id="username-label">{`欢迎您 , ${model.username}`}</div>
             <div id="image-container">
               <ImageContainer src={"member.png"} />
             </div>
@@ -163,29 +168,41 @@ class LoginBar extends React.Component<Props> {
   }
 
   private _onLogin(): void {
-    const { isMobile } = dataSource.systemModel;
+    const { isMobile, loginCallback } = this.props;
 
-    if (isMobile) {
+    if (this._loginFailCount >= 3) {
       popOutHandler.showPopOut(PopOutType.LOGIN);
     } else {
-      const username = this._usernameRef.current.value;
-      const password = this._passwordRef.current.value;
-      const onResultReturn = (result: GenericObjectType, err: string): void => {
-        if (err && !result) {
-          if (err === ErrorType.INVALID_USER) {
-          } else if (err === ErrorType.INVALID_PASSWORD) {
+      if (isMobile) {
+        popOutHandler.showPopOut(PopOutType.LOGIN);
+      } else {
+        const username = this._usernameRef.current.value;
+        const password = this._passwordRef.current.value;
+        const onResultReturn = (
+          result: GenericObjectType,
+          err: string
+        ): void => {
+          if (err && !result) {
+            this._loginFailCount++;
+            if (err === ErrorType.INVALID_USER) {
+            } else if (err === ErrorType.INVALID_PASSWORD) {
+            }
+          } else {
+            this._loginFailCount = 0;
+            loginCallback && loginCallback(true, username);
           }
-        } else {
-          dataSource.updatePlayerModel(result);
-        }
-      };
+        };
 
-      const params = {
-        username,
-        password,
-        verificationCode: -1,
-      };
-      apiClient.callApi(ApiPath.LOGIN, onResultReturn, params);
+        const params = new FormData();
+        params.append("username", username);
+        params.append("password", password);
+        const config = {
+          path: ApiPath.LOGIN,
+          callback: onResultReturn,
+          params: params,
+        };
+        callApi(config);
+      }
     }
   }
 
@@ -194,15 +211,19 @@ class LoginBar extends React.Component<Props> {
   }
 
   private _onLogout(): void {
-    const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err && !result) {
-        console.error("Logout failed: ", err);
-      } else {
-        dataSource.updatePlayerModel(undefined);
-        popOutHandler.showNotice(NoticePopOutConfig.LOGOUT_SUCCESS);
-      }
+    const { loginCallback } = this.props;
+
+    const onResultReturn = (): void => {
+      this._loginFailCount = 0;
+      loginCallback && loginCallback(false);
+      popOutHandler.showNotice(NoticePopOutConfig.LOGOUT_SUCCESS);
     };
-    apiClient.callApi(ApiPath.LOGOUT, onResultReturn);
+
+    const config = {
+      path: ApiPath.LOGOUT,
+      callback: onResultReturn,
+    };
+    callApi(config);
   }
 }
 

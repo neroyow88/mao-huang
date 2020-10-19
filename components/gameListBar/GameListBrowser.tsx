@@ -1,10 +1,15 @@
 import React from "react";
 
-import { gameListModel } from "../../scripts/constant/GameListConstant";
 import { GameListDropdownMenu } from "./GameListDropdownMenu";
 import { GameListDropdownToggle } from "./GameListDropdownToggle";
 
-interface Props {}
+import { gameIcons } from "../../scripts/constant/GameListConstant";
+import { PlatformsModel } from "../../scripts/dataSource/PlatformsModel";
+import { GameIdList } from "../../scripts/WebConstant";
+
+interface Props {
+  model: PlatformsModel;
+}
 
 interface State {
   toggleIndex: number;
@@ -22,25 +27,41 @@ class GameListBrowser extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
+    const { model } = this.props;
     const { toggleIndex } = this.state;
 
-    const toggleComponents = gameListModel.map((item, index: number) => {
-      const toggle = toggleIndex === index;
-      return (
-        <GameListDropdownToggle
-          index={index}
-          title={item.title}
-          toggle={toggle}
-          onToggle={this._onToggle}
-        />
-      );
+    const toggleComponents = GameIdList.map((id: string, index: number) => {
+      const item = model.getGameListById(id);
+      if (item) {
+        const toggle = toggleIndex === index;
+        return (
+          <GameListDropdownToggle
+            index={index}
+            title={item.name}
+            toggle={toggle}
+            onToggle={this._onToggle}
+            key={`GameListDropdownToggle-${id}`}
+          />
+        );
+      }
+      return null;
     });
 
-    const menuComponents = gameListModel.map((item, index: number) => {
-      const toggle = toggleIndex === index;
-      return (
-        <GameListDropdownMenu index={index} toggle={toggle} content={item} />
-      );
+    const menuComponents = GameIdList.map((id: string, index: number) => {
+      const item = model.getGameListById(id);
+      if (item) {
+        const toggle = toggleIndex === index;
+        return (
+          <GameListDropdownMenu
+            index={id}
+            toggle={toggle}
+            prefix={item.constant}
+            contents={gameIcons[item.constant]}
+            key={`GameListDropdownMenu-${id}`}
+          />
+        );
+      }
+      return null;
     });
 
     return (

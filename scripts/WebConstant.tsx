@@ -1,21 +1,65 @@
 export enum ApiPath {
-  REGISTER = "register",
-  LOGIN = "login",
-  LOGOUT = "logout",
+  GET_ANNOUNCEMENT = "v2/site/get-announcements",
+  GET_BANNER = "v2/site/get-banners",
+  GET_CONTACT_INFO = "v2/site/info",
+  GET_GAME_LIST = "v2/game/list",
 
-  FORGOT_USERNAME = "forgotUsername",
-  FORGOT_PASSWORD = "forgotPassword",
-  CHANGE_PASSWORD = "changePassword",
-  CHANGE_PIN = "changePin",
-  CLAIM_DAILY_REWARD = "claimDailyReward",
-  CLAIM_MONTHLY_REWARD = "claimMonthlyReward",
+  REGISTER = "v2/user/register",
+  REQUEST_TAC = "v2/user/register-captcha",
+  VALIDATE_USERNAME = "v2/user/check-username-exist",
+  VALIDATE_PHONE_NUMBER = "v2/user/check-handphone-exist",
 
-  GET_BANK_ACCOUNT = "getBankAccount",
-  ADD_BANK_ACCOUNT = "addBankAccount",
-  WITHDRAW = "withdraw",
+  LOGIN = "v2/user/login",
+  LOGOUT = "v2/user/logout",
+  GET_LOGIN_STATUS = "v2/user/login-status",
+  GET_LOGIN_CAPTCHA = "v2/user/login-captcha",
+  GET_LOGIN_CAPTCHA_STATUS = "v2/user/login-captcha-status",
 
-  REQUEST_BANNER = "requestBanner",
-  REQUEST_VERIFICATION_CODE = "verificationCode",
+  FORGOT_USERNAME = "v2/user/forget-account",
+  REQUEST_FORGOT_USERNAME_TAC = "v2/user/forget-account-captcha",
+  FORGOT_PASSWORD = "v2/user/forget-password",
+  REQUEST_FORGOT_PASSWORD_TAC = "v2/user/forget-password-captcha",
+
+  GET_PROFILE = "v2/user/info",
+  CHANGE_PASSWORD = "v2/user/reset-login-password",
+  UPDATE_PIN = "v2/user/reset-withdraw-password",
+  REQUEST_UPDATE_PIN_TAC = "v2/user/reset-withdraw-password-captcha",
+
+  GET_DAILY_CHECK_IN = "v2/event/check-in-status",
+  DAILY_CHECK_IN = "v2/event/check-in",
+  GET_MONTHLY_CHECK_IN = "v2/tutorial/status",
+  MONTHLY_CHECK_IN = "v2/tutorial/accumulated-price",
+
+  GET_DEPOSIT_ACOUNTS = "v2/deposit/get-accounts",
+  DEPOSIT_SUBMIT = "v2/deposit/submit",
+  DEPOSIT_CONFIRM = "v2/deposit/confirm",
+  DEPOSIT_CANCEL = "v2/deposit/cancel",
+
+  GET_WITHDRAW_ACCOUNTS = "v2/withdraw/get-accounts",
+  GET_WITHDRAW_BANK_LIST = "v2/withdraw/get-bank-list",
+  ADD_WITHDRAW_ACCOUNT = "v2/withdraw/add-account",
+  DELETE_WITHDRAW_ACCOUNT = "v2/withdraw/delete-account",
+  SUBMIT_WITHDRAW = "v2/withdraw/submit",
+
+  GET_TRANSFER_BALANCES = "v2/transfer/get-balance",
+  GET_AUTO_TRANSFER_STATUS = "v2/transfer/get-auto-transfer",
+  UPDATE_AUTO_TRANSFER_STATUS = "v2/transfer/switch-auto-transfer",
+  RESTORE_BALANCE = "v2/transfer/restore-amount",
+  TRANSFER_BALANCE = "v2/transfer/transfer",
+  GET_HISTORY = "v2/cashflow/record",
+  LOGIN_GAME = "v2/transfer/login-game",
+
+  GET_MESSAGE = "v2/message/get",
+  DELETE_MESSAGE = "v2/message/delete",
+
+  // TODO
+  REQUEST_LIVE_CHAT = "v2/site/online-customer-service",
+}
+
+export enum ValidateState {
+  NONE = 0,
+  NOT_EXIST = 1,
+  EXIST = 2,
 }
 
 export enum PopOutType {
@@ -54,12 +98,6 @@ export enum NoticeType {
   ACCOUNT = 3,
 }
 
-export enum DepositType {
-  ALIPAY = 0,
-  BANK = 1,
-  WECHAT = 2,
-}
-
 export enum AudioList {
   KISS = "kiss",
   MONEY = "money",
@@ -73,6 +111,47 @@ export enum AboutType {
   WITHDRAW = 3,
   QUESTION_ANSWER = 4,
   PRIVACY = 5,
+}
+
+export enum PlatformId {
+  MAOHUANG = "1",
+  KG = "2",
+  EBET = "3",
+  AG = "4",
+  N2LIVE = "6",
+  KY = "7",
+  LE = "8",
+  KMG = "9",
+}
+
+export const GameIdList = [
+  PlatformId.MAOHUANG,
+  PlatformId.KY,
+  PlatformId.LE,
+  PlatformId.KG,
+  PlatformId.KMG,
+  PlatformId.AG,
+  PlatformId.EBET,
+  PlatformId.N2LIVE,
+];
+
+export enum DepositType {
+  ALIPAY = "1",
+  WECHAT = "2",
+  UNION = "3",
+  ONLINE_BANKING = "4",
+  BANK = "5",
+}
+
+export const DepositAccountIcon = {
+  "1": "wallet/pay_icon.png",
+  "2": "wallet/pay_wechat_icon.png",
+  "5": "wallet/bank_icon.png",
+};
+
+export enum MailStatus {
+  UNREAD = 1,
+  READ = 2,
 }
 
 export const NoticePopOutConfig = {

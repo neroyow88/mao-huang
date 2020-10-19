@@ -1,11 +1,13 @@
 import React from "react";
+import { callApi } from "../../../scripts/ApiClient";
+import { ApiPath, MailStatus } from "../../../scripts/WebConstant";
 
 import { ImageContainer } from "../../share/ImageContainer";
 
-import { dataSource } from "../../../scripts/dataSource/DataSource";
-import { MailModel } from "../../../scripts/dataSource/PlayerModel";
-
-interface Props {}
+interface Props {
+  mails: IMail[];
+  getMessageCallback: NoParamReturnNulFunction;
+}
 
 interface State {
   selectedIndex: number;
@@ -24,42 +26,60 @@ class Mails extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { mails } = dataSource.playerModel;
+    const { mails } = this.props;
     const { selectedIndex } = this.state;
 
-    const titleList = mails.map((mail: MailModel, index: number) => {
-      const readStyle = mail.isRead ? "mail-read" : "mail-unread";
+    const unreadMail = [];
+    const readMail = [];
+
+    mails.forEach((mail: IMail, index: number): void => {
       const selected =
         selectedIndex === index ? <div id="selected-circle"></div> : null;
 
-      return (
-        <div
-          className={`mail-title ${readStyle}`}
-          key={`mail-title-${index}`}
-          onClick={() => {
-            this._onMailSelected(index);
-          }}
-        >
-          {selected}
-          {mail.title}
-        </div>
-      );
+      if (mail.status === MailStatus.UNREAD) {
+        unreadMail.push(
+          <div
+            className="mail-title mail-unread"
+            key={`mail-title-${index}`}
+            onClick={() => {
+              this._onMailSelected(index);
+            }}
+          >
+            {selected}
+            {mail.title}
+          </div>
+        );
+      } else {
+        readMail.push(
+          <div
+            className="mail-title mail-read"
+            key={`mail-title-${index}`}
+            onClick={() => {
+              this._onMailSelected(index);
+            }}
+          >
+            {selected}
+            {mail.title}
+          </div>
+        );
+      }
     });
+
+    const mail = mails[selectedIndex];
 
     return (
       <div id="mails-container" className="row-container">
         <div id="mail-list-container" className="column-container">
-          {titleList}
+          <div className="mail-title yellow">未读信息</div>
+          {unreadMail}
+          <div className="mail-title yellow">已读信息</div>
+          {readMail}
         </div>
         <div id="inbox-container" className="column-container">
           <div id="message-container">
             <ImageContainer src={"mail/mailbox.png"} scale={0.2} />
             <div id="message-content" className="column-container">
-              <div className="mailbox-label">{mails[selectedIndex].title}</div>
-              <div className="mailbox-label">
-                {mails[selectedIndex].content}
-              </div>
-              <div className="sender-label">{mails[selectedIndex].sender}</div>
+              <div className="mailbox-label">{mail.message}</div>
             </div>
           </div>
           <div
@@ -79,7 +99,25 @@ class Mails extends React.Component<Props, State> {
   }
 
   private _onMailDeleted(): void {
-    // API client call delete mail
+    const { mails, getMessageCallback } = this.props;
+    const { selectedIndex } = this.state;
+    const selectedMail = mails[selectedIndex];
+
+    const onResultReturn = (result, error): void => {
+      if (result && !error) {
+        getMessageCallback && getMessageCallback();
+      }
+    };
+
+    const params = new FormData();
+    params.append("message_id", selectedMail.id);
+
+    const config = {
+      path: ApiPath.DELETE_MESSAGE,
+      callback: onResultReturn,
+      params: params,
+    };
+    callApi(config);
   }
 }
 

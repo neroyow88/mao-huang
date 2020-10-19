@@ -1,19 +1,15 @@
 import React, { CSSProperties } from "react";
-
-interface IDropdownOption {
-  src: string;
-  label: string;
-  value: string;
-}
+import { GameIdList, PlatformId } from "../../../scripts/WebConstant";
 
 interface Props {
-  options: { [keys: string]: IDropdownOption };
+  walletList: { [keys: string]: IWalletList };
   selectedIndex: number;
+  toggle: boolean;
+  onToggle: NoParamReturnNulFunction;
   onSelected: (index: number) => void;
 }
 
 interface State {
-  toggle: boolean;
   hoverIndex: number;
 }
 
@@ -22,7 +18,6 @@ class CustomDropdownOption extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      toggle: false,
       hoverIndex: -1,
     };
 
@@ -30,16 +25,17 @@ class CustomDropdownOption extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { options, selectedIndex } = this.props;
-    const { toggle, hoverIndex } = this.state;
+    const { walletList, selectedIndex, toggle } = this.props;
+    const { hoverIndex } = this.state;
 
-    const optionKeys = Object.keys(options);
-    const children = optionKeys.map(
-      (key: string, index: number): JSX.Element => {
-        const { src, label } = options[key];
+    const children = [];
+    GameIdList.forEach((id: PlatformId, index: number): void => {
+      const wallet = walletList[id];
+      if (wallet) {
+        const label = wallet.title;
         const isHover = hoverIndex === index;
         const style: CSSProperties = {
-          backgroundImage: `url(${src})`,
+          backgroundImage: `url(wallet/${wallet.constant}_logo.png)`,
           backgroundPosition: "5% 50%",
           backgroundRepeat: "no-repeat",
           backgroundSize: "35px",
@@ -47,7 +43,7 @@ class CustomDropdownOption extends React.Component<Props, State> {
           color: `${isHover ? "white" : "black"}`,
         };
 
-        return (
+        children.push(
           <div
             className="option-container"
             key={`option-container-${index}`}
@@ -63,12 +59,14 @@ class CustomDropdownOption extends React.Component<Props, State> {
           </div>
         );
       }
-    );
+    });
 
     const selectedOption =
-      selectedIndex === -1 ? undefined : options[selectedIndex];
+      selectedIndex === -1 ? undefined : walletList[GameIdList[selectedIndex]];
     const style: CSSProperties = {
-      backgroundImage: selectedOption ? `url(${selectedOption.src})` : "",
+      backgroundImage: selectedOption
+        ? `url(wallet/${selectedOption.constant}_logo.png)`
+        : "",
       backgroundPosition: "5% 50%",
       backgroundRepeat: "no-repeat",
       backgroundSize: "35px",
@@ -83,7 +81,7 @@ class CustomDropdownOption extends React.Component<Props, State> {
       <div className="dropdown-container" onClick={this._onToggle}>
         <div className="option-container" style={style}>
           <span style={spanStyle}>
-            {selectedOption ? selectedOption.label : "请选择"}
+            {selectedOption ? selectedOption.title : "请选择"}
           </span>
           <div className="arrow-down"></div>
         </div>
@@ -98,13 +96,13 @@ class CustomDropdownOption extends React.Component<Props, State> {
   }
 
   private _onToggle(): void {
-    this.setState({ toggle: !this.state.toggle });
+    const { onToggle } = this.props;
+    onToggle && onToggle();
   }
 
   private _onSelected(index: number): void {
     const { onSelected } = this.props;
     onSelected && onSelected(index);
-    this.setState({ toggle: false });
   }
 
   private _onHover(index: number): void {

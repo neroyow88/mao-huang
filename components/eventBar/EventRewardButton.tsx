@@ -1,14 +1,13 @@
 import React from "react";
 
 import { ImageContainer } from "../share/ImageContainer";
-
-import { apiClient } from "../../scripts/ApiClient";
 import { audioHandler } from "../../scripts/AudioHandler";
-import { dataSource } from "../../scripts/dataSource/DataSource";
 import { ApiPath, AudioList } from "../../scripts/WebConstant";
+import { callApi } from "../../scripts/ApiClient";
 
 interface Props {
   value: number;
+  canClaim: boolean;
 }
 
 interface State {
@@ -27,10 +26,8 @@ class EventRewardButton extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { value } = this.props;
-    const { playerModel } = dataSource;
-    const isOn = playerModel && playerModel.dailyReward === value;
-    const src = `event_bar/${value}_${isOn ? "light" : "dark"}.png`;
+    const { value, canClaim } = this.props;
+    const src = `event_bar/${value}_${canClaim ? "light" : "dark"}.png`;
 
     const { animated } = this.state;
     const rewardAnim = animated ? (
@@ -50,6 +47,9 @@ class EventRewardButton extends React.Component<Props, State> {
         className="reward-button"
         key={`reward-button-${value}`}
         onClick={this._onClaimReward}
+        style={{
+          cursor: canClaim ? "pointer" : "auto",
+        }}
       >
         <ImageContainer src={src} />
         {rewardAnim}
@@ -58,40 +58,33 @@ class EventRewardButton extends React.Component<Props, State> {
   }
 
   private _onClaimReward(): void {
-    const { value } = this.props;
-    const { playerModel } = dataSource;
+    const { value, canClaim } = this.props;
 
-    if (playerModel) {
-      const { dailyReward, username } = playerModel;
-      if (dailyReward === value) {
-        const onResultReturn = (
-          result: GenericObjectType,
-          err: string
-        ): void => {
-          console.log(result, err);
-          if (err) {
+    if (canClaim) {
+      const onResultReturn = (
+        result: GenericObjectType,
+        error: string
+      ): void => {
+        if (result && !error) {
+          this.setState({ animated: true });
+          const interval = setInterval((): void => {
+            this.setState({ animated: false });
+            clearInterval(interval);
+          }, 500);
+
+          if (value === 0) {
+            audioHandler.playAudio(AudioList.KISS);
           } else {
-            this.setState({ animated: true });
-            const interval = setInterval((): void => {
-              this.setState({ animated: false });
-              clearInterval(interval);
-            }, 500);
-
-            if (value === 0) {
-              audioHandler.playAudio(AudioList.KISS);
-            } else {
-              audioHandler.playAudio(AudioList.MONEY);
-            }
-            // dataSource.updatePlayerModel(result);
+            audioHandler.playAudio(AudioList.MONEY);
           }
-        };
+        }
+      };
 
-        const params = {
-          username,
-          value,
-        };
-        apiClient.callApi(ApiPath.CLAIM_DAILY_REWARD, onResultReturn, params);
-      }
+      const config = {
+        path: ApiPath.DAILY_CHECK_IN,
+        callback: onResultReturn,
+      };
+      callApi(config);
     }
   }
 }

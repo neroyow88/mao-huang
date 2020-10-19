@@ -5,7 +5,7 @@ import { FormInputBox } from "../share/FormInputBox";
 import { FormButton } from "../share/FormButton";
 import { PopOutTitle } from "../share/PopOutTitle";
 
-import { apiClient } from "../../scripts/ApiClient";
+import { callApi } from "../../scripts/ApiClient";
 import { NoticePopOutConfig, ApiPath } from "../../scripts/WebConstant";
 import { ErrorType } from "../../scripts/server/Error";
 import { popOutHandler } from "../../scripts/PopOutHandler";
@@ -116,6 +116,7 @@ class ForgotPasswordPopOut extends React.Component<Props> {
     e.preventDefault();
     const username = this._usernameRef.current.value;
     const newPassword = this._passwordRef.current.value;
+    const phoneNumber = this._phoneNumberRef.current.value;
     const verificationCode = this._verificationCodeRef.current.value;
 
     const onResultReturn = (result: GenericObjectType, err: string): void => {
@@ -126,20 +127,30 @@ class ForgotPasswordPopOut extends React.Component<Props> {
           );
         }
       } else {
+        popOutHandler.hidePopOut();
         popOutHandler.showNotice(NoticePopOutConfig.CHANGE_PASSWORD_SUCCESS);
       }
     };
 
-    const params = {
-      username,
-      newPassword,
-      verificationCode,
+    const params = new FormData();
+    params.append("username", username);
+    params.append("password", newPassword);
+    params.append("password_repeat", newPassword);
+    params.append("handphone", phoneNumber);
+    params.append("tac", verificationCode);
+
+    const config = {
+      path: ApiPath.FORGOT_PASSWORD,
+      callback: onResultReturn,
+      params: params,
     };
-    apiClient.callApi(ApiPath.FORGOT_PASSWORD, onResultReturn, params);
+    callApi(config);
   }
 
   private _getVerificationCode(): void {
+    const username = this._usernameRef.current.value;
     const phoneNumber = this._phoneNumberRef.current.value;
+
     const onResultReturn = (result: GenericObjectType, err: string): void => {
       if (err && !result) {
         if (err === ErrorType.INVALID_PHONE_NUMBER) {
@@ -150,12 +161,16 @@ class ForgotPasswordPopOut extends React.Component<Props> {
       }
     };
 
-    const params = { phoneNumber };
-    apiClient.callApi(
-      ApiPath.REQUEST_VERIFICATION_CODE,
-      onResultReturn,
-      params
-    );
+    const params = new FormData();
+    params.append("username", username);
+    params.append("handphone", phoneNumber);
+
+    const config = {
+      path: ApiPath.REQUEST_FORGOT_PASSWORD_TAC,
+      callback: onResultReturn,
+      params: params,
+    };
+    callApi(config);
   }
 }
 

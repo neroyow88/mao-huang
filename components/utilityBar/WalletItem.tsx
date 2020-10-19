@@ -4,7 +4,7 @@ import { convertToTwoDecimal } from "../../scripts/Utils";
 
 interface Props {
   index: number;
-  name: string;
+  title: string;
   balance: number;
 }
 
@@ -16,7 +16,7 @@ class WalletItem extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { index, name, balance } = this.props;
+    const { index, title, balance } = this.props;
     const style = { backgroundColor: index % 2 === 1 ? "#1E202F" : "#34363F" };
 
     return (
@@ -26,7 +26,7 @@ class WalletItem extends React.Component<Props, State> {
         style={style}
       >
         <div className="wallet-label white" key={`wallet-name-${index}`}>
-          {name}
+          {title}
         </div>
         <div className="wallet-label white" key={`wallet-balance-${index}`}>
           {convertToTwoDecimal(balance)}

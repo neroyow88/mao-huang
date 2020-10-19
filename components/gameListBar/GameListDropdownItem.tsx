@@ -1,14 +1,14 @@
 import React from "react";
+import { loginGame } from "../../scripts/ApiClient";
 
 interface Props {
-  index: number;
+  index: string;
   src: string;
-  onClick: (index: number) => void;
+  gameCode?: string;
 }
 
 interface State {
   hover: boolean;
-  selectedIndex: number;
 }
 
 class GameListDropdownItem extends React.Component<Props, State> {
@@ -17,7 +17,6 @@ class GameListDropdownItem extends React.Component<Props, State> {
 
     this.state = {
       hover: false,
-      selectedIndex: -1,
     };
 
     this._onHover = this._onHover.bind(this);
@@ -58,8 +57,27 @@ class GameListDropdownItem extends React.Component<Props, State> {
   }
 
   private _onClick(): void {
-    const { index, onClick } = this.props;
-    onClick && onClick(index);
+    const { index, gameCode } = this.props;
+    loginGame(index, gameCode);
+
+    // const onResultReturn = (result, error): void => {
+    //   if (result && !error) {
+    //     const url = result.data;
+    //     window.open(url, "_blank");
+    //   }
+    // };
+
+    // const params = new FormData();
+    // params.append("platform", index);
+    // gameCode && params.append("gamecode", gameCode);
+
+    // const config = {
+    //   path: ApiPath.LOGIN_GAME,
+    //   callback: onResultReturn,
+    //   params: params,
+    // };
+
+    // callApi(config);
   }
 }
 

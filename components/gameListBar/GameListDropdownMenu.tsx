@@ -2,29 +2,24 @@ import React from "react";
 import { GameListDropdownItem } from "./GameListDropdownItem";
 
 interface Props {
-  index: number;
+  index: string;
   toggle: boolean;
-  content: IGameListItem;
+  prefix: string;
+  contents: string[];
 }
 
-interface State {
-  selectedIndex: number;
-}
+interface State {}
 
 class GameListDropdownMenu extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      selectedIndex: -1,
-    };
 
     this._renderDropdownItems = this._renderDropdownItems.bind(this);
     this._onItemSelected = this._onItemSelected.bind(this);
   }
 
   public render(): JSX.Element {
-    const { index, toggle, content } = this.props;
+    const { index, toggle, prefix } = this.props;
     const yPos = toggle ? -1 : -100;
 
     return (
@@ -39,7 +34,7 @@ class GameListDropdownMenu extends React.Component<Props, State> {
             key={`dropdown-menu-title-${index}`}
           >
             <img
-              src={`game_list/${content.prefix}/logo.png`}
+              src={`game_list/${prefix}/logo.png`}
               style={{ transform: "scale(0.5)" }}
             />
           </div>
@@ -55,21 +50,22 @@ class GameListDropdownMenu extends React.Component<Props, State> {
   }
 
   private _renderDropdownItems(): JSX.Element[] {
-    const { index, content } = this.props;
+    const { index, prefix, contents } = this.props;
+
     let components = [];
-    if (content.childs && content.childs.length > 0) {
-      components = content.childs.map((child: string, id: number) => {
-        const convertIndex = index * 100 + id;
-        const url = `game_list/${content.prefix}/${child}`;
-        return (
-          <GameListDropdownItem
-            index={convertIndex}
-            src={url}
-            onClick={this._onItemSelected}
-          />
-        );
-      });
-    }
+    components = contents.map((child: string, id: number) => {
+      const url = `game_list/${prefix}/${child}`;
+      const gameCode = prefix === "KMG" ? child : undefined;
+
+      return (
+        <GameListDropdownItem
+          index={index}
+          src={url}
+          gameCode={gameCode}
+          key={`game-list-dropdown-item-${index}-${id}`}
+        />
+      );
+    });
 
     return components;
   }

@@ -12,9 +12,21 @@ import { PopOut } from "./popOut/PopOut";
 
 import { PopOutType } from "../scripts/WebConstant";
 import { popOutHandler } from "../scripts/PopOutHandler";
+import { LoginStatusModel } from "../scripts/dataSource/LoginStatusModel";
+import { PlatformsModel } from "../scripts/dataSource/PlatformsModel";
+import { BannersModel } from "../scripts/dataSource/BannersModel";
+
+interface IDataSource {
+  isMobile: boolean;
+  loginStatus: LoginStatusModel;
+  platforms: PlatformsModel;
+  banners: BannersModel;
+}
 
 interface Props {
   scale: number;
+  loginCallback: (value: boolean, name?: string) => void;
+  dataSource: IDataSource;
 }
 
 interface State {
@@ -59,19 +71,28 @@ class HomeMobileView extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { scale } = this.props;
+    const { scale, loginCallback, dataSource } = this.props;
     const { popOutConfig } = this.state;
-
+    const { isMobile, loginStatus, platforms, banners } = dataSource;
+    const { isLogin } = loginStatus;
     return (
       <div id="map-mobile" style={{ transform: `scale(${scale})` }}>
-        <LoginBar />
-        <Slider />
-        <NoticeBoard />
-        <Cards />
-        <EventBar />
-        <GameListBar />
-        <About />
-        <PopOut scale={scale} config={popOutConfig} />
+        <LoginBar
+          isMobile={isMobile}
+          model={loginStatus}
+          loginCallback={loginCallback}
+        />
+        <Slider isMobile={isMobile} model={banners} />
+        <NoticeBoard isMobile={isMobile} />
+        <Cards isMobile={isMobile} isLogin={isLogin} />
+        <EventBar isMobile={isMobile} isLogin={isLogin} />
+        <GameListBar isMobile={isMobile} model={platforms} />
+        <About isMobile={isMobile} showAbout={undefined} />
+        <PopOut
+          scale={scale}
+          config={popOutConfig}
+          loginCallback={loginCallback}
+        />{" "}
       </div>
     );
   }

@@ -33,7 +33,7 @@ class BannerPopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale, onHide, customData } = this.props;
-    const { src } = customData;
+    const { name, src } = customData;
     return (
       <Modal
         isOpen={toggle}
@@ -43,7 +43,7 @@ class BannerPopOut extends React.Component<Props> {
         cssModule={customStyle}
       >
         <div id="pop-out-container" style={{ transform: `scale(${scale})` }}>
-          <PopOutTitle label="猫皇520" onHide={onHide} />
+          <PopOutTitle label={name} onHide={onHide} />
           <div id="banner-pop-out-container">
             <ImageContainer src={src} />
           </div>

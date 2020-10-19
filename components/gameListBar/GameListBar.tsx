@@ -1,10 +1,13 @@
 import React from "react";
 
-import { dataSource } from "../../scripts/dataSource/DataSource";
 import { GameListMobile } from "./GameListMobile";
 import { GameListBrowser } from "./GameListBrowser";
+import { PlatformsModel } from "../../scripts/dataSource/PlatformsModel";
 
-interface Props {}
+interface Props {
+  isMobile: boolean;
+  model: PlatformsModel;
+}
 
 class GameListBar extends React.Component<Props> {
   constructor(props: Props) {
@@ -12,11 +15,11 @@ class GameListBar extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = dataSource.systemModel;
+    const { isMobile, model } = this.props;
     if (isMobile) {
       return <GameListMobile />;
     } else {
-      return <GameListBrowser />;
+      return <GameListBrowser model={model} />;
     }
   }
 }

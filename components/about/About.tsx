@@ -4,10 +4,10 @@ import { AboutButton } from "./AboutButton";
 import { AboutBrowser } from "./AboutBrowser";
 import { AboutCustomerService } from "./AboutCustomerService";
 
-import { dataSource } from "../../scripts/dataSource/DataSource";
 import { AboutType } from "../../scripts/WebConstant";
 
 interface Props {
+  isMobile: boolean;
   showAbout?: (index: AboutType) => void;
 }
 
@@ -21,7 +21,7 @@ class About extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = dataSource.systemModel;
+    const { isMobile } = this.props;
     if (isMobile) {
       return this._renderMobileView();
     } else {

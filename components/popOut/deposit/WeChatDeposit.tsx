@@ -3,7 +3,7 @@ import React from "react";
 import { InstructionBox } from "./InstructionBox";
 
 interface Props {
-  balance: number;
+  amount: number;
   onBack: NoParamReturnNulFunction;
   onConfirm: NoParamReturnNulFunction;
 }
@@ -20,7 +20,7 @@ class WeChatDeposit extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { balance } = this.props;
+    const { amount } = this.props;
 
     return (
       <div
@@ -42,7 +42,7 @@ class WeChatDeposit extends React.Component<Props> {
           <InstructionBox
             index={3}
             title="充值金额"
-            value={`${balance}`}
+            value={`${amount}`}
             optionalText="元"
             canCopy
           />
@@ -50,7 +50,7 @@ class WeChatDeposit extends React.Component<Props> {
         <div id="deposit-description-content" className="column-container">
           <div className="description-label">
             猫皇财务部已经收到您发出的
-            <span>{`${balance}`}元</span>
+            <span>{`${amount}`}元</span>
             充值通知，请在
             <span>10分钟</span>
             内完成转账。

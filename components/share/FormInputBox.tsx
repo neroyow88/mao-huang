@@ -1,4 +1,5 @@
 import React from "react";
+import { ValidateState } from "../../scripts/WebConstant";
 
 import { ImageContainer } from "./ImageContainer";
 
@@ -13,6 +14,8 @@ interface Props {
   inputRef?: any;
   number?: boolean;
   color?: string;
+  onValidate?: (value: string) => void;
+  validateState?: ValidateState;
 }
 
 interface State {
@@ -27,7 +30,9 @@ class FormInputBox extends React.Component<Props, State> {
       showPassword: false,
     };
 
+    this._renderIcon = this._renderIcon.bind(this);
     this._showPasswordClicked = this._showPasswordClicked.bind(this);
+    this._validateInput = this._validateInput.bind(this);
   }
 
   public render(): JSX.Element {
@@ -65,13 +70,6 @@ class FormInputBox extends React.Component<Props, State> {
       finalType = "text";
     }
 
-    const passwordIcon =
-      type === "password" ? (
-        <div className="icon-container" onClick={this._showPasswordClicked}>
-          <ImageContainer src={"pop_out/password_eye.png"} scale={0.31} />
-        </div>
-      ) : null;
-
     return (
       <div className="input-box-container">
         <input
@@ -84,15 +82,52 @@ class FormInputBox extends React.Component<Props, State> {
           minLength={minLength}
           maxLength={maxLength}
           ref={inputRef}
+          onBlur={this._validateInput}
         ></input>
-        {passwordIcon}
+        {this._renderIcon()}
       </div>
     );
+  }
+
+  private _renderIcon(): JSX.Element {
+    const { type, validateState } = this.props;
+
+    if (type === "password") {
+      return (
+        <div className="icon-container" onClick={this._showPasswordClicked}>
+          <ImageContainer src={"pop_out/password_eye.png"} scale={0.31} />
+        </div>
+      );
+    } else if (validateState) {
+      switch (validateState) {
+        case ValidateState.NOT_EXIST:
+          return (
+            <div className="icon-container" onClick={this._showPasswordClicked}>
+              <ImageContainer src={"pop_out/check.png"} scale={0.31} />
+            </div>
+          );
+        case ValidateState.EXIST:
+          return (
+            <div className="icon-container" onClick={this._showPasswordClicked}>
+              <ImageContainer src={"pop_out/error.png"} scale={0.31} />
+            </div>
+          );
+        default:
+          return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   private _showPasswordClicked(): void {
     const { showPassword } = this.state;
     this.setState({ showPassword: !showPassword });
+  }
+
+  private _validateInput(): void {
+    const { onValidate, inputRef } = this.props;
+    onValidate && onValidate(inputRef.current.value);
   }
 }
 

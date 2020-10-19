@@ -4,21 +4,31 @@ import { isMobile } from "react-device-detect";
 // Components
 import { HomeBrowserView } from "../components/HomeBrowserView";
 import { HomeMobileView } from "../components/HomeMobileView";
+import { LoadingView } from "../components/global/LoadingView";
+import { NavigationBar } from "../components/navigationBar/NavigationBar";
+import { CustomerService } from "../components/CustomerService";
 
 import { ApiPath } from "../scripts/WebConstant";
 import { loadingManager } from "../scripts/LoadingManager";
-import { dataSource } from "../scripts/dataSource/DataSource";
-import { apiClient } from "../scripts/ApiClient";
-import { LoadingView } from "../components/global/LoadingView";
-import { NavigationBar } from "../components/navigationBar/NavigationBar";
+import { callMultipleApi } from "../scripts/ApiClient";
+
+import { LoginStatusModel } from "../scripts/dataSource/LoginStatusModel";
+import { PlatformsModel } from "../scripts/dataSource/PlatformsModel";
+import { BannersModel } from "../scripts/dataSource/BannersModel";
+import { ContactModel } from "../scripts/dataSource/ContactModel";
 
 interface Props {}
 
 interface State {
-  isStart: boolean;
-  isLoading: boolean;
   scale: number;
   height: number;
+  isStart: boolean;
+  isLoading: boolean;
+  isMobile: boolean;
+  loginStatus: LoginStatusModel;
+  platforms: PlatformsModel;
+  contact: ContactModel;
+  banners: BannersModel;
 }
 
 export default class Home extends React.Component<Props, State> {
@@ -26,31 +36,59 @@ export default class Home extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      isStart: false,
-      isLoading: true,
       scale: 1,
       height: 0,
+      isStart: false,
+      isLoading: true,
+      isMobile: false,
+      loginStatus: undefined,
+      platforms: undefined,
+      contact: undefined,
+      banners: undefined,
     };
 
     this._onResize = this._onResize.bind(this);
     this._onAllTasksCompleted = this._onAllTasksCompleted.bind(this);
-
-    const onResultReturn = (result, err) => {
-      if (result && !err) {
-        dataSource.updateServerModel(result);
-      }
-    };
-    apiClient.callApi(ApiPath.REQUEST_BANNER, onResultReturn);
+    this._updateLogin = this._updateLogin.bind(this);
   }
 
   public componentDidMount(): void {
-    setInterval((): void => {
-      dataSource.updateSystemModel({ isMobile });
-      this.setState({ isStart: true });
-      this._onResize();
-      window.addEventListener("resize", this._onResize);
-      loadingManager.setOnAllTasksComplete(this._onAllTasksCompleted);
-    }, 10);
+    const onResultReturn = (results, err) => {
+      if (results && !err) {
+        const loginStatus = new LoginStatusModel(results[0].data.data);
+        const platforms = new PlatformsModel(results[1].data.data);
+        const contact = new ContactModel(results[2].data.data);
+        const banners = new BannersModel(results[3].data.data);
+
+        this.setState({
+          loginStatus: loginStatus,
+          banners: banners,
+          contact: contact,
+          platforms: platforms,
+        });
+
+        this.setState({ isStart: true, isMobile: isMobile });
+        this._onResize();
+        window.addEventListener("resize", this._onResize);
+        loadingManager.setOnAllTasksComplete(this._onAllTasksCompleted);
+      }
+    };
+
+    const configs = [
+      {
+        path: ApiPath.GET_LOGIN_STATUS,
+      },
+      {
+        path: ApiPath.GET_GAME_LIST,
+      },
+      {
+        path: ApiPath.GET_CONTACT_INFO,
+      },
+      {
+        path: ApiPath.GET_BANNER,
+      },
+    ];
+    callMultipleApi(configs, onResultReturn);
   }
 
   public componentWillUnmount(): void {
@@ -58,14 +96,29 @@ export default class Home extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { scale, height, isLoading, isStart } = this.state;
-    const { isMobile } = dataSource.systemModel;
+    const {
+      scale,
+      height,
+      isLoading,
+      isStart,
+      isMobile,
+      loginStatus,
+      platforms,
+      contact,
+      banners,
+    } = this.state;
+
+    const dataSource = { isMobile, loginStatus, platforms, contact, banners };
     if (isStart) {
       if (isMobile) {
         return (
           <div id="main-container" style={{ height: height }}>
             <LoadingView isLoading={isLoading} height={height} />
-            <HomeMobileView scale={scale} />
+            <HomeMobileView
+              scale={scale}
+              loginCallback={this._updateLogin}
+              dataSource={dataSource}
+            />
             <NavigationBar scale={scale} />
           </div>
         );
@@ -73,7 +126,12 @@ export default class Home extends React.Component<Props, State> {
         return (
           <div id="main-container" style={{ height: height }}>
             <LoadingView isLoading={isLoading} height={height} />
-            <HomeBrowserView scale={scale} />
+            <CustomerService />
+            <HomeBrowserView
+              scale={scale}
+              loginCallback={this._updateLogin}
+              dataSource={dataSource}
+            />
           </div>
         );
       }
@@ -87,7 +145,7 @@ export default class Home extends React.Component<Props, State> {
   }
 
   private _onResize(): void {
-    const { isMobile } = dataSource.systemModel;
+    const { isMobile } = this.state;
     let newScale;
     if (isMobile) {
       const maxWidth = 375;
@@ -104,5 +162,13 @@ export default class Home extends React.Component<Props, State> {
 
   private _onAllTasksCompleted(): void {
     this.setState({ isLoading: false });
+  }
+
+  private _updateLogin(isLogin: boolean, username?: string): void {
+    const loginStatus = new LoginStatusModel({
+      is_login: isLogin,
+      username: username ? username : undefined,
+    });
+    this.setState({ loginStatus: loginStatus });
   }
 }

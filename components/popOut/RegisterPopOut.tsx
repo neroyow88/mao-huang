@@ -5,8 +5,12 @@ import { FormInputBox } from "../share/FormInputBox";
 import { FormButton } from "../share/FormButton";
 import { PopOutTitle } from "../share/PopOutTitle";
 
-import { apiClient } from "../../scripts/ApiClient";
-import { NoticePopOutConfig, ApiPath } from "../../scripts/WebConstant";
+import { callApi } from "../../scripts/ApiClient";
+import {
+  NoticePopOutConfig,
+  ApiPath,
+  ValidateState,
+} from "../../scripts/WebConstant";
 import { ErrorType } from "../../scripts/server/Error";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 
@@ -19,11 +23,17 @@ interface Props {
   transitionComplete: NoParamReturnNulFunction;
 }
 
-class RegisterPopOut extends React.Component<Props> {
+interface State {
+  usernameValidate: ValidateState;
+  phoneNumberValidate: ValidateState;
+}
+
+class RegisterPopOut extends React.Component<Props, State> {
   private _usernameRef: RefObject<HTMLInputElement>;
   private _passwordRef: RefObject<HTMLInputElement>;
   private _phoneNumberRef: RefObject<HTMLInputElement>;
   private _verificationCodeRef: RefObject<HTMLInputElement>;
+  private _isSubmitting = false;
 
   constructor(props: Props) {
     super(props);
@@ -33,7 +43,14 @@ class RegisterPopOut extends React.Component<Props> {
     this._phoneNumberRef = React.createRef();
     this._verificationCodeRef = React.createRef();
 
+    this.state = {
+      usernameValidate: ValidateState.NONE,
+      phoneNumberValidate: ValidateState.NONE,
+    };
+
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
+    this._validateUsername = this._validateUsername.bind(this);
+    this._validatePhoneNumber = this._validatePhoneNumber.bind(this);
     this._getVerificationCode = this._getVerificationCode.bind(this);
   }
 
@@ -51,6 +68,7 @@ class RegisterPopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale, onHide } = this.props;
+    const { usernameValidate, phoneNumberValidate } = this.state;
 
     return (
       <Modal
@@ -68,10 +86,11 @@ class RegisterPopOut extends React.Component<Props> {
                 id="username"
                 placeholder="请输入用户名"
                 leftImage={"pop_out/account_logo.png"}
-                rightImage={"pop_out/check.png"}
                 min={4}
                 max={11}
                 inputRef={this._usernameRef}
+                onValidate={this._validateUsername}
+                validateState={usernameValidate}
               />
               <FormInputBox
                 id="password"
@@ -86,6 +105,8 @@ class RegisterPopOut extends React.Component<Props> {
                 id="phonenumber"
                 placeholder="请输入您的手机号码"
                 inputRef={this._phoneNumberRef}
+                onValidate={this._validatePhoneNumber}
+                validateState={phoneNumberValidate}
               />
               <FormButton
                 label="获取短信验证码"
@@ -116,32 +137,88 @@ class RegisterPopOut extends React.Component<Props> {
 
   private _onFormSubmitted(e): void {
     e.preventDefault();
-    const username = this._usernameRef.current.value;
-    const password = this._passwordRef.current.value;
-    const phoneNumber = this._phoneNumberRef.current.value;
-    const verificationCode = this._verificationCodeRef.current.value;
 
-    const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err && !result) {
-        if (err === ErrorType.INVALID_VERIFICATION_CODE) {
-          popOutHandler.showNotice(
-            NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
-          );
-        } else if (err === ErrorType.USER_ALREADY_EXIST) {
-          popOutHandler.showNotice(NoticePopOutConfig.USERNAME_ALREADY_EXIST);
+    if (!this._isSubmitting) {
+      const username = this._usernameRef.current.value;
+      const password = this._passwordRef.current.value;
+      const phoneNumber = this._phoneNumberRef.current.value;
+      const verificationCode = this._verificationCodeRef.current.value;
+
+      const onResultReturn = (result: GenericObjectType, err: string): void => {
+        if (err && !result) {
+          if (err === ErrorType.INVALID_VERIFICATION_CODE) {
+            popOutHandler.showNotice(
+              NoticePopOutConfig.VERIFICATION_CODE_INCORRECT
+            );
+          } else if (err === ErrorType.USER_ALREADY_EXIST) {
+            popOutHandler.showNotice(NoticePopOutConfig.USERNAME_ALREADY_EXIST);
+          }
+        } else {
+          popOutHandler.hidePopOut();
+          popOutHandler.showNotice(NoticePopOutConfig.REGISTER_SUCCESS);
         }
-      } else {
-        popOutHandler.showNotice(NoticePopOutConfig.REGISTER_SUCCESS);
-      }
-    };
+        this._isSubmitting = false;
+      };
 
-    const params = {
-      username,
-      password,
-      phoneNumber,
-      verificationCode,
-    };
-    apiClient.callApi(ApiPath.REGISTER, onResultReturn, params);
+      const params = new FormData();
+      params.append("username", username);
+      params.append("password", password);
+      params.append("password_repeat", password);
+      params.append("handphone", phoneNumber);
+      params.append("tac", verificationCode);
+
+      const config = {
+        path: ApiPath.REGISTER,
+        callback: onResultReturn,
+        params: params,
+      };
+      callApi(config);
+      this._isSubmitting = true;
+    }
+  }
+
+  private _validateUsername(username: string): void {
+    if (username.length > 0) {
+      const onResultReturn = (result: GenericObjectType): void => {
+        if (result.exist === 0) {
+          this.setState({ usernameValidate: ValidateState.NOT_EXIST });
+        } else if (result.exist === 1) {
+          this.setState({ usernameValidate: ValidateState.EXIST });
+        }
+      };
+
+      const params = new FormData();
+      params.append("username", username);
+
+      const config = {
+        path: ApiPath.VALIDATE_USERNAME,
+        callback: onResultReturn,
+        params: params,
+      };
+      callApi(config);
+    }
+  }
+
+  private _validatePhoneNumber(phoneNumber: string): void {
+    if (phoneNumber.length > 0) {
+      const onResultReturn = (result: GenericObjectType): void => {
+        if (result.exist === 0) {
+          this.setState({ phoneNumberValidate: ValidateState.NOT_EXIST });
+        } else if (result.exist === 1) {
+          this.setState({ phoneNumberValidate: ValidateState.EXIST });
+        }
+      };
+
+      const params = new FormData();
+      params.append("handphone", phoneNumber);
+
+      const config = {
+        path: ApiPath.VALIDATE_PHONE_NUMBER,
+        callback: onResultReturn,
+        params: params,
+      };
+      callApi(config);
+    }
   }
 
   private _getVerificationCode(): void {
@@ -156,14 +233,15 @@ class RegisterPopOut extends React.Component<Props> {
       }
     };
 
-    const params = {
-      phoneNumber,
+    const params = new FormData();
+    params.append("handphone", phoneNumber);
+
+    const config = {
+      path: ApiPath.REQUEST_TAC,
+      callback: onResultReturn,
+      params: params,
     };
-    apiClient.callApi(
-      ApiPath.REQUEST_VERIFICATION_CODE,
-      onResultReturn,
-      params
-    );
+    callApi(config);
   }
 }
 

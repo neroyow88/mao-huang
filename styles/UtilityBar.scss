@@ -73,14 +73,14 @@
               width: 50px;
               height: 20px;
               border-radius: 10px;
-              background-color: #01a201;
+              transition: background-color 0.3s;
             }
 
             #toggle-label {
               position: absolute;
               width: 36px;
               height: 18px;
-              top: 2px;
+              top: 3px;
               font-size: 10px;
               text-align: center;
             }

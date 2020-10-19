@@ -6,7 +6,7 @@ import { FormButton } from "../share/FormButton";
 import { PopOutTitle } from "../share/PopOutTitle";
 
 import { NoticePopOutConfig, ApiPath } from "../../scripts/WebConstant";
-import { apiClient } from "../../scripts/ApiClient";
+import { callApi } from "../../scripts/ApiClient";
 import { ErrorType } from "../../scripts/server/Error";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 
@@ -109,17 +109,23 @@ class ForgotUsernamePopOut extends React.Component<Props> {
           );
         }
       } else {
-        const { username } = result;
+        const { username } = result.data;
         console.log("My username: ", username);
+        popOutHandler.hidePopOut();
         popOutHandler.showNotice(NoticePopOutConfig.GET_USERNAME_SUCCESS);
       }
     };
 
-    const params = {
-      phoneNumber,
-      verificationCode,
+    const params = new FormData();
+    params.append("handphone", phoneNumber);
+    params.append("tac", verificationCode);
+
+    const config = {
+      path: ApiPath.FORGOT_USERNAME,
+      callback: onResultReturn,
+      params: params,
     };
-    apiClient.callApi(ApiPath.FORGOT_USERNAME, onResultReturn, params);
+    callApi(config);
   }
 
   private _getVerificationCode(): void {
@@ -134,12 +140,15 @@ class ForgotUsernamePopOut extends React.Component<Props> {
       }
     };
 
-    const params = { phoneNumber };
-    apiClient.callApi(
-      ApiPath.REQUEST_VERIFICATION_CODE,
-      onResultReturn,
-      params
-    );
+    const params = new FormData();
+    params.append("handphone", phoneNumber);
+
+    const config = {
+      path: ApiPath.REQUEST_FORGOT_USERNAME_TAC,
+      callback: onResultReturn,
+      params: params,
+    };
+    callApi(config);
   }
 }
 

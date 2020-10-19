@@ -3,7 +3,11 @@ import React from "react";
 import { InstructionBox } from "./InstructionBox";
 
 interface Props {
-  balance: number;
+  bankName: string;
+  bankAccName: string;
+  bankAccNumber: string;
+  amount: string;
+  remark: string;
   onBack: NoParamReturnNulFunction;
   onConfirm: NoParamReturnNulFunction;
 }
@@ -20,7 +24,7 @@ class BankDeposit extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { balance } = this.props;
+    const { bankName, bankAccName, bankAccNumber, amount, remark } = this.props;
 
     return (
       <div
@@ -29,25 +33,25 @@ class BankDeposit extends React.Component<Props> {
         style={{ background: "url(wallet/bank_bg.png) no-repeat center" }}
       >
         <div id="deposit-instruction-content" className="column-container">
-          <InstructionBox index={0} title="开户银行" value="平安银行" />
-          <InstructionBox index={1} title="户名" value="猫皇皇" canCopy />
+          <InstructionBox index={0} title="开户银行" value={bankName} />
+          <InstructionBox index={1} title="户名" value={bankAccName} canCopy />
           <InstructionBox
             index={2}
             title="卡(账)号"
-            value="6666555566663333999"
+            value={bankAccNumber}
             canCopy
           />
           <InstructionBox
             index={3}
             title="充值金额"
-            value={`${balance}`}
+            value={`${amount}`}
             optionalText="元"
             canCopy
           />
           <InstructionBox
             index={4}
             title="附言或备注"
-            value="B44B"
+            value={remark}
             canCopy
             isStar
           />
@@ -55,7 +59,7 @@ class BankDeposit extends React.Component<Props> {
         <div id="deposit-description-content" className="column-container">
           <div className="description-label">
             猫皇财务部已经收到您发出的
-            <span>{` ${balance}`}元 </span>
+            <span>{` ${amount}`}元 </span>
             充值通知，请在
             <span> 10分钟 </span>
             内完成转账。

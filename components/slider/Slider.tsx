@@ -7,14 +7,17 @@ import {
 } from "reactstrap";
 
 import { ImageContainer } from "../share/ImageContainer";
-import { dataSource } from "../../scripts/dataSource/DataSource";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
+import { BannersModel } from "../../scripts/dataSource/BannersModel";
 
 import customBrowserStyle from "../../styles/module/Carousel.module.scss";
 import customMobileStyle from "../../styles/module/CarouselMobile.module.scss";
 
-interface Props {}
+interface Props {
+  isMobile: boolean;
+  model: BannersModel;
+}
 
 interface State {
   activeIndex: number;
@@ -41,8 +44,8 @@ class Slider extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
+    const { isMobile } = this.props;
     const { activeIndex } = this.state;
-    const { isMobile } = dataSource.systemModel;
     const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
 
     return (
@@ -72,9 +75,9 @@ class Slider extends React.Component<Props, State> {
   }
 
   private _renderIndicator(): JSX.Element {
+    const { isMobile, model } = this.props;
     const { activeIndex } = this.state;
-    const { isMobile } = dataSource.systemModel;
-    const { banners } = dataSource.serverModel;
+    const { banners } = model;
     const customStyle = isMobile ? customMobileStyle : customBrowserStyle;
 
     return isMobile ? null : (
@@ -88,10 +91,10 @@ class Slider extends React.Component<Props, State> {
   }
 
   private _renderSlides(): JSX.Element[] {
-    const { banners } = dataSource.serverModel;
+    const { banners } = this.props.model;
     const slides = banners.map((item, index: number) => {
-      const { isMobile } = dataSource.systemModel;
-      const url = isMobile ? `mobile/${item.sliderSrc}` : item.sliderSrc;
+      const { isMobile } = this.props;
+      const url = item.sliderUrl;
       const height = isMobile ? 180 : 500;
       const scale = isMobile ? 375 / 1080 : 1;
       return (
@@ -117,16 +120,16 @@ class Slider extends React.Component<Props, State> {
   }
 
   private _next(): void {
+    const { banners } = this.props.model;
     const { activeIndex, animating } = this.state;
-    const { banners } = dataSource.serverModel;
     if (animating) return;
     const nextIndex = activeIndex === banners.length - 1 ? 0 : activeIndex + 1;
     this.setState({ activeIndex: nextIndex });
   }
 
   private _previous(): void {
+    const { banners } = this.props.model;
     const { activeIndex, animating } = this.state;
-    const { banners } = dataSource.serverModel;
     if (animating) return;
     const nextIndex = activeIndex === 0 ? banners.length - 1 : activeIndex - 1;
     this.setState({ activeIndex: nextIndex });
@@ -139,9 +142,10 @@ class Slider extends React.Component<Props, State> {
   }
 
   private _onBannerClicked(index: number): void {
-    const { banners } = dataSource.serverModel;
+    const { banners } = this.props.model;
     popOutHandler.showPopOut(PopOutType.BANNER, {
-      src: banners[index].popOutSrc,
+      name: banners[index].name,
+      src: banners[index].popOutUrl,
     });
   }
 }

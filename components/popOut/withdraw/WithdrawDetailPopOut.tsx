@@ -7,15 +7,10 @@ import { FormInputBox } from "../../share/FormInputBox";
 import { FormButton } from "../../share/FormButton";
 
 import { popOutHandler } from "../../../scripts/PopOutHandler";
-import { dataSource } from "../../../scripts/dataSource/DataSource";
-import { apiClient } from "../../../scripts/ApiClient";
-import {
-  PopOutType,
-  ApiPath,
-  NoticePopOutConfig,
-} from "../../../scripts/WebConstant";
+import { PopOutType, ApiPath } from "../../../scripts/WebConstant";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
+import { callApi } from "../../../scripts/ApiClient";
 
 interface Props {
   toggle: boolean;
@@ -26,16 +21,11 @@ interface Props {
 }
 
 class WithdrawDetailPopOut extends React.Component<Props> {
-  private _detail: IWithdrawDetails;
   private _amountRef: RefObject<HTMLInputElement>;
   private _pinNumberRef: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
-
-    const { index } = props.customData;
-    const { bankAccounts } = dataSource.playerModel;
-    this._detail = bankAccounts[index];
 
     this._amountRef = React.createRef();
     this._pinNumberRef = React.createRef();
@@ -58,8 +48,7 @@ class WithdrawDetailPopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale, customData } = this.props;
-    const { index } = customData;
-    const detail = this._detail;
+    const { detail } = customData;
 
     return (
       <Modal
@@ -75,7 +64,7 @@ class WithdrawDetailPopOut extends React.Component<Props> {
             id="withdraw-detail-container"
             className="pop-out-form-container column-container center"
           >
-            <BankAccount index={index} detail={detail} locked />
+            <BankAccount index={0} detail={detail} locked />
             <div id="withdraw-time-label">
               提款时间 : 早上8:00 至次日凌晨2:00。
             </div>
@@ -120,23 +109,25 @@ class WithdrawDetailPopOut extends React.Component<Props> {
     e.preventDefault();
     const amount = this._amountRef.current.value;
     const pinNumber = this._pinNumberRef.current.value;
-    const detail = this._detail;
+    const { detail } = this.props.customData;
 
-    const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err && !result) {
-        popOutHandler.showNotice(NoticePopOutConfig.PIN_INCORRECT);
-      } else {
-        const { invoice } = result;
-        popOutHandler.showPopOut(PopOutType.WITHDRAW_SUCCESS, { invoice });
+    const onResultReturn = (result: GenericObjectType, error: string): void => {
+      if (result && !error) {
+        popOutHandler.hidePopOut();
       }
     };
 
-    const params = {
-      amount,
-      pinNumber,
-      detail,
+    const params = new FormData();
+    params.append("withdraw_account_id", detail.accountId);
+    params.append("amount", amount);
+    params.append("secure_password", pinNumber);
+
+    const config = {
+      path: ApiPath.SUBMIT_WITHDRAW,
+      result: onResultReturn,
+      params: params,
     };
-    apiClient.callApi(ApiPath.WITHDRAW, onResultReturn, params);
+    callApi(config);
   }
 
   private _backToPrevious(): void {

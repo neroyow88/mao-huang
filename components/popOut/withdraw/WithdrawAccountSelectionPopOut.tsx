@@ -1,11 +1,12 @@
 import React from "react";
 import { Modal } from "reactstrap";
 
-import { PopOutTitle } from "../../share/PopOutTitle";
 import { EmptyBankAccount } from "./EmptyBankAccount";
 import { BankAccount } from "./BankAccount";
 
-import { dataSource } from "../../../scripts/dataSource/DataSource";
+import { PopOutTitle } from "../../share/PopOutTitle";
+import { callApi } from "../../../scripts/ApiClient";
+import { ApiPath } from "../../../scripts/WebConstant";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
 
@@ -16,18 +17,25 @@ interface Props {
   transitionComplete: NoParamReturnNulFunction;
 }
 
-class WithdrawAccountSelectionPopOut extends React.Component<Props> {
+interface State {
+  bankAccounts: IBankAccount[];
+}
+
+class WithdrawAccountSelectionPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      bankAccounts: [],
+    };
+
+    this._getAccount = this._getAccount.bind(this);
   }
 
   public componentDidMount(): void {
     const { toggle, transitionComplete } = this.props;
     if (toggle) {
-      const interval = setInterval((): void => {
-        transitionComplete();
-        clearInterval(interval);
-      }, 500);
+      this._getAccount(transitionComplete);
     } else {
       transitionComplete();
     }
@@ -35,15 +43,24 @@ class WithdrawAccountSelectionPopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale, onHide } = this.props;
-    const { bankAccounts } = dataSource.playerModel;
+    const { bankAccounts } = this.state;
     const components = [];
 
     for (let i = 0; i < 3; i++) {
       const detail = bankAccounts[i];
       if (detail) {
-        components.push(<BankAccount index={i} detail={detail} />);
+        components.push(
+          <BankAccount
+            index={i}
+            detail={detail}
+            onRemoveCallback={this._getAccount}
+            key={`bank-account-${i}`}
+          />
+        );
       } else {
-        components.push(<EmptyBankAccount index={i} />);
+        components.push(
+          <EmptyBankAccount index={i} key={`bank-account-${i}`} />
+        );
       }
     }
 
@@ -73,6 +90,37 @@ class WithdrawAccountSelectionPopOut extends React.Component<Props> {
         </div>
       </Modal>
     );
+  }
+
+  private _getAccount(callback?: NoParamReturnNulFunction): void {
+    const onResultReturn = (result, error): void => {
+      if (result && !error) {
+        const tempAcc = [];
+        const data = result.data;
+        const keys = Object.keys(data);
+        if (keys.length > 0) {
+          keys.forEach((key: string): void => {
+            tempAcc.push({
+              accountId: key,
+              bankName: data[key].bank_name,
+              bankAccName: data[key].account_realname,
+              bankAccNumber: data[key].account_num,
+              bankAccBranch: data[key].account_branch,
+              iconUrl: data[key].icon_url,
+            });
+          });
+        }
+
+        this.setState({ bankAccounts: tempAcc });
+        callback && callback();
+      }
+    };
+
+    const config = {
+      path: ApiPath.GET_WITHDRAW_ACCOUNTS,
+      callback: onResultReturn,
+    };
+    callApi(config);
   }
 }
 

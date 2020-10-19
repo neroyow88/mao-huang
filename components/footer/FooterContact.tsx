@@ -1,6 +1,10 @@
 import React from "react";
 
-interface Props {}
+import { ContactModel } from "../../scripts/dataSource/ContactModel";
+
+interface Props {
+  model: ContactModel;
+}
 
 class FooterContact extends React.Component<Props> {
   constructor(props: Props) {
@@ -8,6 +12,9 @@ class FooterContact extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
+    const { model } = this.props;
+    const { qq, skype, gmail } = model;
+
     return (
       <div id="footer-contact-container" className="child-container">
         <div className="footer-title-label">客服中心</div>
@@ -26,21 +33,21 @@ class FooterContact extends React.Component<Props> {
             <div className="footer-contact-image-container">
               <img src="footer/contact_qq.png"></img>
             </div>
-            1535291636
+            {qq}
           </div>
 
           <div className="footer-contact-content-container row-container">
             <div className="footer-contact-image-container">
               <img src="footer/contact_skype.png"></img>
             </div>
-            cs.cat1688@gmail.com
+            {skype}
           </div>
 
           <div className="footer-contact-content-container row-container">
             <div className="footer-contact-image-container">
               <img src="footer/contact_email.png"></img>
             </div>
-            cs.cat1688@gmail.com
+            {gmail}
           </div>
         </div>
       </div>

@@ -2,9 +2,11 @@ import React from "react";
 
 import { FlipCard } from "./FlipCard";
 import { RoundCard } from "./RoundCard";
-import { dataSource } from "../../scripts/dataSource/DataSource";
 
-interface Props {}
+interface Props {
+  isMobile: boolean;
+  isLogin: boolean;
+}
 
 interface State {}
 
@@ -14,7 +16,7 @@ class Cards extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { isMobile } = dataSource.systemModel;
+    const { isMobile, isLogin } = this.props;
 
     if (isMobile) {
       return (
@@ -34,8 +36,8 @@ class Cards extends React.Component<Props, State> {
           </div>
           <div id="card-item-container" className="row-container center">
             <FlipCard index={1} />
-            <FlipCard index={2} buttonLabel="招财勋章" />
-            <FlipCard index={3} buttonLabel="波斯勋章" />
+            <FlipCard index={2} buttonLabel="招财勋章" isLogin={isLogin} />
+            <FlipCard index={3} buttonLabel="波斯勋章" isLogin={isLogin} />
           </div>
         </div>
       );

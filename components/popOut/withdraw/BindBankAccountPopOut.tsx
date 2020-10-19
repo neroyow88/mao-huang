@@ -5,13 +5,9 @@ import { FormInputBox } from "../../share/FormInputBox";
 import { FormButton } from "../../share/FormButton";
 import { PopOutTitle } from "../../share/PopOutTitle";
 
-import {
-  PopOutType,
-  NoticePopOutConfig,
-  ApiPath,
-} from "../../../scripts/WebConstant";
-import { apiClient } from "../../../scripts/ApiClient";
 import { popOutHandler } from "../../../scripts/PopOutHandler";
+import { PopOutType, ApiPath } from "../../../scripts/WebConstant";
+import { callApi } from "../../../scripts/ApiClient";
 
 import customStyle from "../../../styles/module/Modal.module.scss";
 
@@ -21,22 +17,30 @@ interface Props {
   transitionComplete: NoParamReturnNulFunction;
 }
 
-class BindBankAccountPopOut extends React.Component<Props> {
+interface State {
+  bankList: IBankList[];
+}
+
+class BindBankAccountPopOut extends React.Component<Props, State> {
   private _bankTypeRef: RefObject<HTMLSelectElement>;
-  private _bankNameRef: RefObject<HTMLInputElement>;
-  private _usernameRef: RefObject<HTMLInputElement>;
-  private _cardNumberRef: RefObject<HTMLInputElement>;
-  private _verifiedCardNumberRef: RefObject<HTMLInputElement>;
+  private _branchName: RefObject<HTMLInputElement>;
+  private _accountNameRef: RefObject<HTMLInputElement>;
+  private _accountNumberRef: RefObject<HTMLInputElement>;
+  private _verifiedAccountNumberRef: RefObject<HTMLInputElement>;
   private _pinNumberRef: RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
 
+    this.state = {
+      bankList: [],
+    };
+
     this._bankTypeRef = React.createRef();
-    this._bankNameRef = React.createRef();
-    this._usernameRef = React.createRef();
-    this._cardNumberRef = React.createRef();
-    this._verifiedCardNumberRef = React.createRef();
+    this._branchName = React.createRef();
+    this._accountNameRef = React.createRef();
+    this._accountNumberRef = React.createRef();
+    this._verifiedAccountNumberRef = React.createRef();
     this._pinNumberRef = React.createRef();
 
     this._onFormSubmitted = this._onFormSubmitted.bind(this);
@@ -46,10 +50,27 @@ class BindBankAccountPopOut extends React.Component<Props> {
   public componentDidMount(): void {
     const { toggle, transitionComplete } = this.props;
     if (toggle) {
-      const interval = setInterval((): void => {
-        transitionComplete();
-        clearInterval(interval);
-      }, 500);
+      const onResultReturn = (result, error): void => {
+        if (result && !error) {
+          const tempBanks = [];
+          const data = result.data;
+          Object.keys(data).forEach((key: string): void => {
+            tempBanks.push({
+              bankId: key,
+              bankName: data[key],
+            });
+          });
+
+          console.log(tempBanks);
+          this.setState({ bankList: tempBanks });
+          transitionComplete();
+        }
+      };
+
+      callApi({
+        path: ApiPath.GET_WITHDRAW_BANK_LIST,
+        callback: onResultReturn,
+      });
     } else {
       transitionComplete();
     }
@@ -57,6 +78,15 @@ class BindBankAccountPopOut extends React.Component<Props> {
 
   public render(): JSX.Element {
     const { toggle, scale } = this.props;
+    const { bankList } = this.state;
+
+    const options = bankList.map((bank: IBankList, index) => {
+      return (
+        <option value={bank.bankId} key={`bank-option-${index}`}>
+          {bank.bankName}
+        </option>
+      );
+    });
 
     return (
       <Modal
@@ -73,35 +103,34 @@ class BindBankAccountPopOut extends React.Component<Props> {
             className="pop-out-form-container"
           >
             <form autoComplete="off" onSubmit={this._onFormSubmitted}>
-              <select required ref={this._bankTypeRef}>
-                <option value="" disabled selected hidden>
+              <select required ref={this._bankTypeRef} defaultValue={-1}>
+                <option value="-1" disabled selected hidden>
                   请选择开户银行
                 </option>
-                <option value="0">平安银行</option>
-                <option value="1">工商银行</option>
+                {options}
               </select>
               <FormInputBox
-                id="bankname"
+                id="branchname"
                 placeholder="请输入开户支行"
-                inputRef={this._bankNameRef}
+                inputRef={this._branchName}
                 number
               />
               <FormInputBox
                 id="username"
                 placeholder="请输入开户人姓名"
-                inputRef={this._usernameRef}
+                inputRef={this._accountNameRef}
                 number
               />
               <FormInputBox
                 id="cardnumber"
                 placeholder="请输入银行卡号"
-                inputRef={this._cardNumberRef}
+                inputRef={this._accountNumberRef}
                 number
               />
               <FormInputBox
                 id="verifiedcardnumber"
                 placeholder="请再次确认银行卡号"
-                inputRef={this._verifiedCardNumberRef}
+                inputRef={this._verifiedAccountNumberRef}
                 number
               />
               <FormInputBox
@@ -127,43 +156,34 @@ class BindBankAccountPopOut extends React.Component<Props> {
 
   private _onFormSubmitted(e): void {
     e.preventDefault();
+
     const bankType = this._bankTypeRef.current.value;
-    const bankName = this._bankNameRef.current.value;
-    const username = this._usernameRef.current.value;
-    const cardNumber = this._cardNumberRef.current.value;
-    const verifiedCardNumber = this._verifiedCardNumberRef.current.value;
+    const branchName = this._branchName.current.value;
+    const accountName = this._accountNameRef.current.value;
+    const accountNumber = this._accountNumberRef.current.value;
+    const verifiedAccountNumber = this._verifiedAccountNumberRef.current.value;
     const pinNumber = this._pinNumberRef.current.value;
 
-    const onResultReturn = (result: GenericObjectType, err: string): void => {
-      if (err && !result) {
-        if (err === "card") {
-          popOutHandler.showNotice(
-            NoticePopOutConfig.VERIFICATION_CARD_INCORRECT
-          );
-        }
-      } else {
-        const { bankType, bankName, username, cardNumber, pinNumber } = result;
-        console.log(
-          "account added: ",
-          bankType,
-          bankName,
-          username,
-          cardNumber,
-          pinNumber
-        );
+    const onResultReturn = (result, error): void => {
+      if (result && !error) {
         popOutHandler.showPopOut(PopOutType.WITHDRAW_SELECTION);
       }
     };
 
-    const params = {
-      bankType,
-      bankName,
-      username,
-      cardNumber,
-      verifiedCardNumber,
-      pinNumber,
+    const params = new FormData();
+    params.append("bank_id", bankType);
+    params.append("account_branch", branchName);
+    params.append("account_realname", accountName);
+    params.append("account_num", accountNumber);
+    params.append("account_num_repeat", verifiedAccountNumber);
+    params.append("secure_password", pinNumber);
+
+    const config = {
+      path: ApiPath.ADD_WITHDRAW_ACCOUNT,
+      callback: onResultReturn,
+      params: params,
     };
-    apiClient.callApi(ApiPath.ADD_BANK_ACCOUNT, onResultReturn, params);
+    callApi(config);
   }
 
   //#region Utils

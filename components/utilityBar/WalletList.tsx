@@ -1,9 +1,8 @@
 import React, { createRef, RefObject } from "react";
-import { IWalletModel } from "../../scripts/dataSource/PlayerModel";
 import { WalletItem } from "./WalletItem";
 
 interface Props {
-  model: IWalletModel;
+  walletList: { [keys: string]: IWalletList };
 }
 
 interface State {
@@ -16,7 +15,9 @@ class WalletList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = { contentHeight: 450 };
+    this.state = {
+      contentHeight: 450,
+    };
 
     this._contentRef = createRef();
   }
@@ -27,15 +28,20 @@ class WalletList extends React.Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { model } = this.props;
-    const keys = Object.keys(model);
-    const components = keys.map((key: string, index: number) => {
-      if (index > 0) {
-        const wallet = model[key];
-        return <WalletItem index={index} name={key} balance={wallet} />;
+    const { walletList } = this.props;
+    const components = Object.keys(walletList).map(
+      (key: string, index: number) => {
+        const wallet = walletList[key];
+        return (
+          <WalletItem
+            index={index}
+            title={wallet.title}
+            balance={wallet.balance}
+            key={`wallet-item-${index}`}
+          />
+        );
       }
-      return null;
-    });
+    );
 
     const { contentHeight } = this.state;
     const heightOffset = 450 / contentHeight;

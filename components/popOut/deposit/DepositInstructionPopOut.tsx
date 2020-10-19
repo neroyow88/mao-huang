@@ -19,17 +19,11 @@ interface Props {
   customData: GenericObjectType;
 }
 
-interface State {
-  tutorialToggle: boolean;
-}
+interface State {}
 
 class DepositInstructionPopOut extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      tutorialToggle: false,
-    };
 
     this._renderContent = this._renderContent.bind(this);
     this._onBack = this._onBack.bind(this);
@@ -69,20 +63,29 @@ class DepositInstructionPopOut extends React.Component<Props, State> {
 
   private _renderContent(): JSX.Element {
     const { customData } = this.props;
-    const { selectedIndex, balance } = customData;
+    const { selectedIndex, amount } = customData;
     switch (selectedIndex) {
       case DepositType.ALIPAY:
+        const { accountId, depositId, qrUrl } = customData;
         return (
           <AlipayDeposit
-            balance={balance}
+            amount={amount}
+            accountId={accountId}
+            depositId={depositId}
+            qrUrl={qrUrl}
             onBack={this._onBack}
             onConfirm={this._onConfirm}
           />
         );
       case DepositType.BANK:
+        const { bankName, bankAccName, bankAccNumber, remark } = customData;
         return (
           <BankDeposit
-            balance={balance}
+            bankName={bankName}
+            bankAccName={bankAccName}
+            bankAccNumber={bankAccNumber}
+            amount={amount}
+            remark={remark}
             onBack={this._onBack}
             onConfirm={this._onConfirm}
           />
@@ -90,7 +93,7 @@ class DepositInstructionPopOut extends React.Component<Props, State> {
       case DepositType.WECHAT:
         return (
           <WeChatDeposit
-            balance={balance}
+            amount={amount}
             onBack={this._onBack}
             onConfirm={this._onConfirm}
           />

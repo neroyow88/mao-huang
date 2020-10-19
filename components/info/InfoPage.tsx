@@ -32,6 +32,7 @@ class InfoPage extends React.Component<Props, State> {
         <InfoPageButton index={i} active={active} onClick={this._changeIndex} />
       );
     }
+
     const content = infoPageContent[selectedIndex];
     return (
       <div id="info-page-container" className="column-container center">

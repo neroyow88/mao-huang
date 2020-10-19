@@ -1,70 +1,77 @@
 import React from "react";
 
-import { ImageContainer } from "../share/ImageContainer";
+import { NoticeBoardBrowser } from "./NoticeBoardBrowser";
+import { NoticeBoardMobile } from "./NoticeBoardMobile";
 
-import { dataSource } from "../../scripts/dataSource/DataSource";
-import { PopOutType } from "../../scripts/WebConstant";
-import { popOutHandler } from "../../scripts/PopOutHandler";
+import { ApiPath } from "../../scripts/WebConstant";
+import { callApi } from "../../scripts/ApiClient";
 
-interface Props {}
+interface Props {
+  isMobile: boolean;
+}
 
-class NoticeBoard extends React.Component<Props> {
+interface State {
+  noticeList: string[];
+  currentNotice: number;
+}
+
+class NoticeBoard extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this._noticeBoardMobile = this._noticeBoardMobile.bind(this);
-    this._noticeBoardBrowser = this._noticeBoardBrowser.bind(this);
-    this._onNewsClicked = this._onNewsClicked.bind(this);
+    this.state = {
+      noticeList: [],
+      currentNotice: 0,
+    };
+
+    this._refreshNews = this._refreshNews.bind(this);
+  }
+
+  public componentDidMount(): void {
+    this._refreshNews();
   }
 
   public render(): JSX.Element {
-    const { isMobile } = dataSource.systemModel;
+    const { isMobile } = this.props;
+    const { noticeList } = this.state;
     if (isMobile) {
-      return this._noticeBoardMobile();
+      return (
+        <NoticeBoardMobile
+          noticeList={noticeList}
+          refreshNews={this._refreshNews}
+        />
+      );
     } else {
-      return this._noticeBoardBrowser();
+      return (
+        <NoticeBoardBrowser
+          noticeList={noticeList}
+          refreshNews={this._refreshNews}
+        />
+      );
     }
   }
 
-  private _noticeBoardMobile(): JSX.Element {
-    return (
-      <div id="notice-board-container-mobile" className="row-container center">
-        <div id="left-board-container-mobile">
-          <ImageContainer src={"icon_volume.png"} />
-        </div>
-        <div id="scroll-left-container">
-          <div id="scroll-left-mobile">
-            由于受疫情影响，原定于2020年7月21日（星期二）恢复的六合彩搅珠（第20/009期）再度延后，开启日期需等待官方另行通知。
-          </div>
-        </div>
-      </div>
-    );
-  }
+  private _refreshNews(callback?: NoParamReturnNulFunction): void {
+    const onResultReturn = (result, error): void => {
+      if (result && !error) {
+        const data = result.data;
+        if (data) {
+          const noticeList = [];
+          Object.keys(data).forEach((key: string): void => {
+            noticeList.push(data[key]);
+          });
 
-  private _noticeBoardBrowser(): JSX.Element {
-    return (
-      <div id="notice-board-container-browser">
-        <div id="left-board-container-browser">
-          <div
-            id="notice-title-container-browser"
-            className="row-container center"
-          >
-            <div>公告栏</div>
-            <img src="icon_volume.png"></img>
-          </div>
-        </div>
-        <div id="right-board-container"></div>
-        <div id="scroll-left-container">
-          <div id="scroll-left-browser" onClick={this._onNewsClicked}>
-            由于受疫情影响，原定于2020年7月21日（星期二）恢复的六合彩搅珠（第20/009期）再度延后，开启日期需等待官方另行通知。
-          </div>
-        </div>
-      </div>
-    );
-  }
+          this.setState({ noticeList: noticeList });
+          callback && callback();
+        }
+      }
+    };
 
-  private _onNewsClicked(): void {
-    popOutHandler.showPopOut(PopOutType.NEWS);
+    const config = {
+      path: ApiPath.GET_ANNOUNCEMENT,
+      callback: onResultReturn,
+    };
+    callApi(config);
   }
 }
 

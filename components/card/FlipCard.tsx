@@ -1,5 +1,4 @@
 import React from "react";
-import { dataSource } from "../../scripts/dataSource/DataSource";
 import { popOutHandler } from "../../scripts/PopOutHandler";
 import { PopOutType } from "../../scripts/WebConstant";
 
@@ -8,6 +7,7 @@ import { ImageContainer } from "../share/ImageContainer";
 interface Props {
   index: number;
   buttonLabel?: string;
+  isLogin?: boolean;
 }
 
 class FlipCard extends React.Component<Props> {
@@ -59,9 +59,8 @@ class FlipCard extends React.Component<Props> {
   }
 
   private _onClickCallback(): void {
-    const { playerModel } = dataSource;
-    if (playerModel) {
-      const { index, buttonLabel } = this.props;
+    const { index, isLogin, buttonLabel } = this.props;
+    if (isLogin) {
       popOutHandler.showPopOut(PopOutType.CARD, { index, title: buttonLabel });
     } else {
       popOutHandler.showPopOut(PopOutType.LOGIN);
